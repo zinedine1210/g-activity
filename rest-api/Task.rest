@@ -1,0 +1,143 @@
+### Task (Add)
+# sequence: sequence task yg paling besar(di tiap status) + 1
+# resolve: 1:Yes | -1:No
+POST http://g-activity.gnusa.id/service/task HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "title":"Migrasi data",
+    "workspace_id":"c5a20c09-5b1f-4bb3-af72-84365a7c577c",
+    "project_id":"0f6ecdd1-adf6-484b-83d4-45696e64eeba",
+    "status_id":"ca10ae4e-d2d4-44a5-939e-cf1195bdb3eb",
+    "sequence":2,
+    "resolve":-1
+}
+
+
+### Task (Edit)
+# resolve: 1:Yes | -1:No
+# PUT http://g-activity.gnusa.id/service/task/:taskID HTTP/1.1
+PUT http://g-activity.gnusa.id/service/task/8a98e351-452f-4dde-be43-484456db87fe HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "title":"Ini tugas anda",
+    "description":"Ini tugas anda,Ini tugas anda,Ini tugas anda",
+    "start_date":"2023-03-18 00:00:00",
+    "due_date":"2023-03-20 00:00:00",
+    "assign":[{
+        "uid":"",
+        "username":"",
+        "fullname":""
+    }],
+    "label":[{
+        "value":"Test",
+        "color":"Black"
+    }],
+    "status_id":"f3635673-6373-4172-91d5-d468a909462d",
+    "resolve":1
+}
+
+
+### Task (Delete)
+# DELETE http://g-activity.gnusa.id/service/task/:taskID HTTP/1.1
+DELETE http://g-activity.gnusa.id/service/task/8a98e351-452f-4dde-be43-484456db87fe HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Task (GET)
+GET http://g-activity.gnusa.id/service/task/l/0f6ecdd1-adf6-484b-83d4-45696e64eeba HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Task - Detail (GET)
+GET http://g-activity.gnusa.id/service/task/d/8a98e351-452f-4dde-be43-484456db87fe HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Task Activity (Add)
+# http://g-activity.gnusa.id/service/task_activity
+# type: Task | Comment
+POST http://g-activity.gnusa.id/service/task_activity HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "type":"Comment",
+    "content":"Test comment 1",
+    "task_id":"8a98e351-452f-4dde-be43-484456db87fe"
+}
+
+
+### Task Activity (Delete/Remove)
+# http://g-activity.gnusa.id/service/task_activity/:idActivity
+DELETE  http://g-activity.gnusa.id/service/task_activity/7b011cc5-a2e2-40ea-ad29-d99c5cea360e HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Task Activity - List (Get)
+# http://g-activity.gnusa.id/service/task_activity/:taskId
+GET http://g-activity.gnusa.id/service/task_activity/8a98e351-452f-4dde-be43-484456db87fe HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Task Status (Add)
+# http://g-activity.gnusa.id/service/task_status
+# sequence: sequence status yg paling besar + 1
+POST http://g-activity.gnusa.id/service/task_status HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "title":"Complete",
+    "workspace_id":"c5a20c09-5b1f-4bb3-af72-84365a7c577c",
+    "project_id":"0f6ecdd1-adf6-484b-83d4-45696e64eeba",
+    "sequence":5
+}
+
+
+### Task Status (Edit)
+# http://g-activity.gnusa.id/service/task_status/:id
+# sequence: sequence status yg paling besar + 1
+PUT http://g-activity.gnusa.id/service/task_status/f3635673-6373-4172-91d5-d468a909462d HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "title":"Complete",
+    "sequence":5
+}
+
+
+### Task Status - List (Get)
+# http://g-activity.gnusa.id/service/task_status/:projectId
+GET http://g-activity.gnusa.id/service/task_status/0f6ecdd1-adf6-484b-83d4-45696e64eeba HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Task Status (Delete/Remove)
+# http://g-activity.gnusa.id/service/task_status/:idStatus
+DELETE  http://g-activity.gnusa.id/service/task_status/f092b9ef-582a-409c-a1c7-48af78263403 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Task Status (re-position)
+PUT http://g-activity.gnusa.id/service/task_status/_repos_task/9d83f275-705a-4ff6-b7f9-839be0d6e7cd HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+[
+    {
+        "id":"c0fa4fd2-d630-437c-9040-ce7ffede312a",
+        "sequence":1,
+    }
+]

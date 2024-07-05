@@ -1,0 +1,37 @@
+### Role (Add)
+POST http://g-activity.gnusa.id/service/_role HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "rolename":"Admin",
+    "color":"#CCCCCC"
+}
+
+
+### Role (Edit)
+# _active 1= Aktif | -1= Tidak Aktif
+# r_id (ambil dari combo role)
+PUT http://g-activity.gnusa.id/service/_role/c5a20c09-5b1f-4bb3-af72-84365a7c577c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "rolename":"Admin",
+    "color":"#CCCCCC"
+}
+
+### Role (GET)
+GET http://g-activity.gnusa.id/service/_role HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+### Role - Combo Box (GET)
+GET http://g-activity.gnusa.id/service/_rolecombo HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+### Role By IDS (GET)
+GET http://g-activity.gnusa.id/service/_role/id_1,id_2,id_3 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I

@@ -1,0 +1,43 @@
+### User Signin/Login
+POST https://s-gactivity.gnusa.id/gactivity-service/auth/mlogin HTTP/1.1
+content-type: application/cbor
+# uspw: {"user":"max@ipm.id","pass":"admin123"}
+uspw: {"user":"admin@ipm.id","pass":"ipm123"}
+
+
+### User Status (Logged in)
+POST https://s-gactivity.gnusa.id/gactivity-service/auth/status HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+param: user
+
+### User Signout/Logout
+POST https://s-gactivity.gnusa.id/gactivity-service/auth/logout HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Find Enum
+# https://s-gactivity.gnusa.id/gactivity-service/_enum/browse/:app/:module
+GET https://s-gactivity.gnusa.id/gactivity-service/_enum/browse/gactivity/workspaceType HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Find Member (Post)
+# https://s-gactivity.gnusa.id/gactivity-service/member/find
+POST https://s-gactivity.gnusa.id/gactivity-service/member/find HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZTNiYjJhYTI5ODI1MWE0NDdjNmM1ODFhNGI5YzNiMjc1MzM2ZGU3NCJ9.8jVOddgza5C6g-Y4oeP-HXAiZZs45ivNDxdiaQKSvQU
+
+{   
+    // untuk pencarian member di halaman workspace
+    // "workspace_id":"7c89df23-b54a-4b80-acdc-6a5c9ef1da55",
+
+    // untuk pencarian member di halaman project
+    "project_id":"686a3a2a-c7e9-4c55-9a27-d764eca31603",
+
+    // untuk pencarian member di halaman documentation
+    //"document_id":"88ebd905-6a91-4c7f-9dd0-49cb97a5340c", 
+    "keyword":null
+}

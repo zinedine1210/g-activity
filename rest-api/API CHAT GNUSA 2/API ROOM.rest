@@ -1,0 +1,38 @@
+### GET ROOM CHAT
+GET https://service-chat.gnusa.id/service/chat-room HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+### NEW ROOM
+# type 1 == private, 2 == group
+# jika group, label diisi dengan nama groupnya, jika private string kosongkan saja
+POST https://service-chat.gnusa.id/service/chat-room HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+{
+    "label":"",
+    "msg":"Halo",
+    "list_user": ["ead03564-3ae1-42af-940e-b859a89dcf0b"],
+    "type": 1,
+    "type_msg": 1
+}
+
+
+DELETE https://service-chat.gnusa.id/service/chat-room HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+["76620e7f-9ba5-41d0-bb9c-eff6fbe1ec2a"]
+
+
+
+### FETCH DATA ROOM
+### date itu adalah tanggal yang udah di convert jadi isostring (date.toISOString())
+POST https://service-chat.gnusa.id/service/chat-room/new-messages HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+{
+    "date": "2024-06-21T06:22:03.152Z"
+}

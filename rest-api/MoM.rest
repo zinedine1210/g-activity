@@ -1,0 +1,206 @@
+### MoM (Add)
+POST http://g-activity.gnusa.id/service/mom HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "workspace_id":"c5a20c09-5b1f-4bb3-af72-84365a7c577c",
+    "project_id":"05618043-ae7f-425c-a7c9-530849f3534e",
+    "privacy":-1
+}
+
+
+### MoM (Edit)
+# PUT http://g-activity.gnusa.id/service/mom/:momId HTTP/1.1
+# start_time : %Y-%m-%dT%H:%M:%S.%f%z
+# end_time : %Y-%m-%dT%H:%M:%S.%f%z
+PUT http://g-activity.gnusa.id/service/mom/88ebd905-6a91-4c7f-9dd0-49cb97a5340c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "title":"iService",
+    "place":"Document Project iService IBS",
+    "address":"",
+    "action_list":[{
+        "checked":1,
+        "value":"action 1"
+    },{
+        "checked":0,
+        "value":"action 2"
+    }],
+    "agenda":[
+        "Agenda 1",
+        "Agenda 2",
+        "Agenda 3"
+    ],
+    "mom_date":"2023-03-18 00:00:00",
+    "start_time":"2023-03-18T09:00:00.000Z", 
+    "end_time":"2023-03-18T11:00:00.000Z",
+    "conclusion":"kesimpulan disini...",
+    "privacy":-1
+}
+
+
+### MoM (Delete)
+# DELETE http://g-activity.gnusa.id/service/mom/:momId HTTP/1.1
+DELETE http://g-activity.gnusa.id/service/mom/50e029f6-3de9-454b-bfdf-0f6b1667f4a4 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM - My MoM (GET)
+GET http://g-activity.gnusa.id/service/mom/05618043-ae7f-425c-a7c9-530849f3534e/1 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM - Shared (GET)
+GET http://g-activity.gnusa.id/service/mom/05618043-ae7f-425c-a7c9-530849f3534e/2 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM - Detail (GET)
+GET http://g-activity.gnusa.id/service/mom/88ebd905-6a91-4c7f-9dd0-49cb97a5340c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM Team (Add)
+# http://g-activity.gnusa.id/service/mom/team/:projectID/:documentID
+POST http://g-activity.gnusa.id/service/mom/team/05618043-ae7f-425c-a7c9-530849f3534e/88ebd905-6a91-4c7f-9dd0-49cb97a5340c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+["AeDoh9uH","a9fc1a99-14b1-41f9-9009-6ebed0e046e4"]
+
+
+### MoM Team (Delete/Remove/Kick)
+# http://g-activity.gnusa.id/service/mom/team/rm/:documentID
+DELETE  http://g-activity.gnusa.id/service/mom/team/rm/88ebd905-6a91-4c7f-9dd0-49cb97a5340c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+["28e12a2a-894b-444b-af8e-65be3059f2cf"]
+
+
+### MoM Team - List (Get)
+# http://g-activity.gnusa.id/service/mom/team/:documentID/1
+GET http://g-activity.gnusa.id/service/mom/team/88ebd905-6a91-4c7f-9dd0-49cb97a5340c/1 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM Team - Count (Get)
+# http://g-activity.gnusa.id/service/mom/team/:documentID/2
+GET http://g-activity.gnusa.id/service/mom/team/88ebd905-6a91-4c7f-9dd0-49cb97a5340c/2 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM Point (Add)
+POST http://g-activity.gnusa.id/service/mom/point HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "mom_id":"88ebd905-6a91-4c7f-9dd0-49cb97a5340c",
+    "result":"Ini poin meeting",
+    "target_date":"2023-03-18 00:00:00",
+    "pic":"Bambang",
+    "state_by":"Agus"
+}
+
+
+### MoM Point (Edit)
+PUT http://g-activity.gnusa.id/service/mom/point/c0fa4fd2-d630-437c-9040-ce7ffede312a HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "result":"Ini poin meeting",
+    "target_date":"2023-03-18 00:00:00",
+    "pic":"Bambang",
+    "state_by":"Agus"
+}
+
+
+### MoM Point - Re Position (Edit)
+PUT http://g-activity.gnusa.id/service/mom/_repospage HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+[{
+    "id":"xxxxxx",
+    "pos":1
+},{
+    "id":"yyyyyy",
+    "pos":2
+}]
+
+
+### MoM Point (Delete)
+# http://g-activity.gnusa.id/service/mom/point/:id
+DELETE  http://g-activity.gnusa.id/service/mom/point/c0fa4fd2-d630-437c-9040-ce7ffede312a HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM Point - List (Get)
+# http://g-activity.gnusa.id/service/mom/point/:momId
+GET http://g-activity.gnusa.id/service/mom/point/88ebd905-6a91-4c7f-9dd0-49cb97a5340c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM Participant (Add)
+# http://g-activity.gnusa.id/service/mom/participant
+# note: kalau participant diambil dari member maka utk isian field email,name & uid diambil dari data member
+POST http://g-activity.gnusa.id/service/mom/participant HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+// kalau participant dari team member project
+{
+    "mom_id":"88ebd905-6a91-4c7f-9dd0-49cb97a5340c",
+    "email":"alex@ipm.id",
+    "name":"Alex",
+    "position":"Manager",
+    "company":"XL",
+    "uid":"856fad33-7d37-4e89-8830-53d2361b259c"
+}
+
+// kalau participant bukan dari tam member project
+# {
+#     "mom_id":"88ebd905-6a91-4c7f-9dd0-49cb97a5340c",
+#     "email":"alex@ipm.id",
+#     "name":"Alex",
+#     "position":"Manager",
+#     "company":"XL"
+# }
+
+
+### MoM Participant (Edit)
+# http://g-activity.gnusa.id/service/mom/participant/:id
+PUT http://g-activity.gnusa.id/service/mom/participant/88ebd905-6a91-4c7f-9dd0-49cb97a5340c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "position":"Manager",
+    "company":"XL"
+}
+
+### MoM Participant (Delete)
+# http://g-activity.gnusa.id/service/mom/participant/:id
+DELETE  http://g-activity.gnusa.id/service/mom/participant/88ebd905-6a91-4c7f-9dd0-49cb97a5340c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM Participant - List (Get)
+# http://g-activity.gnusa.id/service/mom/participant/:momId
+GET http://g-activity.gnusa.id/service/mom/participant/88ebd905-6a91-4c7f-9dd0-49cb97a5340c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I

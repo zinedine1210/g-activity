@@ -1,0 +1,46 @@
+### GET CONTACT
+GET https://service-chat.gnusa.id/service/chat-contact HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+
+### FIND USER IN CONTACT AND GLOBAL
+POST https://service-chat.gnusa.id/service/chat-contact/search HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+### jika return success tapi type = 1 (User already in contact)
+### jika return success tapi type = 2 (User Found), jadi user ditemukan di aplikasi tapi belum ada di contact
+### jika return success tapi type = 4 (Success Get data), berarti user ingin menambahkan kontak yang sudah pernah dia hapus (is_deleted = 1)
+
+{"username":"mamang@gmail.com"}
+
+### ADD NEW CONTACT
+POST https://service-chat.gnusa.id/service/chat-contact HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+{
+    "username":"mamang@gmail.com",
+    "user_id": "ead03564-3ae1-42af-940e-b859a89dcf0b",
+    "first_name": "Mamang",
+    "last_name": "Konter Pulsa"
+}
+
+### UPDATE CONTACT
+PUT https://service-chat.gnusa.id/service/chat-contact/:id HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+{
+    "username":"mamang@gmail.com",
+    "user_id": "ead03564-3ae1-42af-940e-b859a89dcf0b",
+    "first_name": "aaa",
+    "last_name": "Konter Pulsa"
+}
+
+### DELETE CONTACT
+DELETE https://service-chat.gnusa.id/service/chat-contact HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+["76620e7f-9ba5-41d0-bb9c-eff6fbe1ec2a"]

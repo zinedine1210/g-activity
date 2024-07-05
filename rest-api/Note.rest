@@ -1,0 +1,80 @@
+### Note (Add)
+POST http://g-activity.gnusa.id/service/note HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "workspace_id":"c5a20c09-5b1f-4bb3-af72-84365a7c577c",
+    "project_id":"05618043-ae7f-425c-a7c9-530849f3534e",
+    "privacy":-1
+}
+
+
+### Note (Edit)
+# PUT http://g-activity.gnusa.id/service/note/:noteID HTTP/1.1
+PUT http://g-activity.gnusa.id/service/note/e8ce6535-74c7-4e8b-b7ba-0fb190af2ecd HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "title":"iService",
+    "content":"Ini catatan iService",
+    "privacy":-1
+}
+
+
+### Note (Delete)
+# DELETE http://g-activity.gnusa.id/service/note/:noteID HTTP/1.1
+DELETE http://g-activity.gnusa.id/service/note/e8ce6535-74c7-4e8b-b7ba-0fb190af2ecd HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Note - My Note (GET)
+GET http://g-activity.gnusa.id/service/note/05618043-ae7f-425c-a7c9-530849f3534e/1 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Note - Shared (GET)
+GET http://g-activity.gnusa.id/service/note/05618043-ae7f-425c-a7c9-530849f3534e/2 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Note - Detail (GET)
+GET http://g-activity.gnusa.id/service/note/e8ce6535-74c7-4e8b-b7ba-0fb190af2ecd HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Note Team (Add)
+# http://g-activity.gnusa.id/service/note/:projectID/:noteID/team
+POST http://g-activity.gnusa.id/service/note/05618043-ae7f-425c-a7c9-530849f3534e/e8ce6535-74c7-4e8b-b7ba-0fb190af2ecd/team HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+["AeDoh9uH","a9fc1a99-14b1-41f9-9009-6ebed0e046e4"]
+
+
+### Note Team (Delete/Remove/Kick)
+# http://g-activity.gnusa.id/service/note/:noteID/team/rm
+DELETE  http://g-activity.gnusa.id/service/note/e8ce6535-74c7-4e8b-b7ba-0fb190af2ecd/team/rm HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+["f02d5960-9df2-40b1-a551-049d555c8781"]
+
+
+### Note Team - List (Get)
+# http://g-activity.gnusa.id/service/note/:noteID/team/1
+GET http://g-activity.gnusa.id/service/note/e8ce6535-74c7-4e8b-b7ba-0fb190af2ecd/team/1 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Note Team - Count (Get)
+# http://g-activity.gnusa.id/service/note/:noteID/team/2
+GET http://g-activity.gnusa.id/service/note/e8ce6535-74c7-4e8b-b7ba-0fb190af2ecd/team/2 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I

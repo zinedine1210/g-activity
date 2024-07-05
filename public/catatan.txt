@@ -1,0 +1,4 @@
+enum
+
+type of header table
+checkbox, mention, freeText, datetime, time

@@ -1,0 +1,110 @@
+### WorkSpace (Add)
+# privacy : -1 (Private) | 1 (Public)
+# type : ambil dari API find ENUM
+POST http://g-activity.gnusa.id/service/workspace HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
+
+{
+    "name":"Sushimoo",
+    "website":"sushimoo.id",
+    "type":"08e80022-1368-485c-bd60-1531b110f363",
+    "privacy":-1,
+    "description":"Sushimoo workspaces"
+}
+
+
+### WorkSpace (Edit)
+# http://g-activity.gnusa.id/service/workspace/:workspaceID
+# privacy : -1 (Private) | 1 (Public)
+# type : ambil dari API find ENUM
+PUT http://g-activity.gnusa.id/service/workspace/c5a20c09-5b1f-4bb3-af72-84365a7c577c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
+
+{
+    "name":"Sushimoo",
+    "website":"sushimoo.id",
+    "type":"f0d32eab-50a3-46f0-aeec-4dd8e1439474",
+    "privacy":-1,
+    "description":"Sushimoo workspaces 123456"
+}
+
+
+### WorkSpace (Delete)
+DELETE http://g-activity.gnusa.id/service/workspace/9c39c88d-bfe7-4337-8045-039a39805f37 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
+
+
+### WorkSpace - My workspace (GET)
+GET http://g-activity.gnusa.id/service/workspace/1 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
+
+
+### WorkSpace - Shared (GET)
+GET http://g-activity.gnusa.id/service/workspace/2 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
+
+
+### WorkSpace - Invited (GET)
+GET http://g-activity.gnusa.id/service/workspace/3 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
+# XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxleEBpcG0uaWQiLCJwYXNzd29yZCI6IjQ1YTVhMTJhNTUxOWViMDNlNWU3ZTAxYTQyMzBhY2YwOWZkYjBmNWEifQ.tbQiKripplAzetaWulxR8Kgy-jsJWfnhgVKUnfEg2-g
+
+### WorkSpace - Detail (GET)
+GET http://g-activity.gnusa.id/service/workspace/d/2425d974-65f4-48e3-b175-2e4fe350805a HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
+
+
+### WorkSpace Team (Add)
+# http://g-activity.gnusa.id/service/workspace/:workspaceID/team
+POST http://g-activity.gnusa.id/service/workspace/c5a20c09-5b1f-4bb3-af72-84365a7c577c/team HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
+
+["alex@ipm.id"]
+// ["designer@ipm.id","max@ipm.id"]
+
+
+### WorkSpace Team (Delete/Remove/Kick)
+# http://g-activity.gnusa.id/service/workspace/:workspaceID/team/rm
+DELETE  http://g-activity.gnusa.id/service/workspace/c5a20c09-5b1f-4bb3-af72-84365a7c577c/team/rm HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
+
+["946c54c5-0245-411a-a7b2-d53e006f7118"]
+
+
+### WorkSpace Team - List (Get)
+# invited & active member
+# http://g-activity.gnusa.id/service/workspace/:workspaceID/team/1
+GET http://g-activity.gnusa.id/service/workspace/c5a20c09-5b1f-4bb3-af72-84365a7c577c/team/1 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
+
+
+### WorkSpace Team - Count (Get)
+# Only active member on workspace
+# http://g-activity.gnusa.id/service/workspace/:workspaceID/team/2
+GET http://g-activity.gnusa.id/service/workspace/c5a20c09-5b1f-4bb3-af72-84365a7c577c/team/2 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
+
+
+### WorkSpace Team - resend link invitation (Get)
+# http://g-activity.gnusa.id/service/workspace/:workspaceID/resend/:id
+GET http://g-activity.gnusa.id/service/workspace/c5a20c09-5b1f-4bb3-af72-84365a7c577c/resend/b32059af-8e91-4a0f-a7f2-008590822f7f HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
+
+
+### WorkSpace Team - Accept invitation (PUT)
+# http://g-activity.gnusa.id/service/workspace/:workspaceID/resend/:id
+PUT http://g-activity.gnusa.id/service/workspace/c5a20c09-5b1f-4bb3-af72-84365a7c577c/accept/c67ac526-ca07-42e7-b46c-d6a4334618e7 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZ3Vlc3QxQGlwbS5pZCIsInBhc3N3b3JkIjoiOTE0YzBlMWEyZWJmOTYwOTk4NDRmNjhjOTZlMDFiMmVjNjlhNzM4MSJ9.bb1Dn7O6PMM_mou3hvtKmljZQKB6zd-tgZ7PlsT1VQY

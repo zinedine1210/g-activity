@@ -1,0 +1,82 @@
+### Project (Add)
+# privacy : -1 (Private) | 1 (Public)
+POST http://g-activity.gnusa.id/service/project HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "name":"ECPP",
+    "workspace_id":"c5a20c09-5b1f-4bb3-af72-84365a7c577c",
+    "privacy":-1,
+    "description":"ECPP", 
+    "assigned": "AeDoh9uH,a9fc1a99-14b1-41f9-9009-6ebed0e046e4"
+}
+
+
+### Project (Edit)
+# privacy : -1 (Private) | 1 (Public)
+PUT http://g-activity.gnusa.id/service/project/0f6ecdd1-adf6-484b-83d4-45696e64eeba HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "name":"ECPP",
+    "privacy":-1,
+    "description":"Project ECPP"
+}
+
+
+### Project (Delete)
+DELETE http://g-activity.gnusa.id/service/project/0f6ecdd1-adf6-484b-83d4-45696e64eeba HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Project - My Project (GET)
+GET http://g-activity.gnusa.id/service/project/c5a20c09-5b1f-4bb3-af72-84365a7c577c/1 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Project - Shared (GET)
+GET http://g-activity.gnusa.id/service/project/c5a20c09-5b1f-4bb3-af72-84365a7c577c/2 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Project - Detail (GET)
+GET http://g-activity.gnusa.id/service/project/0f6ecdd1-adf6-484b-83d4-45696e64eeba HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Project Team (Add)
+# http://g-activity.gnusa.id/service/project/:workspaceID/:projectID/team
+POST http://g-activity.gnusa.id/service/project/c5a20c09-5b1f-4bb3-af72-84365a7c577c/0f6ecdd1-adf6-484b-83d4-45696e64eeba/team HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+["AeDoh9uH","a9fc1a99-14b1-41f9-9009-6ebed0e046e4"]
+
+
+### Project Team (Delete/Remove/Kick)
+# http://g-activity.gnusa.id/service/project/:projectID/team/rm
+DELETE  http://g-activity.gnusa.id/service/project/0f6ecdd1-adf6-484b-83d4-45696e64eeba/team/rm HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+["6e0fd4da-0e49-42c7-bdac-75cee238fbec"]
+
+
+### Project Team - List (Get)
+# http://g-activity.gnusa.id/service/project/:projectID/team/1
+GET http://g-activity.gnusa.id/service/project/0f6ecdd1-adf6-484b-83d4-45696e64eeba/team/1 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Project Team - Count (Get)
+# http://g-activity.gnusa.id/service/project/:projectID/team/2
+GET http://g-activity.gnusa.id/service/project/0f6ecdd1-adf6-484b-83d4-45696e64eeba/team/2 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I

@@ -1,0 +1,82 @@
+### Project (Add)
+# privacy : -1 (Private) | 1 (Public)
+POST https://s-gactivity.gnusa.id/gactivity-service/project HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZTNiYjJhYTI5ODI1MWE0NDdjNmM1ODFhNGI5YzNiMjc1MzM2ZGU3NCJ9.8jVOddgza5C6g-Y4oeP-HXAiZZs45ivNDxdiaQKSvQU
+
+{
+    "name":"Coba Sushimo",
+    "workspace_id":"59c7049a-c3ac-4aac-856a-467f728d7f63",
+    "privacy":-1,
+    "description":"Coba Sushimoo", 
+    "assigned": ""
+}
+
+
+### Project (Edit)
+# privacy : -1 (Private) | 1 (Public)
+PUT https://s-gactivity.gnusa.id/gactivity-service/project/05618043-ae7f-425c-a7c9-530849f3534e HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZTNiYjJhYTI5ODI1MWE0NDdjNmM1ODFhNGI5YzNiMjc1MzM2ZGU3NCJ9.8jVOddgza5C6g-Y4oeP-HXAiZZs45ivNDxdiaQKSvQU
+
+{
+    "name":"Android",
+    "privacy":-1,
+    "description":"Project android sushimoo"
+}
+
+
+### Project (Delete)
+DELETE https://s-gactivity.gnusa.id/gactivity-service/project/05618043-ae7f-425c-a7c9-530849f3534e HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZTNiYjJhYTI5ODI1MWE0NDdjNmM1ODFhNGI5YzNiMjc1MzM2ZGU3NCJ9.8jVOddgza5C6g-Y4oeP-HXAiZZs45ivNDxdiaQKSvQU
+
+
+### Project - My Project (GET)
+GET https://s-gactivity.gnusa.id/gactivity-service/project/c5a20c09-5b1f-4bb3-af72-84365a7c577c/1 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZTNiYjJhYTI5ODI1MWE0NDdjNmM1ODFhNGI5YzNiMjc1MzM2ZGU3NCJ9.8jVOddgza5C6g-Y4oeP-HXAiZZs45ivNDxdiaQKSvQU
+
+
+### Project - Shared (GET)
+GET https://s-gactivity.gnusa.id/gactivity-service/project/c5a20c09-5b1f-4bb3-af72-84365a7c577c/2 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZTNiYjJhYTI5ODI1MWE0NDdjNmM1ODFhNGI5YzNiMjc1MzM2ZGU3NCJ9.8jVOddgza5C6g-Y4oeP-HXAiZZs45ivNDxdiaQKSvQU
+
+
+### Project - Detail (GET)
+GET https://s-gactivity.gnusa.id/gactivity-service/project/05618043-ae7f-425c-a7c9-530849f3534e HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZTNiYjJhYTI5ODI1MWE0NDdjNmM1ODFhNGI5YzNiMjc1MzM2ZGU3NCJ9.8jVOddgza5C6g-Y4oeP-HXAiZZs45ivNDxdiaQKSvQU
+
+
+### Project Team (Add)
+# https://s-gactivity.gnusa.id/gactivity-service/project/:workspaceID/:projectID/team
+POST https://s-gactivity.gnusa.id/gactivity-service/project/7c89df23-b54a-4b80-acdc-6a5c9ef1da55/05618043-ae7f-425c-a7c9-530849f3534e/team HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZTNiYjJhYTI5ODI1MWE0NDdjNmM1ODFhNGI5YzNiMjc1MzM2ZGU3NCJ9.8jVOddgza5C6g-Y4oeP-HXAiZZs45ivNDxdiaQKSvQU
+
+["AeDoh9uH","a9fc1a99-14b1-41f9-9009-6ebed0e046e4"]
+
+
+### Project Team (Delete/Remove/Kick)
+# https://s-gactivity.gnusa.id/gactivity-service/project/:projectID/team/rm
+DELETE  https://s-gactivity.gnusa.id/gactivity-service/project/05618043-ae7f-425c-a7c9-530849f3534e/team/rm HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZTNiYjJhYTI5ODI1MWE0NDdjNmM1ODFhNGI5YzNiMjc1MzM2ZGU3NCJ9.8jVOddgza5C6g-Y4oeP-HXAiZZs45ivNDxdiaQKSvQU
+
+["6e0fd4da-0e49-42c7-bdac-75cee238fbec"]
+
+
+### Project Team - List (Get)
+# https://s-gactivity.gnusa.id/gactivity-service/project/:projectID/team/1
+GET https://s-gactivity.gnusa.id/gactivity-service/project/05618043-ae7f-425c-a7c9-530849f3534e/team/1 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZTNiYjJhYTI5ODI1MWE0NDdjNmM1ODFhNGI5YzNiMjc1MzM2ZGU3NCJ9.8jVOddgza5C6g-Y4oeP-HXAiZZs45ivNDxdiaQKSvQU
+
+
+### Project Team - Count (Get)
+# https://s-gactivity.gnusa.id/gactivity-service/project/:projectID/team/2
+GET https://s-gactivity.gnusa.id/gactivity-service/project/05618043-ae7f-425c-a7c9-530849f3534e/team/2 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiZTNiYjJhYTI5ODI1MWE0NDdjNmM1ODFhNGI5YzNiMjc1MzM2ZGU3NCJ9.8jVOddgza5C6g-Y4oeP-HXAiZZs45ivNDxdiaQKSvQU

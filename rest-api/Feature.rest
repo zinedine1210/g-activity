@@ -1,0 +1,20 @@
+### Fitur (Edit)
+# f_id (Fitur ID)
+# r_id (Role ID)
+# action (view,add,edit,delete,export,import,setting,approval)
+
+# note: semua action ditampilkan dalam bentuk kolom matriks. apabila ada action yg di tersedia atas fitur tersebut, maka action jadi disable (tidak bisa enable) untuk tampilan ada di lampiran word
+PUT http://g-activity.gnusa.id/service/_feature HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "f_id":"XXXX",
+    "r_id":"YYYY",
+    "action":"view"
+}
+
+### Fitur (GET)
+GET http://g-activity.gnusa.id/service/_feature/:roleID HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I

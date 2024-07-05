@@ -1,0 +1,1766 @@
+{
+  "documentation": [
+    {
+      "name": "Zinedine Web",
+      "id": "123",
+      "userID": "123",
+      "projectID": "12121212",
+      "logo": "/default.png",
+      "date": "12/11/2022",
+      "privacy": "private",
+      "pages": [
+        {
+          "page": "Getting Started",
+          "rows": [
+            {
+              "layout": "cols",
+              "cols": [
+                {
+                  "type": "title",
+                  "text": "Zinedine Web"
+                },
+                {
+                  "type": "paragraph",
+                  "text": "ini adalah paragraph"
+                }
+              ]
+            },
+            {
+              "layout": "cols",
+              "cols": [
+                {
+                  "type": "title",
+                  "text": "Zinedine Web"
+                },
+                {
+                  "type": "paragraph",
+                  "text": "ini adalah paragraph"
+                }
+              ]
+            },
+            {
+              "layout": "rows",
+              "type": "title",
+              "text": "Zinedine Web"
+            }
+          ],
+          "child": [
+            {
+              "page": "Instalation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hallo ini project",
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "id": "1676604563755584794534",
+      "projectID": "12891829182",
+      "pages": [
+        {
+          "page": "bangunan",
+          "lock": false,
+          "subHeader": false,
+          "device": 3,
+          "rows": [
+            {
+              "id": 1,
+              "index": 1,
+              "type": "title",
+              "text": "Sistem yang akan kita buat adalah sistem AI"
+            },
+            {
+              "index": 2,
+              "cols": [
+                {
+                  "index": "2-1",
+                  "rows": [
+                    {
+                      "id": 3,
+                      "type": "tip",
+                      "image": "/tip.png",
+                      "title": "<p>Tips sistem AI</p>\n",
+                      "description": "Make writing stand out",
+                      "text": "<p>AI harus bisa kita bangun bersama-sama hal ini akan lebih bagus apabila kita&nbsp; samakan<br>penerapan pertama<br></p>\n",
+                      "index": "2-1-1"
+                    },
+                    {
+                      "id": 2,
+                      "description": "Just start writing with plain text",
+                      "type": "paragraph",
+                      "image": "/paragraph.png",
+                      "text": "<p>Paragraf pertama kita akan&nbsp; bisa memperbaiki sistem ini</p>\n",
+                      "index": "2-1-2"
+                    }
+                  ]
+                },
+                {
+                  "index": "2-2",
+                  "rows": []
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "cols": [
+                {
+                  "index": "3-1",
+                  "rows": [
+                    {
+                      "id": 2,
+                      "description": "Just start writing with plain text",
+                      "type": "paragraph",
+                      "image": "/paragraph.png",
+                      "text": "<p>askaksjkasjka</p>\n",
+                      "index": "3-1-1"
+                    },
+                    {
+                      "id": 3,
+                      "type": "tip",
+                      "image": "/tip.png",
+                      "title": null,
+                      "description": "Make writing stand out",
+                      "text": null,
+                      "index": "3-1-2"
+                    }
+                  ]
+                },
+                {
+                  "index": "3-2",
+                  "rows": [
+                    {
+                      "id": 2,
+                      "description": "Just start writing with plain text",
+                      "type": "paragraph",
+                      "image": "/paragraph.png",
+                      "text": null,
+                      "index": "3-2-1"
+                    },
+                    {
+                      "id": 2,
+                      "description": "Just start writing with plain text",
+                      "type": "paragraph",
+                      "image": "/paragraph.png",
+                      "text": "",
+                      "index": "3-2-2"
+                    },
+                    {
+                      "id": 3,
+                      "type": "tip",
+                      "image": "/tip.png",
+                      "title": null,
+                      "description": "Make writing stand out",
+                      "text": "",
+                      "index": "3-2-3"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "description": "Just start writing with plain text",
+              "type": "paragraph",
+              "image": "/paragraph.png",
+              "text": "<p>Hallo world</p>\n",
+              "tab": 1,
+              "index": 4
+            }
+          ],
+          "child": [],
+          "id": "0"
+        },
+        {
+          "page": null,
+          "lock": false,
+          "subHeader": false,
+          "device": 1,
+          "rows": [
+            {
+              "id": 1,
+              "index": 1,
+              "type": "title",
+              "text": null
+            },
+            {
+              "id": 0,
+              "index": 2,
+              "type": "text",
+              "text": null
+            }
+          ],
+          "child": [],
+          "id": "1"
+        }
+      ],
+      "date": "2023-02-17T03:29:23.755Z",
+      "projectName": "Hallo ini project"
+    },
+    {
+      "name": null,
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "id": "1676625965064620328230",
+      "projectID": "1676105332576157724922",
+      "pages": [],
+      "date": "2023-02-17T09:26:05.064Z"
+    },
+    {
+      "name": null,
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "id": "1676867489567460726571",
+      "projectID": "12891829182",
+      "pages": [],
+      "date": "2023-02-20T04:31:29.567Z"
+    },
+    {
+      "name": null,
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "id": "1676871934924187230202",
+      "projectID": "12891829182",
+      "pages": [
+        {
+          "page": "SOP",
+          "lock": false,
+          "subHeader": false,
+          "device": 1,
+          "rows": [
+            {
+              "id": 1,
+              "index": 1,
+              "type": "title",
+              "text": "SOP"
+            },
+            {
+              "id": 0,
+              "index": 2,
+              "type": "text",
+              "text": null
+            },
+            {
+              "id": 4,
+              "image": "/header1.png",
+              "type": "header 1",
+              "description": "Big section heading",
+              "text": null,
+              "index": 3
+            },
+            {
+              "index": 4,
+              "cols": [
+                {
+                  "index": "4-1",
+                  "rows": [
+                    {
+                      "id": 3,
+                      "type": "tip",
+                      "image": "/tip.png",
+                      "title": null,
+                      "description": "Make writing stand out",
+                      "text": null,
+                      "index": "4-1-1"
+                    }
+                  ]
+                },
+                {
+                  "index": "4-2",
+                  "rows": [
+                    {
+                      "id": 2,
+                      "description": "Just start writing with plain text",
+                      "type": "paragraph",
+                      "image": "/paragraph.png",
+                      "text": null,
+                      "index": "4-2-1"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "child": [],
+          "id": "0"
+        }
+      ],
+      "date": "2023-02-20T05:45:34.924Z"
+    },
+    {
+      "name": null,
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "id": "1676872329268649803413",
+      "projectID": "1676625017985199109071",
+      "pages": [],
+      "date": "2023-02-20T05:52:09.268Z"
+    },
+    {
+      "name": null,
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "id": "1676873328452472947164",
+      "projectID": "12891829182",
+      "pages": [],
+      "date": "2023-02-20T06:08:48.452Z"
+    },
+    {
+      "name": null,
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "id": "1677505164994042829510",
+      "projectID": "12891829182",
+      "pages": [],
+      "date": "2023-02-27T13:39:24.994Z"
+    },
+    {
+      "name": null,
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "id": "1677589431080449385502",
+      "projectID": "1677581300234641642009",
+      "pages": [
+        {
+          "page": null,
+          "lock": false,
+          "subHeader": false,
+          "device": 1,
+          "rows": [
+            {
+              "id": 1,
+              "index": 1,
+              "type": "title",
+              "text": null
+            },
+            {
+              "id": 0,
+              "index": 2,
+              "type": "text",
+              "text": null
+            }
+          ],
+          "child": [],
+          "id": "0"
+        }
+      ],
+      "date": "2023-02-28T13:03:51.080Z"
+    }
+  ],
+  "notes": [
+    {
+      "name": "Testing utama",
+      "privacy": "private",
+      "pin": false,
+      "members": [],
+      "content": "<img src=\"data:image/png;base64,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\"><p></p><p>bersama dengan surat ini saya memberitahukan tentang berita yang akan kita buat dalam rangka persamaan kwadrad sistem yang ada</p><table><tbody><tr><th colspan=\"1\" rowspan=\"1\"><p>Nama</p></th><th colspan=\"1\" rowspan=\"1\"><p>Alamat</p></th><th colspan=\"1\" rowspan=\"1\"><p>Telepon</p></th></tr><tr><td colspan=\"1\" rowspan=\"1\"><p>Bonard</p></td><td colspan=\"1\" rowspan=\"1\"><p>Bekasiq</p></td><td colspan=\"1\" rowspan=\"1\"><p>081295300530</p></td></tr><tr><td colspan=\"1\" rowspan=\"1\"><p></p></td><td colspan=\"1\" rowspan=\"1\"><p></p></td><td colspan=\"1\" rowspan=\"1\"><p></p></td></tr></tbody></table>",
+      "id": "1676543715724006501532",
+      "projectID": "12891829182",
+      "date": "2023-02-16T10:35:15.724Z"
+    },
+    {
+      "name": "Hallo World",
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "content": "<p>Bersama dengan ini saya memberitahukan <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://gnusa.id\">kepada</a> anda</p><p></p><pre><code>console.log(\"\")</code></pre>",
+      "id": "1676546231145408085144",
+      "projectID": "12891829182",
+      "date": "2023-02-16T11:17:11.145Z"
+    },
+    {
+      "name": null,
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "content": "<p></p>",
+      "id": "1676608114411543765225",
+      "projectID": "12891829182",
+      "date": "2023-02-17T04:28:34.411Z"
+    },
+    {
+      "name": "",
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "content": "<p>asasjaas</p><p>aasaaaaaaaaaaaaaaaaaaaaaaa</p>",
+      "id": "1676626062147490173115",
+      "projectID": "1676105332576157724922",
+      "date": "2023-02-17T09:27:42.148Z"
+    },
+    {
+      "name": null,
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "content": null,
+      "id": "1676868438217707427805",
+      "projectID": "12891829182",
+      "date": "2023-02-20T04:47:18.217Z"
+    },
+    {
+      "name": null,
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "content": null,
+      "id": "1676872033634052743656",
+      "projectID": "12891829182",
+      "date": "2023-02-20T05:47:13.634Z"
+    },
+    {
+      "name": null,
+      "privacy": "public",
+      "pin": false,
+      "members": [],
+      "content": null,
+      "id": "1678516770961688032934",
+      "projectID": "1677590624521760359869",
+      "date": "2023-03-11T06:39:30.961Z"
+    }
+  ],
+  "user": [
+    {
+      "username": "admingnusa",
+      "userID": "123",
+      "email": "zidane.gnusa@gmail.com",
+      "company": "Gateway Internusa",
+      "password": "gnusa123"
+    }
+  ],
+  "workspaces": [
+    {
+      "name": "Gateway Internusa",
+      "website": "https://gnusa.id",
+      "type": "it",
+      "privacy": "public",
+      "description": "gnusa adalah ",
+      "members": [
+        {
+          "email": "zidane.gnusa@gmail.com",
+          "status": "pending"
+        },
+        {
+          "email": "ziddanfhdlvy12@gmail.com",
+          "status": "pending"
+        },
+        {
+          "email": "bonard.saragih@gnusa.id",
+          "status": "pending"
+        },
+        {
+          "email": "denisramdan92@gmail.com",
+          "status": "pending"
+        },
+        {
+          "email": "charly.gnusa@gmail.com",
+          "status": "pending"
+        }
+      ],
+      "id": "1677590598872488705265",
+      "userID": "123",
+      "logo": "/images/default.png"
+    }
+  ],
+  "forum": [
+    {
+      "title": "Testing",
+      "id": "1218013",
+      "workspaceID": "121313",
+      "conversation": [
+        {
+          "userID": "123",
+          "comments": "Hallo semuanya!!",
+          "time": "12/11/2023"
+        }
+      ],
+      "members": [
+        {
+          "username": "Zinedine Ziddan Fahdlevy",
+          "userID": "123",
+          "email": "zidane.gnusa@gmail.com",
+          "status": "Owner",
+          "whatsapp": "089508781380"
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Google Login",
+      "statusID": "1677590624544493362054",
+      "id": "1677661565589605205250",
+      "done": true,
+      "label": [],
+      "assign": [],
+      "date": "2023-03-02",
+      "targetDate": "2023-03-24",
+      "description": "",
+      "attachment": [],
+      "urutan": 1
+    },
+    {
+      "title": "Apple Login",
+      "statusID": "1677590624544493362054",
+      "id": "1677735172545988804272",
+      "done": true,
+      "label": [],
+      "assign": [],
+      "date": "2023-03-02T05:32:52.545Z",
+      "targetDate": "2023-03-02T05:32:52.545Z",
+      "description": "",
+      "attachment": [],
+      "urutan": 1
+    },
+    {
+      "title": "Zinedine Task",
+      "statusID": "1677590624545436275342",
+      "id": "1677748949714331725782",
+      "done": true,
+      "label": [
+        {
+          "color": "yellow",
+          "value": "Test"
+        }
+      ],
+      "assign": [
+        {
+          "email": "zidane.gnusa@gmail.com",
+          "status": "pending"
+        },
+        {
+          "email": "bonard.saragih@gnusa.id",
+          "status": "pending"
+        }
+      ],
+      "date": "2023-03-02T09:22:29.714Z",
+      "targetDate": "2023-03-02T09:22:29.714Z",
+      "description": "",
+      "attachment": [],
+      "urutan": 1
+    }
+  ],
+  "activity": [
+    {
+      "type": "comments",
+      "email": "zidane.gnusa@gmail.com",
+      "date": "2023-03-02T09:28:02.204Z",
+      "value": "<p>Hallo</p>",
+      "taskID": "1677748949714331725782",
+      "id": "1677749282204817752669"
+    }
+  ],
+  "status": [
+    {
+      "date": "2023-02-28T13:23:44.544Z",
+      "name": "In Progress",
+      "id": "1677590624544493362054",
+      "projectID": "1677590624521760359869",
+      "urutan": 4
+    },
+    {
+      "date": "2023-02-28T13:23:44.545Z",
+      "name": "To Do",
+      "id": "1677590624545436275342",
+      "projectID": "1677590624521760359869",
+      "urutan": 3
+    },
+    {
+      "date": "2023-02-28T13:23:44.545Z",
+      "name": "Done",
+      "id": "1677590624545845234487",
+      "projectID": "1677590624521760359869",
+      "urutan": 1
+    },
+    {
+      "date": "2023-03-01T10:26:25.351Z",
+      "name": "In Progress",
+      "id": "1677666385351964619210",
+      "projectID": "1677666385304558649663"
+    },
+    {
+      "date": "2023-03-01T10:26:25.352Z",
+      "name": "To Do",
+      "id": "1677666385352404392375",
+      "projectID": "1677666385304558649663"
+    },
+    {
+      "date": "2023-03-01T10:26:25.353Z",
+      "name": "Done",
+      "id": "1677666385353837622675",
+      "projectID": "1677666385304558649663"
+    },
+    {
+      "name": "QC",
+      "date": "2023-03-02T09:22:18.667Z",
+      "projectID": "1677590624521760359869",
+      "id": "1677748938667064401069",
+      "urutan": 4
+    },
+    {
+      "name": "Testing",
+      "date": "2023-03-09T07:02:04.980Z",
+      "projectID": "1677590624521760359869",
+      "id": "1678345324980171051611"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Project Gactivity",
+      "privacy": "public",
+      "typeBoard": "board",
+      "members": [
+        {
+          "email": "zidane.gnusa@gmail.com",
+          "status": "pending"
+        },
+        {
+          "email": "ziddanfhdlvy12@gmail.com",
+          "status": "pending"
+        },
+        {
+          "email": "bonard.saragih@gnusa.id",
+          "status": "pending"
+        },
+        {
+          "email": "denisramdan92@gmail.com",
+          "status": "pending"
+        },
+        {
+          "email": "charly.gnusa@gmail.com",
+          "status": "pending"
+        }
+      ],
+      "id": "1677590624521760359869",
+      "workspaceID": "1677590598872488705265"
+    },
+    {
+      "name": "Virtues",
+      "privacy": "public",
+      "typeBoard": "board",
+      "members": [
+        {
+          "email": "bonard.saragih@gnusa.id",
+          "status": "pending"
+        },
+        {
+          "email": "denisramdan92@gmail.com",
+          "status": "pending"
+        }
+      ],
+      "id": "1677666385304558649663",
+      "workspaceID": "1677590598872488705265"
+    }
+  ],
+  "mom": [
+    {
+      "name": null,
+      "size": 1,
+      "id": "1678516541022120745977",
+      "projectID": "1677590624521760359869",
+      "privacy": "public",
+      "pin": false,
+      "participants": [
+        {
+          "email": null,
+          "jabatan": null,
+          "company": null
+        }
+      ],
+      "address": null,
+      "date": null,
+      "dateLocale": null,
+      "start": null,
+      "end": null,
+      "place": null,
+      "agenda": [""],
+      "create": "2023-03-11T06:35:41.022Z",
+      "conclusion": null,
+      "action": [
+        {
+          "value": null,
+          "check": false
+        }
+      ],
+      "header": [
+        {
+          "name": "Meeting Result",
+          "id": "1678516541022736888695",
+          "align": "start",
+          "type": "freeText"
+        },
+        {
+          "name": "Target Date",
+          "id": "1678516541022488185986",
+          "align": "start",
+          "type": "datetime"
+        },
+        {
+          "name": "PIC",
+          "id": "1678516541022295981233",
+          "align": "start",
+          "type": "mention"
+        },
+        {
+          "name": "Stated By",
+          "id": "1678516541022063365596",
+          "align": "start",
+          "type": "mention"
+        }
+      ]
+    }
+  ],
+  "momPoint": [
+    {
+      "momID": "1677734545450153605551",
+      "urutan": 7,
+      "id": "1678275222934887058876",
+      "content": [
+        {
+          "pointID": "1678275222934887058876",
+          "headerID": "112901830131212",
+          "value": null
+        },
+        {
+          "pointID": "1678275222934887058876",
+          "headerID": "12137195916391",
+          "value": []
+        },
+        {
+          "pointID": "1678275222934887058876",
+          "headerID": "1678338220491785149949",
+          "value": null
+        },
+        {
+          "pointID": "1678275222934887058876",
+          "headerID": "1678436165277518818428",
+          "value": null
+        }
+      ]
+    },
+    {
+      "momID": "1677734545450153605551",
+      "urutan": 5,
+      "id": "1678275223483400397382",
+      "content": [
+        {
+          "pointID": "1678275223483400397382",
+          "headerID": "112901830131212",
+          "value": null
+        },
+        {
+          "pointID": "1678275223483400397382",
+          "headerID": "12137195916391",
+          "value": []
+        },
+        {
+          "pointID": "1678275223483400397382",
+          "headerID": "1678338220491785149949",
+          "value": null
+        },
+        {
+          "pointID": "1678275223483400397382",
+          "headerID": "1678436165277518818428",
+          "value": null
+        }
+      ]
+    },
+    {
+      "momID": "1677734545450153605551",
+      "urutan": 1,
+      "id": "1678275223721775913627",
+      "content": [
+        {
+          "pointID": "1678275223721775913627",
+          "headerID": "112901830131212",
+          "value": "<p>Keren bang</p>"
+        },
+        {
+          "pointID": "1678275223721775913627",
+          "headerID": "12137195916391",
+          "value": [
+            {
+              "email": "ziddanfhdlvy12@gmail.com",
+              "jabatan": null,
+              "company": null
+            }
+          ]
+        },
+        {
+          "pointID": "1678275223721775913627",
+          "headerID": "1678338220491785149949",
+          "value": "2023-03-20"
+        },
+        {
+          "pointID": "1678275223721775913627",
+          "headerID": "1678436165277518818428",
+          "value": null
+        }
+      ]
+    },
+    {
+      "momID": "1677734545450153605551",
+      "urutan": 4,
+      "id": "1678275223877217795561",
+      "content": [
+        {
+          "pointID": "1678275223877217795561",
+          "headerID": "112901830131212",
+          "value": "<p></p>"
+        },
+        {
+          "pointID": "1678275223877217795561",
+          "headerID": "12137195916391",
+          "value": [
+            {
+              "email": "Zinedine Ziddan",
+              "jabatan": null,
+              "company": null
+            }
+          ]
+        },
+        {
+          "pointID": "1678275223877217795561",
+          "headerID": "1678338220491785149949",
+          "value": "2023-03-09"
+        },
+        {
+          "pointID": "1678275223877217795561",
+          "headerID": "1678436165277518818428",
+          "value": null
+        }
+      ]
+    },
+    {
+      "momID": "1677734545450153605551",
+      "urutan": 6,
+      "id": "1678278524509796310019",
+      "content": [
+        {
+          "pointID": "1678278524509796310019",
+          "headerID": "112901830131212",
+          "value": "<p>mantap ini lagi</p>"
+        },
+        {
+          "pointID": "1678278524509796310019",
+          "headerID": "12137195916391",
+          "value": [
+            {
+              "email": "alsaljlasa",
+              "jabatan": null,
+              "company": null
+            }
+          ]
+        },
+        {
+          "pointID": "1678278524509796310019",
+          "headerID": "1678338220491785149949",
+          "value": null
+        },
+        {
+          "pointID": "1678278524509796310019",
+          "headerID": "1678436165277518818428",
+          "value": null
+        }
+      ]
+    },
+    {
+      "momID": "1678345098431860267484",
+      "urutan": 1,
+      "id": "1678345125692215973435",
+      "content": [
+        {
+          "pointID": "1678345125692215973435",
+          "headerID": "1678345098431647630960",
+          "value": "<p>Masih kurang dari yang akan datang</p><p>harus ada tambahan sistem</p>"
+        },
+        {
+          "pointID": "1678345125692215973435",
+          "headerID": "1678345098431837843499",
+          "value": "2023-03-14"
+        },
+        {
+          "pointID": "1678345125692215973435",
+          "headerID": "1678345098431286316660",
+          "value": [
+            {
+              "email": "@denis",
+              "jabatan": null,
+              "company": null
+            }
+          ]
+        },
+        {
+          "pointID": "1678345125692215973435",
+          "headerID": "1678425458494549582199",
+          "value": null
+        }
+      ]
+    },
+    {
+      "momID": "1677734545450153605551",
+      "urutan": 2,
+      "id": "1678436138777509102224",
+      "content": [
+        {
+          "pointID": "1678436138777509102224",
+          "headerID": "112901830131212",
+          "value": "<p>dasddaldjald ad,ajdla dadkadadadadadadadada</p>"
+        },
+        {
+          "pointID": "1678436138777509102224",
+          "headerID": "12137195916391",
+          "value": [
+            {
+              "email": "ziddanfhdlvy12@gmail.com",
+              "jabatan": null,
+              "company": null
+            },
+            {
+              "email": "ini mas den",
+              "jabatan": null,
+              "company": null
+            }
+          ]
+        },
+        {
+          "pointID": "1678436138777509102224",
+          "headerID": "1678338220491785149949",
+          "value": null
+        },
+        {
+          "pointID": "1678436138777509102224",
+          "headerID": "1678436165277518818428",
+          "value": null
+        },
+        {
+          "pointID": "1678436138777509102224",
+          "headerID": "1678436928345110752142",
+          "value": null
+        }
+      ]
+    },
+    {
+      "momID": "1677734545450153605551",
+      "urutan": 3,
+      "id": "1678436750377045054203",
+      "content": [
+        {
+          "pointID": "1678436750377045054203",
+          "headerID": "112901830131212",
+          "value": null
+        },
+        {
+          "pointID": "1678436750377045054203",
+          "headerID": "12137195916391",
+          "value": []
+        },
+        {
+          "pointID": "1678436750377045054203",
+          "headerID": "1678338220491785149949",
+          "value": null
+        },
+        {
+          "pointID": "1678436750377045054203",
+          "headerID": "1678436165277518818428",
+          "value": null
+        },
+        {
+          "pointID": "1678436750377045054203",
+          "headerID": "1678436928345110752142",
+          "value": null
+        }
+      ]
+    },
+    {
+      "momID": "1678438422976593273372",
+      "urutan": 1,
+      "id": "1678438704517911740573",
+      "content": [
+        {
+          "pointID": "1678438704517911740573",
+          "headerID": "1678438422976068066797",
+          "value": null
+        },
+        {
+          "pointID": "1678438704517911740573",
+          "headerID": "1678438422976868668120",
+          "value": null
+        },
+        {
+          "pointID": "1678438704517911740573",
+          "headerID": "1678438422976964778211",
+          "value": []
+        }
+      ]
+    },
+    {
+      "momID": "1678438422976593273372",
+      "urutan": 2,
+      "id": "1678438710170297619214",
+      "content": [
+        {
+          "pointID": "1678438710170297619214",
+          "headerID": "1678438422976068066797",
+          "value": null
+        },
+        {
+          "pointID": "1678438710170297619214",
+          "headerID": "1678438422976868668120",
+          "value": null
+        },
+        {
+          "pointID": "1678438710170297619214",
+          "headerID": "1678438422976964778211",
+          "value": []
+        }
+      ]
+    },
+    {
+      "momID": "1678438771035249308961",
+      "urutan": 5,
+      "id": "1678438781186486180495",
+      "content": [
+        {
+          "pointID": "1678438781186486180495",
+          "headerID": "1678438771035573480279",
+          "value": null
+        },
+        {
+          "pointID": "1678438781186486180495",
+          "headerID": "1678438771035316098927",
+          "value": null
+        },
+        {
+          "pointID": "1678438781186486180495",
+          "headerID": "1678438771035136268720",
+          "value": []
+        },
+        {
+          "pointID": "1678438781186486180495",
+          "headerID": "1678438771035168353956",
+          "value": []
+        }
+      ]
+    },
+    {
+      "momID": "1678438771035249308961",
+      "urutan": 4,
+      "id": "1678438896559308848368",
+      "content": [
+        {
+          "pointID": "1678438896559308848368",
+          "headerID": "1678438771035573480279",
+          "value": null
+        },
+        {
+          "pointID": "1678438896559308848368",
+          "headerID": "1678438771035316098927",
+          "value": null
+        },
+        {
+          "pointID": "1678438896559308848368",
+          "headerID": "1678438771035136268720",
+          "value": []
+        },
+        {
+          "pointID": "1678438896559308848368",
+          "headerID": "1678438771035168353956",
+          "value": []
+        }
+      ]
+    },
+    {
+      "momID": "1678438771035249308961",
+      "urutan": 3,
+      "id": "1678438897328340147379",
+      "content": [
+        {
+          "pointID": "1678438897328340147379",
+          "headerID": "1678438771035573480279",
+          "value": null
+        },
+        {
+          "pointID": "1678438897328340147379",
+          "headerID": "1678438771035316098927",
+          "value": null
+        },
+        {
+          "pointID": "1678438897328340147379",
+          "headerID": "1678438771035136268720",
+          "value": []
+        },
+        {
+          "pointID": "1678438897328340147379",
+          "headerID": "1678438771035168353956",
+          "value": []
+        }
+      ]
+    },
+    {
+      "momID": "1678438771035249308961",
+      "urutan": 2,
+      "id": "1678438897551380088028",
+      "content": [
+        {
+          "pointID": "1678438897551380088028",
+          "headerID": "1678438771035573480279",
+          "value": null
+        },
+        {
+          "pointID": "1678438897551380088028",
+          "headerID": "1678438771035316098927",
+          "value": null
+        },
+        {
+          "pointID": "1678438897551380088028",
+          "headerID": "1678438771035136268720",
+          "value": []
+        },
+        {
+          "pointID": "1678438897551380088028",
+          "headerID": "1678438771035168353956",
+          "value": []
+        }
+      ]
+    },
+    {
+      "momID": "1678438771035249308961",
+      "urutan": 1,
+      "id": "1678438897679478742158",
+      "content": [
+        {
+          "pointID": "1678438897679478742158",
+          "headerID": "1678438771035573480279",
+          "value": null
+        },
+        {
+          "pointID": "1678438897679478742158",
+          "headerID": "1678438771035316098927",
+          "value": null
+        },
+        {
+          "pointID": "1678438897679478742158",
+          "headerID": "1678438771035136268720",
+          "value": [
+            {
+              "email": "Mantap",
+              "jabatan": null,
+              "company": null
+            },
+            {
+              "email": "Zinedine",
+              "jabatan": null,
+              "company": null
+            }
+          ]
+        },
+        {
+          "pointID": "1678438897679478742158",
+          "headerID": "1678438771035168353956",
+          "value": []
+        }
+      ]
+    },
+    {
+      "momID": "1678516541022120745977",
+      "urutan": 6,
+      "id": "1680064715043598317640",
+      "content": [
+        {
+          "pointID": "1680064715043598317640",
+          "headerID": "1678516541022736888695",
+          "value": null
+        },
+        {
+          "pointID": "1680064715043598317640",
+          "headerID": "1678516541022488185986",
+          "value": null
+        },
+        {
+          "pointID": "1680064715043598317640",
+          "headerID": "1678516541022295981233",
+          "value": []
+        },
+        {
+          "pointID": "1680064715043598317640",
+          "headerID": "1678516541022063365596",
+          "value": []
+        }
+      ]
+    },
+    {
+      "momID": "1678516541022120745977",
+      "urutan": 5,
+      "id": "1680064715913794510021",
+      "content": [
+        {
+          "pointID": "1680064715913794510021",
+          "headerID": "1678516541022736888695",
+          "value": null
+        },
+        {
+          "pointID": "1680064715913794510021",
+          "headerID": "1678516541022488185986",
+          "value": null
+        },
+        {
+          "pointID": "1680064715913794510021",
+          "headerID": "1678516541022295981233",
+          "value": []
+        },
+        {
+          "pointID": "1680064715913794510021",
+          "headerID": "1678516541022063365596",
+          "value": []
+        }
+      ]
+    },
+    {
+      "momID": "1678516541022120745977",
+      "urutan": 4,
+      "id": "1680064716589331797006",
+      "content": [
+        {
+          "pointID": "1680064716589331797006",
+          "headerID": "1678516541022736888695",
+          "value": null
+        },
+        {
+          "pointID": "1680064716589331797006",
+          "headerID": "1678516541022488185986",
+          "value": null
+        },
+        {
+          "pointID": "1680064716589331797006",
+          "headerID": "1678516541022295981233",
+          "value": []
+        },
+        {
+          "pointID": "1680064716589331797006",
+          "headerID": "1678516541022063365596",
+          "value": []
+        }
+      ]
+    },
+    {
+      "momID": "1678516541022120745977",
+      "urutan": 3,
+      "id": "1680064716797099552098",
+      "content": [
+        {
+          "pointID": "1680064716797099552098",
+          "headerID": "1678516541022736888695",
+          "value": null
+        },
+        {
+          "pointID": "1680064716797099552098",
+          "headerID": "1678516541022488185986",
+          "value": null
+        },
+        {
+          "pointID": "1680064716797099552098",
+          "headerID": "1678516541022295981233",
+          "value": []
+        },
+        {
+          "pointID": "1680064716797099552098",
+          "headerID": "1678516541022063365596",
+          "value": []
+        }
+      ]
+    },
+    {
+      "momID": "1678516541022120745977",
+      "urutan": 2,
+      "id": "1680064716924562492937",
+      "content": [
+        {
+          "pointID": "1680064716924562492937",
+          "headerID": "1678516541022736888695",
+          "value": null
+        },
+        {
+          "pointID": "1680064716924562492937",
+          "headerID": "1678516541022488185986",
+          "value": null
+        },
+        {
+          "pointID": "1680064716924562492937",
+          "headerID": "1678516541022295981233",
+          "value": []
+        },
+        {
+          "pointID": "1680064716924562492937",
+          "headerID": "1678516541022063365596",
+          "value": []
+        }
+      ]
+    },
+    {
+      "momID": "1678516541022120745977",
+      "urutan": 1,
+      "id": "1680064717118808335583",
+      "content": [
+        {
+          "pointID": "1680064717118808335583",
+          "headerID": "1678516541022736888695",
+          "value": null
+        },
+        {
+          "pointID": "1680064717118808335583",
+          "headerID": "1678516541022488185986",
+          "value": null
+        },
+        {
+          "pointID": "1680064717118808335583",
+          "headerID": "1678516541022295981233",
+          "value": []
+        },
+        {
+          "pointID": "1680064717118808335583",
+          "headerID": "1678516541022063365596",
+          "value": []
+        }
+      ]
+    }
+  ],
+  "errorKnowledge": [
+    {
+      "id": "1678515277199157176345",
+      "name": null,
+      "privacy": "public",
+      "pin": true,
+      "projectID": "1677590624521760359869",
+      "date": "2023-03-11T06:14:37.199Z"
+    }
+  ],
+  "errorLogs": [
+    {
+      "description": "Ini description",
+      "errorStatus": "incident",
+      "id": "171380170131039016",
+      "errorKnowledgeID": "13913801710820130",
+      "caused": "Cause the problem is",
+      "solution": "Ini solusi",
+      "solutionDate": {
+        "date": "2023-03-01",
+        "dateLocale": "Rabu, 1 Maret 2023"
+      },
+      "category": "backend",
+      "location": "kp gempol cakung timur",
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [
+        {
+          "email": "zidane.gnusa@gmail.com",
+          "status": "pending"
+        },
+        {
+          "email": "bonard.saragih@gnusa.id",
+          "status": "pending"
+        }
+      ],
+      "attachment": [],
+      "create": "2023-03-02T05:22:25.450Z",
+      "severity": "high",
+      "status": "progress",
+      "urutan": 1
+    },
+    {
+      "description": null,
+      "errorStatus": "incident",
+      "id": "171380170131039011",
+      "errorKnowledgeID": "13913801710820130",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "frontend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-02T05:22:25.450Z",
+      "severity": "high",
+      "urutan": 2,
+      "status": "progress"
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678513395448227570339",
+      "errorKnowledgeID": "13913801710820130",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T05:43:15.448Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 3
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678513895957348203919",
+      "errorKnowledgeID": "13913801710820130",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T05:51:35.957Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 4
+    },
+    {
+      "description": "",
+      "errorStatus": "incident",
+      "id": "1678515282547950523569",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": "",
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "Dev Ops",
+      "location": "",
+      "problemDate": {
+        "date": "2023-03-16",
+        "dateLocale": "Kamis, 16 Maret 2023"
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:14:42.547Z",
+      "severity": "medium",
+      "status": "resolved",
+      "urutan": 1
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678515667037651068898",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:21:07.037Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 2
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678515667874211501391",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:21:07.874Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 3
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678515668244891777688",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:21:08.244Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 4
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678515668380859708911",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:21:08.380Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 5
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678515668524683487127",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:21:08.524Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 6
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678515668648636190511",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:21:08.648Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 7
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678515668784745630943",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:21:08.784Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 8
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678515668948348483713",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:21:08.948Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 9
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678515669092828999543",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:21:09.092Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 1
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678515669216293619009",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:21:09.216Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 1
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678515669400747448817",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:21:09.400Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 1
+    },
+    {
+      "description": null,
+      "errorStatus": "problem",
+      "id": "1678515669541308963505",
+      "errorKnowledgeID": "1678515277199157176345",
+      "caused": null,
+      "solution": null,
+      "solutionDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "category": "backend",
+      "location": null,
+      "problemDate": {
+        "date": null,
+        "dateLocale": null
+      },
+      "assignedTo": [],
+      "attachment": [],
+      "create": "2023-03-11T06:21:09.541Z",
+      "severity": "low",
+      "status": "open",
+      "urutan": 1
+    }
+  ]
+}

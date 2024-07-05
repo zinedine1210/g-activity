@@ -1,0 +1,141 @@
+### Task (Add)
+# sequence: sequence task yg paling besar(di tiap status) + 1
+POST https://s-gactivity.gnusa.id/gactivity-service/task HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+{
+    "title":"Migrasi data",
+    "workspace_id":"c5a20c09-5b1f-4bb3-af72-84365a7c577c",
+    "project_id":"0f6ecdd1-adf6-484b-83d4-45696e64eeba",
+    "status_id":"ca10ae4e-d2d4-44a5-939e-cf1195bdb3eb",
+    "sequence":2
+}
+
+
+### Task (Edit)
+# PUT https://s-gactivity.gnusa.id/gactivity-service/task/:taskID HTTP/1.1
+PUT https://s-gactivity.gnusa.id/gactivity-service/task/85115bd5-4a2b-4872-aaeb-c36767321ba3 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+{
+    "title":"Ini tugas anda",
+    "description":"Ini tugas anda,Ini tugas anda,Ini tugas anda",
+    "start_date":"2023-03-18 00:00:00",
+    "due_date":"2023-03-20 00:00:00",
+    "uid":[{
+        "uid":"",
+        "username":"",
+        "fullname":""
+    }],
+    "label":[{
+        "value":"Test",
+        "color":"Black"
+    }],
+    "status_id":"f3635673-6373-4172-91d5-d468a909462d",
+    "sequence":1
+}
+
+
+### Task (Delete)
+# DELETE https://s-gactivity.gnusa.id/gactivity-service/task/:taskID HTTP/1.1
+DELETE https://s-gactivity.gnusa.id/gactivity-service/task/8a98e351-452f-4dde-be43-484456db87fe HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+
+### Task (GET)
+GET https://s-gactivity.gnusa.id/gactivity-service/task/l/03622279-2d52-420a-98f2-f09b76b57724 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+
+### Task - Detail (GET)
+GET https://s-gactivity.gnusa.id/gactivity-service/task/d/85115bd5-4a2b-4872-aaeb-c36767321ba3 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+
+### Task Activity (Add)
+# https://s-gactivity.gnusa.id/gactivity-service/task_activity
+# type: Task | Comment
+POST https://s-gactivity.gnusa.id/gactivity-service/task_activity HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+{
+    "type":"Comment",
+    "content":"Test comment 1",
+    "task_id":"8a98e351-452f-4dde-be43-484456db87fe"
+}
+
+
+### Task Activity (Delete/Remove)
+# https://s-gactivity.gnusa.id/gactivity-service/task_activity/:idActivity
+DELETE  https://s-gactivity.gnusa.id/gactivity-service/task_activity/7b011cc5-a2e2-40ea-ad29-d99c5cea360e HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+
+### Task Activity - List (Get)
+# https://s-gactivity.gnusa.id/gactivity-service/task_activity/:taskId
+GET https://s-gactivity.gnusa.id/gactivity-service/task_activity/8a98e351-452f-4dde-be43-484456db87fe HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+
+### Task Status (Add)
+# https://s-gactivity.gnusa.id/gactivity-service/task_status
+# sequence: sequence status yg paling besar + 1
+POST https://s-gactivity.gnusa.id/gactivity-service/task_status HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+{
+    "title":"Complete",
+    "workspace_id":"c5a20c09-5b1f-4bb3-af72-84365a7c577c",
+    "project_id":"0f6ecdd1-adf6-484b-83d4-45696e64eeba",
+    "sequence":5
+}
+
+
+### Task Status (Edit)
+# https://s-gactivity.gnusa.id/gactivity-service/task_status/:id
+# sequence: sequence status yg paling besar + 1
+PUT https://s-gactivity.gnusa.id/gactivity-service/task_status/f3635673-6373-4172-91d5-d468a909462d HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+{
+    "title":"Complete",
+    "sequence":5
+}
+
+
+### Task Status - List (Get)
+# https://s-gactivity.gnusa.id/gactivity-service/task_status/:projectId
+GET https://s-gactivity.gnusa.id/gactivity-service/task_status/0f6ecdd1-adf6-484b-83d4-45696e64eeba HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+
+### Task Status (Delete/Remove)
+# https://s-gactivity.gnusa.id/gactivity-service/task_status/:idStatus
+DELETE  https://s-gactivity.gnusa.id/gactivity-service/task_status/f092b9ef-582a-409c-a1c7-48af78263403 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+
+### Task Status (re-position)
+# https://s-gactivity.gnusa.id/gactivity-service/task_status/_repos_task/:idStatus
+PUT https://s-gactivity.gnusa.id/gactivity-service/task_status/_repos_task/9d83f275-705a-4ff6-b7f9-839be0d6e7cd HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkZGFuZmhkbHZ5MTJAZ21haWwuY29tIiwicGFzc3dvcmQiOiJlM2JiMmFhMjk4MjUxYTQ0N2M2YzU4MWE0YjljM2IyNzUzMzZkZTc0In0.CHyjACbHB5IaH21D29OsUfuoWFMz_dtqTvaFFqBWwCs
+
+[
+    {
+        "id":"c0fa4fd2-d630-437c-9040-ce7ffede312a",
+        "sequence":1,
+    }
+]

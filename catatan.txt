@@ -1,0 +1,32 @@
+// CARA OPTIMAZING CSS
+1. sebelum di build lakukan code berikut
+- npx tailwindcss -i styles/globals.css -o build.css --minify
+2. lalu pada file pages/_app ubah arahkan yang tadinya ke globals.css ke build.css yang sudah dibuat tadi
+
+
+// CARA CONNECT REDUX
+export default connect((state) => state, {setKeranjang, setDataTotal})(Cart)
+
+
+// CARA SWITCH DARKMODE
+import { useTheme } from "next-themes";
+const {theme, setTheme} = useTheme("light")
+
+
+
+// CARA INSTALASI BAHASA DI SSR
+import { useTranslation } from "next-i18next";
+const {t} = useTranslation("common")
+
+----- SSR ------
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common']))
+    }
+  };
+}
+
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I

@@ -1,0 +1,67 @@
+
+### GET LIST CHAT MSG BY ROOM ID ###
+### ex: https://g-activity.gnusa.id/service/chat-msg?room_id=ac0a027b-b33d-4b1a-913d-3ba50a61e818
+GET https://g-activity.gnusa.id/service/chat-msg?room_id=ROOM_ID HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+### INSERT CHAT
+## type: 1 = text, 2 = emoji, other
+POST https://g-activity.gnusa.id/service/chat-msg HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+{
+    "msg":"apa kabar",
+    "room_id": "d7694e14-d6c1-4dab-8f2a-3a295c1989eb",
+    "type": 1
+}
+
+# ### jika reply msg
+# {
+#     "msg":"setuju, mending hari senin aja",
+#     "context": {
+#         "id": "5f289bb5-c26d-4947-9fa5-483f5c740594" ,
+#         "msg": "Halo" ,
+#         "type": 1 ,
+#         "user_id": "1c4eb9fd-5b7e-41e8-8b44-46a09ab0dcae"
+#     },
+#     "room_id": "d7694e14-d6c1-4dab-8f2a-3a295c1989eb",
+#     "type": 1
+# }
+
+
+
+### DELETE CHAT MSG
+DELETE https://g-activity.gnusa.id/service/chat-msg HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+[{
+    "room_id": "a1e0c5bc-25c0-49f5-9119-727467c45c30",
+    "msg_id": "59bc0c2c-3eed-4dea-b885-a70827bdac51"
+},{
+    "room_id": "a2s0c5bc-25c0-49f5-9119-727467c45c30",
+    "msg_id": "52dc3c2c-3eed-4dea-b885-a70827bdac51"
+}]
+
+
+### UPDATE IS READ MSG BY ROOM ID
+POST https://g-activity.gnusa.id/service/chat-msg/isread HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+{
+    "room_id": "d7694e14-d6c1-4dab-8f2a-3a295c1989eb"
+}
+
+### FETCH DATA NEW MESSAGES IN ROOM
+### date itu adalah tanggal yang udah di convert jadi isostring (date.toISOString())
+POST https://g-activity.gnusa.id/service/chat-msg/new-messages HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+{
+    "room_id": "d7694e14-d6c1-4dab-8f2a-3a295c1989eb",
+    "date": "2024-06-21T06:22:03.152Z"
+}

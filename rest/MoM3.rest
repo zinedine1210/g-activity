@@ -1,0 +1,199 @@
+### MoM (Add)
+POST https://s-gactivity.gnusa.id/gactivity-service/mom HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "workspace_id":"c5a20c09-5b1f-4bb3-af72-84365a7c577c",
+    "project_id":"407c7a88-b664-466a-9c85-4dfd9255b4ed",
+    "privacy":-1
+}
+
+
+### MoM (Edit)
+# PUT https://s-gactivity.gnusa.id/gactivity-service/mom/:momId HTTP/1.1
+# start_time : %Y-%m-%dT%H:%M:%S.%f%z
+# end_time : %Y-%m-%dT%H:%M:%S.%f%z
+# end_time_type : 1(sampai selesai) -1(tidak sampai selesai)
+PUT https://s-gactivity.gnusa.id/gactivity-service/mom/718e8870-e7a9-466b-8ef1-7a5a72599fd2 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+# kalau "end_time" terisi waktu selesainya maka field "end_time_type" diisi -1
+# kalau "end_time" tidak diisi atau diisi null maka field "end_time_type" di isi 1
+{
+    "title":"iService",
+    "place":"Document Project iService IBS",
+    "address":"",
+    "action_list":[{
+        "checked":1,
+        "value":"action 1"
+    },{
+        "checked":0,
+        "value":"action 2"
+    }],
+    "agenda":[
+        "Agenda 5",
+        "Agenda 6",
+        "Agenda 7"
+    ],
+    "mom_date":"2023-03-18 00:00:00",
+    "start_time":"2023-03-18T09:00:00.000Z", 
+    "end_time":"2023-03-18T11:00:00.000Z",
+    "end_time_type":-1,
+    "conclusion":"kesimpulan disini...",
+    "privacy":-1
+}
+
+
+### MoM (Delete)
+# DELETE https://s-gactivity.gnusa.id/gactivity-service/mom/:momId HTTP/1.1
+DELETE https://s-gactivity.gnusa.id/gactivity-service/mom/50e029f6-3de9-454b-bfdf-0f6b1667f4a4 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM - My MoM (GET)
+# GET https://s-gactivity.gnusa.id/gactivity-service/mom/:projectId/1 HTTP/1.1 
+GET https://s-gactivity.gnusa.id/gactivity-service/mom/407c7a88-b664-466a-9c85-4dfd9255b4ed/1 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM - Shared (GET)
+# GET https://s-gactivity.gnusa.id/gactivity-service/mom/:projectId/2 HTTP/1.1 
+GET https://s-gactivity.gnusa.id/gactivity-service/mom/407c7a88-b664-466a-9c85-4dfd9255b4ed/2 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM - Detail (GET)
+# GET https://s-gactivity.gnusa.id/gactivity-service/mom/:momId HTTP/1.1
+GET https://s-gactivity.gnusa.id/gactivity-service/mom/718e8870-e7a9-466b-8ef1-7a5a72599fd2 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM Team (Add)
+# https://s-gactivity.gnusa.id/gactivity-service/mom_team/:projectID/:momId
+POST https://s-gactivity.gnusa.id/gactivity-service/mom_team/407c7a88-b664-466a-9c85-4dfd9255b4ed/718e8870-e7a9-466b-8ef1-7a5a72599fd2 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+["AeDoh9uH","a9fc1a99-14b1-41f9-9009-6ebed0e046e4"]
+
+
+### MoM Team (Delete/Remove/Kick)
+# https://s-gactivity.gnusa.id/gactivity-service/mom_team/rm/:momId
+DELETE  https://s-gactivity.gnusa.id/gactivity-service/mom_team/rm/718e8870-e7a9-466b-8ef1-7a5a72599fd2 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+["28e12a2a-894b-444b-af8e-65be3059f2cf"]
+
+
+### MoM Team - List (Get)
+# https://s-gactivity.gnusa.id/gactivity-service/mom_team/:momId/1
+GET https://s-gactivity.gnusa.id/gactivity-service/mom_team/718e8870-e7a9-466b-8ef1-7a5a72599fd2/1 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM Team - Count (Get)
+# https://s-gactivity.gnusa.id/gactivity-service/mom_team/:momId/2
+GET https://s-gactivity.gnusa.id/gactivity-service/mom_team/718e8870-e7a9-466b-8ef1-7a5a72599fd2/2 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM Point (Add)
+POST https://s-gactivity.gnusa.id/gactivity-service/mom_point HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "mom_id":"718e8870-e7a9-466b-8ef1-7a5a72599fd2",
+    "result":"Ini poin meeting",
+    "target_date":"2023-03-18 00:00:00",
+    "pic":"Bambang",
+    "state_by":"Agus"
+}
+
+
+### MoM Point (Edit)
+# PUT https://s-gactivity.gnusa.id/gactivity-service/mom_point/:id HTTP/1.1
+PUT https://s-gactivity.gnusa.id/gactivity-service/mom_point/6bec6fd4-d41e-42f0-b69c-0271b60dc443 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "result":"Ini poin meeting test",
+    "target_date":"2023-03-18 00:00:00",
+    "pic":"Bambang",
+    "state_by":"Agus"
+}
+
+
+### MoM Point (Delete)
+# https://s-gactivity.gnusa.id/gactivity-service/mom_point/:id
+DELETE  https://s-gactivity.gnusa.id/gactivity-service/mom_point/c0fa4fd2-d630-437c-9040-ce7ffede312a HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM Point - List (Get)
+# https://s-gactivity.gnusa.id/gactivity-service/mom_point/:momId
+GET https://s-gactivity.gnusa.id/gactivity-service/mom_point/718e8870-e7a9-466b-8ef1-7a5a72599fd2 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### MoM Participant (Add)
+# https://s-gactivity.gnusa.id/gactivity-service/mom_participant
+# note: kalau participant diambil dari member maka utk isian field email,name & uid diambil dari data member
+POST https://s-gactivity.gnusa.id/gactivity-service/mom_participant HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+// kalau participant dari team member project
+{
+    "mom_id":"718e8870-e7a9-466b-8ef1-7a5a72599fd2",
+    "email":"alex@ipm.id",
+    "name":"Alex",
+    "position":"Manager",
+    "company":"XL",
+    "uid":"856fad33-7d37-4e89-8830-53d2361b259c"
+}
+
+// kalau participant bukan dari tam member project
+# {
+#     "mom_id":"718e8870-e7a9-466b-8ef1-7a5a72599fd2",
+#     "email":"felix@ipm.id",
+#     "name":"Felix",
+#     "position":"Manager",
+#     "company":"XL"
+# }
+
+
+### MoM Participant (Edit)
+# https://s-gactivity.gnusa.id/gactivity-service/mom_participant/:id
+PUT https://s-gactivity.gnusa.id/gactivity-service/mom_participant/718e8870-e7a9-466b-8ef1-7a5a72599fd2 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "position":"Manager",
+    "company":"XL"
+}
+
+### MoM Participant (Delete)
+# https://s-gactivity.gnusa.id/gactivity-service/mom_participant/:id
+DELETE  https://s-gactivity.gnusa.id/gactivity-service/mom_participant/c2399212-2cca-4efc-a360-54f388e8d5e2 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+### MoM Participant - List (Get)
+# https://s-gactivity.gnusa.id/gactivity-service/mom_participant/:momId
+GET https://s-gactivity.gnusa.id/gactivity-service/mom_participant/718e8870-e7a9-466b-8ef1-7a5a72599fd2 HTTP/1.1
+content-type: application/json
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
