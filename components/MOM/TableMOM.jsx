@@ -10,18 +10,18 @@ export default function TableMOM() {
     const context = useContext(MyContext)
     const data = context.dataDocumentation
     const [loading, setLoading] = useState(false)
-    
+
     useEffect(() => {
-        async function getRecord(){
-            const result = await MomRepository.getPoint({xa:JSON.parse(localStorage.getItem("XA")), momID:data.id})
+        async function getRecord() {
+            const result = await MomRepository.getPoint({ xa: JSON.parse(localStorage.getItem("XA")), momID: data.id })
             console.log(result);
-            result.data.data.sort(function(a, b){
+            result.data.sort(function (a, b) {
                 return a.pos - b.pos
             })
-            context.dataDocumentation.record = result.data.data
+            context.dataDocumentation.record = result.data
             context.setDataDocumentation(context.dataDocumentation)
         }
-        if(!context.dataDocumentation.hasOwnProperty('record')){
+        if (!context.dataDocumentation.hasOwnProperty('record')) {
             getRecord()
         }
     }, [])
@@ -30,24 +30,24 @@ export default function TableMOM() {
     const handlerCreateRecord = async () => {
         setLoading(true)
         let obj = {
-            mom_id:data.id,
-            result:"",
-            target_date:new Date(),
-            pic:[],
-            state_by:[],
-            pos:context.dataDocumentation.record.length + 1
+            mom_id: data.id,
+            result: "",
+            target_date: new Date(),
+            pic: [],
+            state_by: [],
+            pos: context.dataDocumentation.record.length + 1
         }
-        
-        const result = await MomRepository.postPoint({xa:JSON.parse(localStorage.getItem("XA")), data:obj})
+
+        const result = await MomRepository.postPoint({ xa: JSON.parse(localStorage.getItem("XA")), data: obj })
         console.log(result);
-        if(result.data.type == "success"){
-            data.record.push(result.data.data)
+        if (result.status == 0) {
+            data.record.push(result.data)
             context.setDataDocumentation(context.dataDocumentation)
         }
 
         setLoading(false)
     }
-    
+
 
     return (
         <section className="pb-10">
@@ -62,7 +62,7 @@ export default function TableMOM() {
                     <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-300">Fill in the table before your meeting. Add Answer of Question or Important Point of meeting about what you learned since the last meeting and what you hope to achieve by the next meeting.</p>
                 </div>
                 <button onClick={() => handlerCreateRecord()} className="bg-zinc-200 rounded-md hover:bg-zinc-300 transition-all duration-300 ease-in-out w-12 h-12 ">
-                    <FaPlus className="text-sm text-zinc-500 text-center mx-auto"/>
+                    <FaPlus className="text-sm text-zinc-500 text-center mx-auto" />
                 </button>
             </div>
             <div className="flex flex-col relative">
@@ -77,7 +77,7 @@ export default function TableMOM() {
                                         {
                                             data.header.map((header, key) => {
                                                 return (
-                                                    <RecordHeader key={key} header={header}/>
+                                                    <RecordHeader key={key} header={header} />
                                                 )
                                             })
                                         }
@@ -87,9 +87,9 @@ export default function TableMOM() {
                                     {
                                         context.dataDocumentation.hasOwnProperty("record") ?
                                             context.dataDocumentation.record.map((record, key) => {
-                                                return <RecordMOM record={record} key={key}/>
+                                                return <RecordMOM record={record} key={key} />
                                             })
-                                        :"Loading"
+                                            : "Loading"
                                     }
                                 </tbody>
                             </table>
@@ -130,5 +130,5 @@ export default function TableMOM() {
                 </a>
             </div> */}
         </section>
-  )
+    )
 }

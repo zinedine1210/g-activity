@@ -1,7 +1,7 @@
 ### Documentation (Add)
 POST http://g-activity.gnusa.id/service/documentation HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 {
     "workspace_id":"c5a20c09-5b1f-4bb3-af72-84365a7c577c",
@@ -14,7 +14,7 @@ XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3d
 # PUT http://g-activity.gnusa.id/service/documentation/:documentID HTTP/1.1
 PUT http://g-activity.gnusa.id/service/documentation/88ebd905-6a91-4c7f-9dd0-49cb97a5340c HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 {
     "name":"iService",
@@ -27,32 +27,32 @@ XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3d
 # DELETE http://g-activity.gnusa.id/service/documentation/:documentID HTTP/1.1
 DELETE http://g-activity.gnusa.id/service/documentation/50e029f6-3de9-454b-bfdf-0f6b1667f4a4 HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 
 ### Documentation - My Document (GET)
 GET http://g-activity.gnusa.id/service/documentation/05618043-ae7f-425c-a7c9-530849f3534e/1 HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 
 ### Documentation - Shared (GET)
 GET http://g-activity.gnusa.id/service/documentation/05618043-ae7f-425c-a7c9-530849f3534e/2 HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 
 ### Documentation - Detail (GET)
 GET http://g-activity.gnusa.id/service/documentation/88ebd905-6a91-4c7f-9dd0-49cb97a5340c HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 
 ### Documentation Team (Add)
 # http://g-activity.gnusa.id/service/documentation/:projectID/:documentID/team
 POST http://g-activity.gnusa.id/service/documentation/05618043-ae7f-425c-a7c9-530849f3534e/88ebd905-6a91-4c7f-9dd0-49cb97a5340c/team HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 ["AeDoh9uH","a9fc1a99-14b1-41f9-9009-6ebed0e046e4"]
 
@@ -61,7 +61,7 @@ XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3d
 # http://g-activity.gnusa.id/service/documentation/:documentID/team/rm
 DELETE  http://g-activity.gnusa.id/service/documentation/88ebd905-6a91-4c7f-9dd0-49cb97a5340c/team/rm HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 ["28e12a2a-894b-444b-af8e-65be3059f2cf"]
 
@@ -70,14 +70,14 @@ XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3d
 # http://g-activity.gnusa.id/service/documentation/:documentID/team/1
 GET http://g-activity.gnusa.id/service/documentation/88ebd905-6a91-4c7f-9dd0-49cb97a5340c/team/1 HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 
 ### Documentation Team - Count (Get)
 # http://g-activity.gnusa.id/service/documentation/:documentID/team/2
 GET http://g-activity.gnusa.id/service/documentation/88ebd905-6a91-4c7f-9dd0-49cb97a5340c/team/2 HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 
 ### Documentation Page (Add)
@@ -86,10 +86,11 @@ XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3d
 # pos: hitung jumlah data existing + 1
 POST http://g-activity.gnusa.id/service/documentation/page HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 {
-    "document_id":"88ebd905-6a91-4c7f-9dd0-49cb97a5340c",
+    "document_id":"4d5284e6-cc7f-415f-a43a-288f465dc632",
+    "title":"",
     "device":1,
     "pid":"ortu",
     "pos":1
@@ -101,7 +102,7 @@ XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3d
 # subHeader: -1 (false) | 1 true
 PUT http://g-activity.gnusa.id/service/documentation/page/c0fa4fd2-d630-437c-9040-ce7ffede312a HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 {
     "title":"Page 1",
@@ -149,7 +150,7 @@ XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3d
 # http://g-activity.gnusa.id/service/documentation/page
 DELETE  http://g-activity.gnusa.id/service/documentation/page HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 ["c0fa4fd2-d630-437c-9040-ce7ffede312a"]
 
@@ -157,19 +158,19 @@ XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3d
 # http://g-activity.gnusa.id/service/documentation/:documentID/page/list
 GET http://g-activity.gnusa.id/service/documentation/88ebd905-6a91-4c7f-9dd0-49cb97a5340c/page/list HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 
 ### Documentation Page - Detail (GET)
 GET http://g-activity.gnusa.id/service/documentation/page/d/c0fa4fd2-d630-437c-9040-ce7ffede312a HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 
 ### Documentation Page (re-position)
 PUT http://g-activity.gnusa.id/service/documentation/_repospage HTTP/1.1
 content-type: application/cbor
-XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiemlkYW5lQGdhaS5jby5pZCIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.5xDniSQwku7JSdcOB_yKUn49fNjwYGueSTKmIqjmS-U
 
 [
     {

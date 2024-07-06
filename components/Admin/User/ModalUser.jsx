@@ -4,10 +4,10 @@ import PasswordInput from "../../Input/PasswordInput"
 import RoleRepository from "../../../repositories/RoleRepository"
 import UserRepository from "../../../repositories/UserRepository"
 import SelectInput from "../../Input/SelectInput"
-import { Notify } from "@/utils/scriptApp"
+import { Notify } from "../../../utils/scriptApp"
 
 
-export default function ModalUser(props){
+export default function ModalUser(props) {
     const context = useContext(MyContext)
     const { name, type, data } = context.modal
     const [value, setValue] = useState({
@@ -17,14 +17,18 @@ export default function ModalUser(props){
     const [optionsRole, setOptionsRole] = useState(null)
 
     const handlerChange = (valueinput, target) => {
-        setValue({...value, [target]:valueinput})
+        setValue({ ...value, [target]: valueinput })
+    }
+
+    const handleChangePassword = async (value, target) => {
+        handlerChange(value, target)
     }
 
     const getComboRole = async () => {
         const getxa = JSON.parse(localStorage.getItem("XA"))
-        const result = await RoleRepository.getRoleComboBox({ xa:getxa })
+        const result = await RoleRepository.getRoleComboBox({ xa: getxa })
         console.log(result)
-        if(result.status == 0){
+        if (result.status == 0) {
             let arr = []
 
             result.data.forEach(element => {
@@ -35,27 +39,28 @@ export default function ModalUser(props){
                 arr.push(obj)
             });
             setOptionsRole(arr)
-        }else{
+        } else {
             alert("Something went wrong")
         }
     }
 
     useEffect(() => {
-        if(!optionsRole) getComboRole()
-        if(type == "create"){
+        if (!optionsRole) getComboRole()
+        if (type == "create") {
             setTypename("Create User")
-        }else if(type == "update"){
+        } else if (type == "update") {
             let obj = {
+                id: data.id,
                 email: data.email,
                 username: data.username,
+                fullname: data.fullname,
                 r_id: data.r_id,
-                password: "",
-                repassword: "",
-                _active: data._active ?? 1
+                _active: data._active ?? 1,
+                changePassword: false
             }
             setValue(obj)
             setTypename("Update User")
-        }else{
+        } else {
             setTypename("User Detail")
             setValue(data)
         }
@@ -64,12 +69,33 @@ export default function ModalUser(props){
     const handlerSubmit = async (e) => {
         e.preventDefault()
         // validasi
-        if(!value?._active || !value?.r_id) return alert("Please fill input is null")
+        if (!value?._active || !value?.r_id) return alert("Please fill input is null")
         // console.log(value)
         actionUser[type].action(value)
     }
 
     let actionUser = {
+        update: {
+            name: "update",
+            action: async (value) => {
+                const getxa = JSON.parse(localStorage.getItem("XA"))
+                console.log(value)
+                // const result = await UserRepository.putUser({
+                //     xa: getxa,
+                //     id: value.id,
+                //     data: value
+                // })
+
+                // console.log(result, "update")
+                // if (result.status == 0) {
+                //     // const findOne = context.dataUserAdmin.find(res => res.id == result.data.id)
+                //     const filter = context.dataUserAdmin.data.filter(res => res.id !== result.data.id)
+                //     filter.push(result.data)
+                //     context.setData({ ...context, dataUserAdmin: { ...context.dataUserAdmin, data: filter } })
+                //     Notify("Updated", "info")
+                // }
+            }
+        },
         create: {
             name: "create",
             action: async (value) => {
@@ -78,9 +104,10 @@ export default function ModalUser(props){
                     xa: getxa,
                     data: value
                 })
-                if(result.status == 0){
-                    context.dataUserAdmin.push(result.data)
-                    context.setData({...context, dataUserAdmin: context.dataUserAdmin, modal: null})
+                console.log(result)
+                if (result.status == 0) {
+                    context.dataUserAdmin.data.push(result.data)
+                    context.setData({ ...context, dataUserAdmin: context.dataUserAdmin, modal: null })
                     setOptionsRole(null)
                     Notify("Berhasil ditambahkan", "info")
                 }
@@ -96,11 +123,6 @@ export default function ModalUser(props){
             <div className="relative w-full h-full max-w-2xl md:h-auto">
                 <div className="relative bg-white rounded-lg shadow dark:bg-darkSecondary flex items-center">
                     <div className="p-6 w-full relative">
-                        {/* <button type="button" className="absolute top-2 right-2" onClick={() => context.setData({...context, modal:null})}>
-                            <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button> */}
                         <form onSubmit={e => handlerSubmit(e)} className="flex-col flex h-full">
                             <header>
                                 <h1 className="font-bold text-2xl">{typename}</h1>
@@ -113,14 +135,18 @@ export default function ModalUser(props){
                                             <input type="text" disabled={isDisabledView} required value={value.username} name="username" onInput={e => handlerChange(e.target.value, e.target.name)} className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white" autoComplete="off" />
                                         </div>
                                         <div>
+                                            <h1 className="font-semibold">Fullname</h1>
+                                            <input type="text" disabled={isDisabledView} value={value.fullname} required name="fullname" onChange={e => handlerChange(e.target.value, e.target.name)} className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white" autoComplete="off" />
+                                        </div>
+                                        <div>
                                             <h1 className="font-semibold">Email</h1>
                                             <input type="text" disabled={isDisabledView} value={value.email} required name="email" onChange={e => handlerChange(e.target.value, e.target.name)} className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white" autoComplete="off" />
                                         </div>
-                                        <SelectInput 
+                                        <SelectInput
                                             isDisabled={isDisabledView}
                                             defaultAll={false}
                                             name={"r_id"}
-                                            change={(v,t) => handlerChange(v,t)}
+                                            change={(v, t) => handlerChange(v, t)}
                                             value={value.r_id}
                                             label="Role"
                                             options={optionsRole ?? []}
@@ -128,28 +154,34 @@ export default function ModalUser(props){
                                         <div className="space-y-3">
                                             <h1 className="font-semibold block">Status</h1>
                                             <label class="inline-flex items-center cursor-pointer ml-2">
-                                                <input disabled={isDisabledView} type="checkbox" checked={value._active == 1 ? true:false} name="_active" onChange={(e) => handlerChange(e.target.checked ? 1:-1, e.target.name)} class="sr-only peer" />
+                                                <input disabled={isDisabledView} type="checkbox" checked={value._active == 1 ? true : false} name="_active" onChange={(e) => handlerChange(e.target.checked ? 1 : -1, e.target.name)} class="sr-only peer" />
                                                 <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                                <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{value._active == 1 ? "Active":"Suspend"}</span>
+                                                <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{value._active == 1 ? "Active" : "Suspend"}</span>
                                             </label>
                                         </div>
                                         {
                                             type == "create" && (
                                                 <>
-                                                    <PasswordInput label={"Password"} isDisabled={isDisabledView} value={value.password} handlerChange={(value, target) => handlerChange(value, target)} name={"password"}/>
-                                                    <PasswordInput label={"Retype Password"} isDisabled={isDisabledView} handlerChange={(value, target) => handlerChange(value, target)} value={value.repassword} name={"repassword"}/>
+                                                    <PasswordInput label={"Password"} isDisabled={isDisabledView} value={value.password} handlerChange={(value, target) => handlerChange(value, target)} name={"password"} />
+                                                    <PasswordInput label={"Retype Password"} isDisabled={isDisabledView} handlerChange={(value, target) => handlerChange(value, target)} value={value.repassword} name={"repassword"} />
                                                 </>
                                             )
                                         }
-                                        {/* {
+                                        {
                                             type == "update" && (
                                                 <div>
-                                                    <button className="btn-secondary">Change Password</button>
-                                                    <PasswordInput label={"Password"} isDisabled={isDisabledView} value={value.password} handlerChange={(value, target) => handlerChange(value, target)} name={"password"}/>
-                                                    <PasswordInput label={"Retype Password"} isDisabled={isDisabledView} handlerChange={(value, target) => handlerChange(value, target)} value={value.repassword} name={"repassword"}/>
+                                                    <button type="button" className="btn-secondary" onClick={() => handleChangePassword(!value.changePassword, "changePassword")}>Change Password</button>
+                                                    {
+                                                        value.changePassword && (
+                                                            <div className="mt-5 space-y-5">
+                                                                <PasswordInput label={"Password"} isDisabled={isDisabledView} value={value.password} handlerChange={(value, target) => handlerChange(value, target)} name={"password"} />
+                                                                <PasswordInput label={"Retype Password"} isDisabled={isDisabledView} handlerChange={(value, target) => handlerChange(value, target)} value={value.repassword} name={"repassword"} />
+                                                            </div>
+                                                        )
+                                                    }
                                                 </div>
                                             )
-                                        } */}
+                                        }
                                     </div>
                                 )
                             }
@@ -157,7 +189,7 @@ export default function ModalUser(props){
                             <footer className="pt-5 border-t mt-5 w-full">
                                 <div className="flex items-center justify-end gap-2">
                                     {type !== "view" && <button className="btn-primary" type="submit">Save</button>}
-                                    <button className="btn-secondary" type="button" onClick={() => {context.setData({...context, modal:null}); setOptionsRole(null)}}>Cancel</button>
+                                    <button className="btn-secondary" type="button" onClick={() => { context.setData({ ...context, modal: null }); setOptionsRole(null) }}>Cancel</button>
                                 </div>
                             </footer>
                         </form>
