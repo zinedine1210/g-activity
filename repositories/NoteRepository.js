@@ -3,14 +3,16 @@ import cbor from 'cbor';
 
 class NoteRepository {
     async postNote(params) {
+        const data = cbor.encode(params.data)
         const reponse = await Repository.post(
             `${baseUrl}/note`,
-            params.data,
+            data,
             {
                 headers: {
                     xa:params.xa
                 },
                 contentType:"application/cbor",
+                responseType: "arraybuffer"
             }
         )
         .then((response) => {
@@ -18,7 +20,8 @@ class NoteRepository {
             return data;
         })
         .catch((error) => {
-            return error.response.data
+            if(error?.response) return cbor.decode(error.response.data)
+                else return error
         });
         return reponse;
     }
@@ -30,7 +33,8 @@ class NoteRepository {
                 headers:{
                     xa:params.xa
                 },
-                contentType:"application/cbor"
+                contentType:"application/cbor",
+                responseType: "arraybuffer"
             }
         )
             .then((response) => {
@@ -38,20 +42,23 @@ class NoteRepository {
                 return data
             })
             .catch((error) => {
-                return error.response.data
+                if(error?.response) return cbor.decode(error.response.data)
+                    else return error
             });
         return reponse;
     }
 
     async putNote(params) {
+        const data = cbor.encode(params.data)
         const reponse = await Repository.put(
             `${baseUrl}/note/${params.id}`,
-            params.data,
+            data,
             {
                 headers:{
                     xa:params.xa
                 },
-                contentType:"application/cbor"
+                contentType:"application/cbor",
+                responseType: "arraybuffer"
             }
         )
             .then((response) => {
@@ -59,7 +66,8 @@ class NoteRepository {
                 return data
             })
             .catch((error) => {
-                return error.response.data
+                if(error?.response) return cbor.decode(error.response.data)
+                    else return error
             });
         return reponse;
     }
@@ -71,7 +79,8 @@ class NoteRepository {
                 headers: {
                     xa:params.xa
                 },
-                contentType:"application/cbor"
+                contentType:"application/cbor",
+                responseType: "arraybuffer"
             }
         )
         .then((response) => {
@@ -79,7 +88,8 @@ class NoteRepository {
             return data
         })
         .catch((error) => {
-            return error.response.data;
+            if(error?.response) return cbor.decode(error.response.data)
+                else return error;
         });
         return reponse;
     }
@@ -91,7 +101,8 @@ class NoteRepository {
                 headers: {
                     xa:params.xa
                 },
-                contentType:"application/cbor"
+                contentType:"application/cbor",
+                responseType: "arraybuffer"
             }
         )
         .then((response) => {
@@ -99,21 +110,24 @@ class NoteRepository {
             return data
         })
         .catch((error) => {
-            return error.response.data;
+            if(error?.response) return cbor.decode(error.response.data)
+                else return error;
         });
         return reponse;
     }
 
     // TEAM
     async postTeamNote(params) {
+        const data = cbor.encode(params.data)
         const reponse = await Repository.post(
             `${baseUrl}/note/${params.projectID}/${params.id}/team`,
-            params.data,
+            data,
             {
                 headers: {
                     xa:params.xa
                 },
                 contentType:"application/cbor",
+                responseType: "arraybuffer"
             }
         )
         .then((response) => {
@@ -121,13 +135,15 @@ class NoteRepository {
             return data;
         })
         .catch((error) => {
-            return error.response.data
+            if(error?.response) return cbor.decode(error.response.data)
+                else return error
         });
         return reponse;
     }
 
 
     async deleteTeam(params) {
+        const data = cbor.encode(params.data)
         const reponse = await Repository.delete(
             `${baseUrl}/note/${params.id}/team/rm`,
             {
@@ -135,7 +151,7 @@ class NoteRepository {
                     xa:params.xa
                 },
                 contentType:"application/cbor",
-                data:params.data
+                data: data
             }
         )
             .then((response) => {
@@ -143,7 +159,8 @@ class NoteRepository {
                 return data
             })
             .catch((error) => {
-                return error.response.data
+                if(error?.response) return cbor.decode(error.response.data)
+                    else return error
             });
         return reponse;
     }
@@ -157,7 +174,8 @@ class NoteRepository {
                 headers: {
                     xa:params.xa
                 },
-                contentType:"application/cbor"
+                contentType:"application/cbor",
+                responseType: "arraybuffer"
             }
         )
         .then((response) => {
@@ -165,7 +183,8 @@ class NoteRepository {
             return data
         })
         .catch((error) => {
-            return error.response.data;
+            if(error?.response) return cbor.decode(error.response.data)
+                else return error;
         });
         return reponse;
     }

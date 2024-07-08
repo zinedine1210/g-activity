@@ -1,10 +1,10 @@
-import { FaChartArea, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import LayoutAdmin from "../../../components/Admin/Layout/LayoutAdmin";
 import MainUser from "../../../components/Admin/User/MainUser";
 
-export default function DashboardAdmin({ profileData }) {
+export default function UserAdmin({ profileData }) {
   return (
-    <LayoutAdmin title={"Dashboard"} desc="Halaman Dashboard dari admin" profileData={profileData}>
+    <LayoutAdmin title={"User Collection"} desc="Halaman User Collection" profileData={profileData}>
         <div className="p-5">
             <header className="border-b pb-3 border-zinc-300 flex items-center gap-5">
                 <FaUser className="text-4xl text-blue-500"/>

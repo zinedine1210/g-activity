@@ -54,7 +54,6 @@ export default function NavbarNote(props) {
     }
 
     const handlerSave = async () => {
-        console.log(context.dataDocumentation);
         const result = await NoteRepository.putNote({ data: context.dataDocumentation, id: context.dataDocumentation.id, xa: JSON.parse(localStorage.getItem("XA")) })
         console.log(result);
         if (result.status == 0) {
@@ -73,7 +72,7 @@ export default function NavbarNote(props) {
             })
         }
 
-        context.setDataDocumentation(null)
+        context.setDataDocumentation(context.dataDocumentation)
     }
 
     const handlerPinned = () => {

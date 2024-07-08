@@ -24,7 +24,7 @@ export default function Application({ data, t, profileData }) {
             workspace_id: data.workspace_id,
             project_id: data.id,
             privacy: -1,
-            title: "",
+            title: "Untitled Note",
             content: ""
         }
 

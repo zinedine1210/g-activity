@@ -13,7 +13,7 @@ function HalamanNote(props) {
       console.log("notes", result);
       const members = await NoteRepository.getTeam({xa:JSON.parse(localStorage.getItem("XA")), id:props.query.id, type:1})
       console.log(members);
-      result.data.assigns = members.data.data
+      result.data.assigns = members.data
       context.setDataDocumentation(result.data)
     }
 

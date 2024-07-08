@@ -1,46 +1,33 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { MyContext } from "../../../context/MyProvider"
-import RecordUser from "./RecordUser"
-import UserRepository from "../../../repositories/UserRepository"
-import RoleRepository from "../../../repositories/RoleRepository"
+import RecordFeature from "./RecordFeature"
+import FeatureRepository from "../../../repositories/FeatureRepository"
 
-export default function TableUser({
-    keyword
+export default function TableFeature({
+    statename,
+    keyword,
+    filter
 }) {
     const context = useContext(MyContext)
-    const [data, setData] = useState(null)
 
-    const getUserData = async () => {
+    const getFeatureData = async (role) => {
         const getxa = JSON.parse(localStorage.getItem("XA"))
-        // dapatin combo box role
-        const resultbyids = await RoleRepository.getRoleComboBox({ xa: getxa })
-        let arr = []
-        resultbyids.data.forEach(el => {
-            arr.push({
-                label: el.rolename,
-                value: el.id
-            })
-        });
-        const result = await UserRepository.getUser({ XA: getxa })
-        if (result.status == 0) {
-            result.data.map((list) => {
-                const findRole = resultbyids.data.find(res => res.id == list.r_id)
-                list.rolename = findRole
-            })
-            context.setData({ ...context, dataUserAdmin: result, options: { ...context.options, roleOptions: arr } })
-            setData(result)
+        const result = await FeatureRepository.getFeature({
+            roleId: role == "" ? 'dataawal' : role,
+            xa: getxa
+        })
+        if(result.status == 0){
+            context.setData({...context, [statename]: result })
         }
-
-
     }
 
     useEffect(() => {
-        if (!data || !context.dataUserAdmin) {
-            getUserData()
+        if (!context[statename]) {
+            getFeatureData(filter.role)
         }
-    }, [data, context.dataUserAdmin])
+    }, [context[statename]])
 
-    const dataList = context?.dataUserAdmin?.data
+    const dataList = context?.[statename]?.data
 
     const advanceSearch = (valueSearch) => {
 		return options.slice(1).filter((res) => {
@@ -60,7 +47,7 @@ export default function TableUser({
                                             return true
                                         })
                                         .map((item, key) => {
-                                            return <RecordUser key={key} data={item} />
+                                            return <RecordFeature key={key} data={item} />
                                         })
     return (
         <div className="w-full">
@@ -74,29 +61,33 @@ export default function TableUser({
                                         <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
                                             <thead className="">
                                                 <tr>
-                                                    <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
-                                                        <div className="flex items-center gap-x-3">
-                                                            <input type="checkbox" onChange={() => handlerSelectAll()} className="text-blue-500 border-zinc-300 rounded dark:bg-zinc-900 dark:ring-offset-zinc-900 dark:border-zinc-700" />
-                                                            <span>Username</span>
-                                                        </div>
+                                                    <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400 w-full">
+                                                        Feature
                                                     </th>
 
-                                                    <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
-                                                        Fullname
+                                                    <th className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
+                                                        View
                                                     </th>
-                                                    <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
-                                                        Email
+                                                    <th className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
+                                                        Add
                                                     </th>
-
-                                                    <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
-                                                        Role
+                                                    <th className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
+                                                        Edit
                                                     </th>
-
-                                                    <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
-                                                        Status
+                                                    <th className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
+                                                        Delete
                                                     </th>
-                                                    <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
-                                                        Bulk Action
+                                                    <th className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
+                                                        Export
+                                                    </th>
+                                                    <th className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
+                                                        Import
+                                                    </th>
+                                                    <th className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
+                                                        Approval
+                                                    </th>
+                                                    <th className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
+                                                        Setting
                                                     </th>
                                                 </tr>
                                             </thead>

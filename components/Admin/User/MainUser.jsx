@@ -11,15 +11,15 @@ export default function MainUser() {
   return (
     <div className="w-full">
         <div className={`my-5 w-full xl:w-full`}>
-            <div className="xl:flex items-center justify-between">
+            <div className="xl:flex items-center justify-between mb-5">
                 <input type="search" value={keyword} onChange={(e) => setKeyword(e.target.value)} className="input-search w-full xl:w-auto" placeholder="Search" />
                 <div className="xl:flex items-center gap-2 mt-2 xl:mt-0 space-y-2 xl:space-y-0">
-                    <button className="btn-secondary" onClick={() => context.setData({...context, dataKnowledge:null})}>Refresh </button>
+                    <button className="btn-secondary" onClick={() => context.setData({...context, dataUserAdmin:null})}>Refresh </button>
                     <button className="btn-primary" onClick={() => context.setData({...context, modal:{ name:"modalUser", type:"create", data:null}})}><BsPlus className="text-2xl" /></button>
                 </div>
             </div>
             <div>
-                <TableUser />
+                <TableUser keyword={keyword} />
             </div>
             {
                 context?.modal?.name == "modalUser" && <ModalUser />

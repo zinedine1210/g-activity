@@ -7,7 +7,7 @@ import SelectInput from "../../Input/SelectInput"
 import { Notify } from "../../../utils/scriptApp"
 
 
-export default function ModalUser(props) {
+export default function ModalFeature(props) {
     const context = useContext(MyContext)
     const { name, type, data } = context.modal
     const [value, setValue] = useState({
