@@ -4,7 +4,8 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { MyContext, urlData } from "../../context/MyProvider";
 import {FaSave, FaFilter, FaSort} from "react-icons/fa"
 import { useProjects } from "../../utils/swr";
-import Swal from "sweetalert2";
+import TaskRepository from "../../repositories/TaskRepository";
+import { Notify } from "../../utils/scriptApp"
 
 export default function MenuBoard(props) {
     const {lang, editor} = props
@@ -44,22 +45,21 @@ export default function MenuBoard(props) {
     }
 
     const handlerSave = async () => {
-        await fetch(`${urlData}/documentation/${dataBoard.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataBoard)
-        }).then(res => {
-            console.log(res);
-            Swal.fire({
-                icon:"success",
-                position:"top-end",
-                title:"Changes saved successfully",
-                timer:1000,
-                showConfirmButton:false
+        const statusall = dataBoard.data
+        const getxa = JSON.parse(localStorage.getItem("XA"))
+        statusall.forEach(async (ele, index) => {
+            const result = await TaskRepository.putStatusTask({
+                xa: getxa,
+                id: ele.id,
+                data: ele
             })
-        })
+            if(result.status == 0){
+                console.log("Update status index : " + index + 1)
+            }else{
+                console.log("Error update on status index : " + index + 1)
+            }
+        });
+        Notify("Updated successfully", "info")
     }
 
     

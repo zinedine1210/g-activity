@@ -59,7 +59,7 @@ export default function Application({ data, t, profileData }) {
     const handlerCreateMOM = async () => {
         setLoading(true)
         let obj = {
-            title: "",
+            title: "Untitled MOM",
             place: null,
             address: null,
             action_list: [{
@@ -82,6 +82,8 @@ export default function Application({ data, t, profileData }) {
             project_id: data.id,
             privacy: -1
         }
+
+        console.log(obj)
 
         const result = await MomRepository.postMom({ xa: JSON.parse(localStorage.getItem("XA")), data: obj })
         console.log(result);

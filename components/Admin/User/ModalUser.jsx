@@ -80,20 +80,20 @@ export default function ModalUser(props) {
             action: async (value) => {
                 const getxa = JSON.parse(localStorage.getItem("XA"))
                 console.log(value)
-                // const result = await UserRepository.putUser({
-                //     xa: getxa,
-                //     id: value.id,
-                //     data: value
-                // })
+                const result = await UserRepository.putUser({
+                    xa: getxa,
+                    id: value.id,
+                    data: value
+                })
 
-                // console.log(result, "update")
-                // if (result.status == 0) {
-                //     // const findOne = context.dataUserAdmin.find(res => res.id == result.data.id)
-                //     const filter = context.dataUserAdmin.data.filter(res => res.id !== result.data.id)
-                //     filter.push(result.data)
-                //     context.setData({ ...context, dataUserAdmin: { ...context.dataUserAdmin, data: filter } })
-                //     Notify("Updated", "info")
-                // }
+                console.log(result, "update")
+                if (result.status == 0) {
+                    // const findOne = context.dataUserAdmin.find(res => res.id == result.data.id)
+                    const filter = context.dataUserAdmin.data.filter(res => res.id !== result.data.id)
+                    filter.push(result.data)
+                    context.setData({ ...context, dataUserAdmin: { ...context.dataUserAdmin, data: filter } })
+                    Notify("Updated", "info")
+                }
             }
         },
         create: {

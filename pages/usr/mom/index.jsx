@@ -23,8 +23,8 @@ function MinuteOfMeeting(props) {
         console.log("members", members);
         const participant = await MomRepository.getParticipant({xa:JSON.parse(localStorage.getItem("XA")), momID:props.query.id})
         console.log("participant",participant);
-        result.data.assigns = members.data.data
-        result.data.participants = participant.data.data
+        result.data.assigns = members.data
+        result.data.participants = participant.data
         result.data.header = [
           {
             "name": "Meeting Result",

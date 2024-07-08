@@ -17,7 +17,7 @@ export default function ShareProjectApplication({data}) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mb-20">
         {
-            dataDocumentation ? dataDocumentation?.data?.data?.data.map((item, key) => {
+            dataDocumentation ? dataDocumentation?.data?.data.map((item, key) => {
                 return <CardDocumentation key={key} item={item}/>
             })
             :
@@ -27,7 +27,7 @@ export default function ShareProjectApplication({data}) {
         }
 
         {
-            dataNote ? dataNote?.data?.data?.data.map((item, key) => {
+            dataNote ? dataNote?.data?.data.map((item, key) => {
                 return <CardNote key={key} item={item}/>
             })
             :

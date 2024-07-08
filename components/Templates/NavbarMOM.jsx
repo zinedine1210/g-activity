@@ -50,9 +50,13 @@ export default function NavbarMOM(props) {
             val.target_date = val.target_date ? new Date(val.target_date.epoch_time * 1000).toISOString() : null
             delete val.mom_id
             delete val._cd
+
+            console.log("point update:", val)
             const point = await MomRepository.putMomPoint({ xa: JSON.parse(localStorage.getItem("XA")), data: val, id: val.id })
             console.log(point);
         })
+
+        console.log("Mom update: ", newArr)
 
         const result = await MomRepository.putMom({ xa: JSON.parse(localStorage.getItem("XA")), data: newArr, id: context.dataDocumentation.id })
         console.log(result);
