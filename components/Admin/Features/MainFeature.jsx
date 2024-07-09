@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../../context/MyProvider";
-import { BsPlus } from "react-icons/bs";
 import TableFeature from "./TableFeature";
-import ModalFeature from "./ModalFeature";
 import SelectInput from "../../Input/SelectInput";
 import RoleRepository from "../../../repositories/RoleRepository";
 
@@ -21,7 +19,7 @@ export default function MainFeature() {
         if(!roleOptions){
             const getxa = JSON.parse(localStorage.getItem("XA"))
             const result = await RoleRepository.getRoleComboBox({ xa: getxa })
-            console.log(result)
+            // console.log(result)
             if(result.status == 0){
                 const resultdata = result.data
                 let arr = []
@@ -45,31 +43,27 @@ export default function MainFeature() {
         if(!roleOptions) getRoleComboBox()
     }, [roleOptions])
 
-    console.log("roleOptions", roleOptions)
-
   return (
     <div className="w-full">
         <div className={`my-5 w-full xl:w-full`}>
             <div className="xl:flex items-center justify-between mb-5">
                 <input type="search" value={keyword} onChange={(e) => setKeyword(e.target.value)} className="input-search w-full xl:w-auto" placeholder="Search" />
-                { roleOptions && (
-                    <SelectInput 
-                        change={(v,t) => handleFilter(v)}
-                        value={filter.role}
-                        options={roleOptions}
-                    />
-                )}
                 <div className="xl:flex items-center gap-2 mt-2 xl:mt-0 space-y-2 xl:space-y-0">
-                    <button className="btn-secondary" onClick={() => context.setData({...context, [statename]:null})}>Refresh </button>
-                    <button className="btn-primary" onClick={() => context.setData({...context, modal:{ name:nameModal, type:"create", data:null}})}><BsPlus className="text-2xl" /></button>
+                    { roleOptions && (
+                        <SelectInput 
+                            change={(v,t) => handleFilter(v)}
+                            value={filter.role}
+                            options={roleOptions}
+                        />
+                    )}
+                    <button className="btn-primary" onClick={() => context.setData({...context, [statename]:null})}>
+                        Refresh
+                    </button>
                 </div>
             </div>
             <div>
                 <TableFeature filter={filter} statename={statename} keyword={keyword} />
             </div>
-            {
-                context?.modal?.name == nameModal && <ModalFeature />
-            }
         </div>
     </div>
   )

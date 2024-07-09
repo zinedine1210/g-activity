@@ -17,6 +17,7 @@ export default function TableFeature({
             xa: getxa
         })
         if(result.status == 0){
+            result.data.map((res) => res['roleId'] = role)
             context.setData({...context, [statename]: result })
         }
     }
@@ -47,7 +48,7 @@ export default function TableFeature({
                                             return true
                                         })
                                         .map((item, key) => {
-                                            return <RecordFeature key={key} data={item} />
+                                            return <RecordFeature statename={statename} key={key} data={item} />
                                         })
     return (
         <div className="w-full">
