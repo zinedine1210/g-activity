@@ -72,6 +72,8 @@ export default function ModalUser(props) {
         if (!value?._active || !value?.r_id) return alert("Please fill input is null")
         // console.log(value)
         actionUser[type].action(value)
+
+        // context.setData({ ...context, dataUserAdmin: null })
     }
 
     let actionUser = {
@@ -85,11 +87,7 @@ export default function ModalUser(props) {
                     data: value
                 })
                 if (result.status == 0) {
-                    const getowndata = JSON.parse(JSON.stringify(context.dataUserAdmin.data))
-                    const filter = getowndata.filter(res => res.id != result.data.id)
-                    filter.push(result.data)
-                    context.setData({ ...context, dataUserAdmin: { ...context.dataUserAdmin, data: filter } })
-                    context.setData({ ...context, modal: null })
+                    context.setData({ ...context, dataUserAdmin: null, modal: null })
                     Notify("Updated", "info")
                 }
             }
@@ -104,9 +102,7 @@ export default function ModalUser(props) {
                 })
                 console.log(result)
                 if (result.status == 0) {
-                    context.dataUserAdmin.data.push(result.data)
-                    context.setData({ ...context, modal: null })
-                    context.setData({ ...context, dataUserAdmin: context.dataUserAdmin })
+                    context.setData({ ...context, dataUserAdmin: null, modal: null })
                     setOptionsRole(null)
                     Notify("Berhasil ditambahkan", "info")
                 }

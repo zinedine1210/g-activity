@@ -4,7 +4,7 @@ import { BsCaretDown } from 'react-icons/bs';
 export default function SelectInput({
     name, 
     options=[],
-    label="",
+    label,
     value,
     change,
     defaultAll=false,
@@ -52,8 +52,11 @@ export default function SelectInput({
     // console.log(value)
   return (
     <div className='relative' ref={dropdownRef}>
-        <label htmlFor={name} className='block font-semibold'>{label}</label>
-        <div onClick={() => handleOpen()} className="cursor-pointer mt-2 w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white flex items-center justify-between">
+        {
+            label && <label htmlFor={name} className='block font-semibold mb-2'>{label}</label>
+        }
+        
+        <div onClick={() => handleOpen()} className="cursor-pointer w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-1.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white flex items-center justify-between">
             <h1>{prefix} {active} {suffix}</h1>
             <BsCaretDown className={`${isOpen && "rotate-180"} duration-300 ease-in-out`}/>
         </div>

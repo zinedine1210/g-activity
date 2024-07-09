@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { BsViewList } from "react-icons/bs";
-import { FaGrinHearts, FaStar, FaUser } from "react-icons/fa";
+import { FaGrinHearts, FaStar, FaUser, FaUsers } from "react-icons/fa";
 
 export default function SidebarAdmin() {
     const router = useRouter()
@@ -30,6 +30,12 @@ export default function SidebarAdmin() {
                         <button className={`py-3 px-5 duration-300 ${pathname == "/admin/feature" ? "bg-blue-600" : "hover:bg-blue-400"} w-full text-start flex items-center gap-3 text-white text-lg`}>
                             <FaStar className="text-2xl" />
                             <h1 className="font-semibold">Feature</h1>
+                        </button>
+                    </Link>
+                    <Link href={"/admin/role"}>
+                        <button className={`py-3 px-5 duration-300 ${pathname == "/admin/role" ? "bg-blue-600" : "hover:bg-blue-400"} w-full text-start flex items-center gap-3 text-white text-lg`}>
+                            <FaUsers className="text-2xl" />
+                            <h1 className="font-semibold">Role</h1>
                         </button>
                     </Link>
                 </div>

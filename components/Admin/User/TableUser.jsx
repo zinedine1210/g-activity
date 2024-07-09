@@ -8,7 +8,6 @@ export default function TableUser({
     keyword
 }) {
     const context = useContext(MyContext)
-    const [data, setData] = useState(null)
 
     const getUserData = async () => {
         const getxa = JSON.parse(localStorage.getItem("XA"))
@@ -28,17 +27,16 @@ export default function TableUser({
                 list.rolename = findRole
             })
             context.setData({ ...context, dataUserAdmin: result, options: { ...context.options, roleOptions: arr } })
-            setData(result)
         }
 
 
     }
 
     useEffect(() => {
-        if (!data || !context.dataUserAdmin) {
+        if (!context.dataUserAdmin) {
             getUserData()
         }
-    }, [data, context.dataUserAdmin])
+    }, [context.dataUserAdmin])
 
     const dataList = context?.dataUserAdmin?.data
 

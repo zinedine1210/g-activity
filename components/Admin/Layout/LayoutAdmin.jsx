@@ -33,7 +33,7 @@ export default function LayoutAdmin({ children, image, desc, title, profileData 
             description={desc}
             image={image ? image:null}
         />
-        <section className='flex'>
+        <section className='flex '>
             <navigation className='w-[500px] h-screen overflow-y-hidden p-5'>
                 <SidebarAdmin />
             </navigation>

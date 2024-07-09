@@ -48,7 +48,7 @@ export default function RecordUser({ data }) {
             <td className="px-12 py-4 text-sm font-normal text-zinc-700 dark:text-white whitespace-nowrap">
                 {data?.email}
             </td>
-            <td className="px-12 py-4 text-sm font-normal text-zinc-700 dark:text-white whitespace-nowrap">
+            <td className="px-12 py-4 text-sm font-normal text-zinc-700 dark:text-white whitespace-nowrap text-center mx-auto">
                 <span className="inline-block py-1.5 px-5 rounded-xl text-sm text-white" style={{ backgroundColor: data?.rolename?.color }}>{data?.rolename?.rolename}</span>
             </td>
             <td className="px-12 py-4 text-sm font-normal text-zinc-700 dark:text-white whitespace-nowrap">
