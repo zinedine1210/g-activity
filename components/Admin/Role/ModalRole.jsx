@@ -1,9 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { MyContext } from "../../../context/MyProvider"
-import PasswordInput from "../../Input/PasswordInput"
 import RoleRepository from "../../../repositories/RoleRepository"
-import UserRepository from "../../../repositories/UserRepository"
-import SelectInput from "../../Input/SelectInput"
 import { Notify } from "../../../utils/scriptApp"
 
 

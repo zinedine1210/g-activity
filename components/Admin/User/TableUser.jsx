@@ -28,8 +28,6 @@ export default function TableUser({
             })
             context.setData({ ...context, dataUserAdmin: result, options: { ...context.options, roleOptions: arr } })
         }
-
-
     }
 
     useEffect(() => {

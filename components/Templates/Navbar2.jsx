@@ -208,7 +208,6 @@ export default function Navbar2(props) {
                 <svg onClick={() => setTheme("light")} className={`fill-white w-7 h-7 absolute cursor-pointer ${theme == "dark" ? "translate-y-0 opacity-100 visible" : " translate-y-10 invisible opacity-0"} transition-all duration-500 ease-in-out`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" /></svg>
               </div>
               <div className="relative group">
-                <Link href={"/usr/profile"}>
                   <div className="relative flex items-center gap-2 cursor-pointer group">
                     <button className="w-8 h-8 rounded-full flex items-center justify-center uppercase text-white bg-zinc-500">{props.profileData.hasOwnProperty("username") ? props.profileData.username.charAt(0) : ""}</button>
                     <div>
@@ -216,7 +215,6 @@ export default function Navbar2(props) {
                       <p className="text-xs text-zinc-500 font-semibold dark:text-zinc-300">{props.profileData.hasOwnProperty("org_name") ? props.profileData.org_name : ""}</p>
                     </div>
                   </div>
-                </Link>
                 <div className="bg-white dark:bg-dark w-44 rounded-md shadow-lg group-hover:visible invisible opacity-0 group-hover:opacity-100 absolute top-full right-0 transition-all duration-300 group-hover:translate-y-0 translate-y-10 delay-300 overflow-hidden py-1">
                   <button className="px-5 w-full text-start py-2 flex items-center gap-2 hover:bg-blue-100 dark:hover:bg-darkSecondary transition-all duration-300">
                     <FaUserEdit />
