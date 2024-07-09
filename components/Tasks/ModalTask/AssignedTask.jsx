@@ -46,9 +46,9 @@ export default function AssignedTask(props) {
 
     const handlerAddAssign = (value) => {
         let obj = {
-            assign: value.assign,
+            uid: value.uid,
             username: value.uid_docs?.username ?? value.uid_docs?.email,
-            fullname: value.uid_docs?.username ?? value.uid_docs?.email
+            fullname: value.uid_docs?.fullname ?? value.uid_docs?.fullname
         }
         item.assign.push(obj)
         setMenu(false)
@@ -66,7 +66,7 @@ export default function AssignedTask(props) {
         }).then((result) => {
             if (result.isConfirmed) {
                 const filter = item.assign.filter(res => {
-                    return res.assign != value.assign
+                    return res.uid != value.uid
                 })
                 let data = []
                 filter.forEach(val => {

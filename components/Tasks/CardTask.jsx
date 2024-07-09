@@ -5,6 +5,7 @@ import { HiOutlineChat, HiOutlineClock } from "react-icons/hi"
 import Swal from "sweetalert2";
 import { MyContext } from "../../context/MyProvider"
 import TaskRepository from "../../repositories/TaskRepository";
+import CollectionData from "@repositories/CollectionData"
 
 export default function CardTask({ item, project, hide, status }) {
   const context = useContext(MyContext)
@@ -56,7 +57,6 @@ export default function CardTask({ item, project, hide, status }) {
       if (result.isConfirmed) {
         e.stopPropagation()
         const result = await TaskRepository.deleteTask({ id: item.id, xa: JSON.parse(localStorage.getItem("XA")) })
-        console.log(result);
         if (result.status == 0) {
           const newArr = status.tasks.filter(res => {
             return res.id != item.id
@@ -83,10 +83,10 @@ export default function CardTask({ item, project, hide, status }) {
       val.sequence = key + 1
     });
 
-    console.log(dataStatus);
-
     status.tasks = dataStatus
     context.setDataDocumentation(context.dataDocumentation)
+    CollectionData.putData({ url: `task_status/_repos_task`, values: dataStatus, id: item.status_id })
+
   }
 
   const handlerChangeStatus = async (drop, drag) => {
@@ -110,6 +110,8 @@ export default function CardTask({ item, project, hide, status }) {
     });
 
     status.tasks = dropStatus
+
+    CollectionData.putData({ url: `task_status/_repos_task`, values: status['tasks'], id: status.id })
     context.setDataDocumentation(context.dataDocumentation)
   }
 
@@ -136,7 +138,6 @@ export default function CardTask({ item, project, hide, status }) {
   }
 
   const handleDragStart = (e, task) => {
-    console.log("task start");
     e.stopPropagation()
     context.setData({ ...context, activeDrag: "task" })
     e.dataTransfer.setData('json', JSON.stringify(task))
@@ -226,9 +227,9 @@ export default function CardTask({ item, project, hide, status }) {
 
           <div className={`absolute text-sm backdrop-blur-xl w-56 shadow-xl rounded-md z-20 transition-all duration-300 right-0 ${open ? "block opacity-100" : "hidden opacity-0"}`}>
             <div className="space-y-1">
-              <button className="block w-full text-start hover:bg-blue-200 p-3 dark:hover:bg-darkPrimary">Move Task...</button>
-              <button className="block w-full text-start hover:bg-blue-200 p-3 dark:hover:bg-darkPrimary">Copy Task...</button>
-              <button className="block w-full text-start hover:bg-blue-200 p-3 dark:hover:bg-darkPrimary" onClick={e => handlerResolveTask(e)}>Resolve Task...</button>
+              {/* <button className="block w-full text-start hover:bg-blue-200 p-3 dark:hover:bg-darkPrimary">Move Task...</button>
+              <button className="block w-full text-start hover:bg-blue-200 p-3 dark:hover:bg-darkPrimary">Copy Task...</button> */}
+              {/* <button className="block w-full text-start hover:bg-blue-200 p-3 dark:hover:bg-darkPrimary" onClick={e => handlerResolveTask(e)}>Resolve Task...</button> */}
               <button className="block w-full text-start hover:bg-blue-200 p-3 dark:hover:bg-darkPrimary text-red-500" onClick={(e) => handlerDeleteTask(e)}>Delete Task...</button>
             </div>
           </div>

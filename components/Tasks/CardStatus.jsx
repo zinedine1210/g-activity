@@ -2,6 +2,7 @@ import { findIndex } from "lodash"
 import { useContext, useEffect, useRef, useState } from "react"
 import { FaEllipsisH } from "react-icons/fa"
 import Swal from "sweetalert2"
+import CollectionData from "@repositories/CollectionData"
 import { MyContext } from "../../context/MyProvider"
 import TaskRepository from "../../repositories/TaskRepository"
 import CardAddTask from "./CardAddTask"
@@ -77,8 +78,17 @@ export default function CardStatus(props) {
             val.sequence = key + 1
         });
 
+        let getDataDrag = arr.find(res => res.id == drag.id)
+        let getDataDrop = arr.find(res => res.id == drop.id)
+
+        console.log("getDataDrag", getDataDrag)
+        console.log("getDataDrop", getDataDrop)
+
+
+        CollectionData.putData({ url: `task_status`, values: [getDataDrag, getDataDrop], id: '_repos_status' })
         context.dataDocumentation.data = arr
         context.setDataDocumentation(context.dataDocumentation)
+        
     }
 
     const handlerChangeStatus = async (drop, drag) => {
@@ -97,6 +107,7 @@ export default function CardStatus(props) {
         })
 
         context.dataDocumentation.data = arr
+        CollectionData.putData({ url: `task_status/_repos_task`, values: [drag], id: drop.id })
         context.setDataDocumentation(context.dataDocumentation)
       }
     
@@ -105,7 +116,6 @@ export default function CardStatus(props) {
         const dragStatus = JSON.parse(e.dataTransfer.getData("json"))
         document.getElementById(dropStatus.id).style.border = "none"
         document.getElementById(dragStatus.id).style.border = "none"
-        console.log(dragStatus);
         if(!dragStatus.hasOwnProperty("status_id")){
             handlerChangePosition(dragStatus, dropStatus)
         }else{
@@ -199,19 +209,19 @@ export default function CardStatus(props) {
                                     <h1>Active Task</h1>
                                     <span className="font-bold">{props.item.tasks.filter(res => !res.done).length}</span>
                                 </div>
-                                <div className="flex items-center justify-between text-green-500">
+                                {/* <div className="flex items-center justify-between text-green-500">
                                     <h1>Resolved Task</h1>
                                     <span className="font-bold">{props.item.tasks.filter(res => res.done).length}</span>
-                                </div>
-                                <label className="flex items-center justify-between">
+                                </div> */}
+                                {/* <label className="flex items-center justify-between">
                                     <h1>Show Resolved Task</h1>
                                     <input type="checkbox" id="show" checked={hide} onChange={e => setHide(!hide)} className="w-4 h-4" />
-                                </label>
+                                </label> */}
                             </div>
                             <div className="space-y-1">
-                                <button className="block w-full text-start hover:bg-zinc-100 p-3 dark:hover:bg-darkPrimary">Move Status...</button>
+                                {/* <button className="block w-full text-start hover:bg-zinc-100 p-3 dark:hover:bg-darkPrimary">Move Status...</button>
                                 <button className="block w-full text-start hover:bg-zinc-100 p-3 dark:hover:bg-darkPrimary">Copy Status...</button>
-                                <button className="block w-full text-start hover:bg-zinc-100 p-3 dark:hover:bg-darkPrimary" onClick={() => handlerResolveAllTask()}>Resolve all Task...</button>
+                                <button className="block w-full text-start hover:bg-zinc-100 p-3 dark:hover:bg-darkPrimary" onClick={() => handlerResolveAllTask()}>Resolve all Task...</button> */}
                                 <button className="block w-full text-start hover:bg-zinc-100 p-3 dark:hover:bg-darkPrimary text-red-500" onClick={() => handlerDeleteStatus()}>Delete Status...</button>
                             </div>
                         </div>

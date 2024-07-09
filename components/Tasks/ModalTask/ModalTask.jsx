@@ -53,10 +53,10 @@ export default function ModalTask() {
         delete data._cb
         delete data._cd
         delete data.project_id
-        console.log(data);
+        // console.log("apa datanya", data);
 
         const result = await TaskRepository.putTask({ id: item.task.id, data: data, xa: JSON.parse(localStorage.getItem("XA")) })
-        console.log(result);
+      
         if (result.status == 0) {
             const indexStatus = findIndex(context.dataDocumentation.data, { id: item.status.id })
             const indexTask = findIndex(context.dataDocumentation.data[indexStatus].tasks, { id: item.task.id })
@@ -143,9 +143,9 @@ export default function ModalTask() {
                                             <AssignedTask item={item.task} />
                                         </div>
 
-                                        <div className="mt-5">
+                                        {/* <div className="mt-5">
                                             <AttachmentsTask />
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <div className="w-1/2 px-5">
                                         <ActivityTask item={item.task} />
