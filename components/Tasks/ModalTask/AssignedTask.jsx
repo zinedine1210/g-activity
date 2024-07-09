@@ -18,8 +18,8 @@ export default function AssignedTask(props) {
     };
 
     useEffect(() => {
-        if (!item.hasOwnProperty("uid")) {
-            item.uid = []
+        if (!item.hasOwnProperty("assign")) {
+            item.assign = []
             context.setDataDocumentation(context.dataDocumentation)
         }
 
@@ -45,13 +45,12 @@ export default function AssignedTask(props) {
     }, [])
 
     const handlerAddAssign = (value) => {
-        console.log(value)
         let obj = {
-            uid: value.uid,
+            assign: value.assign,
             username: value.uid_docs?.username ?? value.uid_docs?.email,
             fullname: value.uid_docs?.username ?? value.uid_docs?.email
         }
-        item.uid.push(obj)
+        item.assign.push(obj)
         setMenu(false)
     }
 
@@ -66,15 +65,15 @@ export default function AssignedTask(props) {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                const filter = item.uid.filter(res => {
-                    return res.uid != value.uid
+                const filter = item.assign.filter(res => {
+                    return res.assign != value.assign
                 })
                 let data = []
                 filter.forEach(val => {
                     data.push(val)
                 });
 
-                item.uid = data
+                item.assign = data
                 setMenu(true)
             }
         })
@@ -85,7 +84,7 @@ export default function AssignedTask(props) {
             <div className="flex items-center">
                 <div className="flex -space-x-3">
                     {
-                        item.hasOwnProperty("uid") ? item.uid.map((item, key) => {
+                        item.hasOwnProperty("assign") ? item.assign.map((item, key) => {
                             return (
                                 <span key={key} className="ring-2 ring-offset-2 ring-blue-400 ring-offset-gray-100 w-12 h-12 rounded-full relative bg-zinc-500 border-zinc-300 flex items-center justify-center font-semibold text-white uppercase group text-xl">
                                     <span onClick={() => handlerDeleteAssign(item)} className="bg-red-500 transition-all duration-300 text-white rounded-full w-5 h-5 absolute -top-2 flex items-center justify-center right-0 hover:bg-red-800 cursor-pointer z-20 border-2 border-white group-hover:visible invisible">
@@ -101,12 +100,12 @@ export default function AssignedTask(props) {
                     }
 
                     <div ref={menuRef} className="relative">
-                        <span onClick={() => setMenu(true)} className={`${item.hasOwnProperty("uid") ? item.uid.length == context.dataDocumentation.project.members.length ? "hidden" : "" : ""} ring-2 ring-offset-2 flex items-center justify-center relative hover:text-primary hover:border-primary transition-all cursor-pointer w-12 h-12 font-semibold border-2 border-dashed rounded-full bg-zinc-50 text-zinc-800 border-zinc-300`}><FaUserPlus /></span>
+                        <span onClick={() => setMenu(true)} className={`${item.hasOwnProperty("assign") ? item.assign.length == context.dataDocumentation.project.members.length ? "hidden" : "" : ""} ring-2 ring-offset-2 flex items-center justify-center relative hover:text-primary hover:border-primary transition-all cursor-pointer w-12 h-12 font-semibold border-2 border-dashed rounded-full bg-zinc-50 text-zinc-800 border-zinc-300`}><FaUserPlus /></span>
                         <div className={`bg-white space-y-1 rounded-md shadow-xl absolute w-fit p-2 ${menu ? "visible opacity-100" : "invisible opacity-0"}`}>
                             {
-                                item.hasOwnProperty("uid") ? context.dataDocumentation.project.members.filter(res => {
-                                    const find = item.uid.find(opt => {
-                                        return res.uid == opt.uid
+                                item.hasOwnProperty("assign") ? context.dataDocumentation.project.members.filter(res => {
+                                    const find = item.assign.find(opt => {
+                                        return res.uid_docs.username == opt.username
                                     })
 
                                     if (!find)

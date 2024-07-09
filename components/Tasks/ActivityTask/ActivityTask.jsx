@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { FaDotCircle, FaHistory } from "react-icons/fa";
 import { MyContext } from "../../../context/MyProvider";
 import TipTapTask from "../ModalTask/TipTapTask";
@@ -15,6 +15,7 @@ export default function ActivityTask(props) {
   const [open, setOpen] = useState(false)
   const [data, setData] = useState("")
   const context = useContext(MyContext)
+  const editorRef = useRef(null);
   console.log(activity);
 
   const handlerEnter = (value) => {
@@ -28,18 +29,15 @@ export default function ActivityTask(props) {
       task_id: props.item.id
     }
 
-    console.log(obj);
     const result = await TaskRepository.postActivityTask({ xa: JSON.parse(localStorage.getItem("XA")), data: obj })
-    console.log(result);
     if (result.status == 0) {
       const newData = JSON.parse(JSON.stringify(result.data))
       newData._cb_docs = { username: context.dataDocumentation.profileData.username }
       newData._cd = { epoch_time: new Date().getTime() }
-      console.log(newData);
-
+      setData("")
+      editorRef.current.clearEditor();
       mutate(['activity', props.item.id], cache => {
         cache.data.unshift(newData)
-        console.log(cache);
         return cache
       }, false)
 
@@ -61,7 +59,7 @@ export default function ActivityTask(props) {
           <div className="absolute top-0 left-0 w-full border-b-2 py-2 invisible group-hover:visible bg-white flex items-center gap-4">
             <span className="flex items-center justify-center text-white bg-red-500 w-10 h-10 rounded-full shadow-md font-bold uppercase">{context.dataDocumentation.profileData.username.charAt(0)}</span>
             <div className="w-full relative">
-              <TipTapTask value={data} style="text-sm pl-3 pr-8 py-2" handlerEnter={(value) => handlerEnter(value)} />
+              <TipTapTask ref={editorRef}  value={data} style="text-sm pl-3 pr-8 py-2" handlerEnter={(value) => handlerEnter(value)} />
               <button className="absolute top-1/2 text-sm font-semibold right-1 hover:bg-zinc-200 bg-zinc-100 p-1 rounded-md -translate-y-1/2" onClick={() => handlerCreateComment()}>Submit</button>
             </div>
           </div>

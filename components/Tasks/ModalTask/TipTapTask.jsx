@@ -1,3 +1,4 @@
+import { useEffect, forwardRef, useImperativeHandle } from 'react'
 import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Highlight from "@tiptap/extension-highlight"
@@ -19,61 +20,69 @@ import FontFamily from '@tiptap/extension-font-family'
 import Image from "@tiptap/extension-image"
 import MenuBar from "../../Notes/MenuBar"
 import BubbleBar from '../../Notes/BubbleBar'
-import { useEffect } from 'react'
 
 lowlight.registerLanguage('html', html)
 lowlight.registerLanguage('css', css)
 lowlight.registerLanguage('js', js)
 lowlight.registerLanguage('ts', ts)
 
-export default function TipTapTask(props) {
+const TipTapTask = forwardRef((props, ref) => {
 
-    const editor = useEditor({
-        extensions: [
-          StarterKit,
-          CodeBlockLowlight.configure({
-            lowlight
-          }),
-          Highlight.configure({
-            multicolor: true,
-          }),
-          Link,
-          TextStyle,
-          Underline,
-          TextAlign.configure({
-            types: ['heading', 'paragraph'],
-          }),
-          Image.configure({
-            allowBase64: true,
-          }),
-          Table.configure({
-            resizable: true,
-            allowTableNodeSelection:true
-          }),
-          TableRow,
-          TableHeader,
-          TableCell,
-          FontFamily.configure({
-            types: ['textStyle'],
-          })
-        ],
-        onUpdate:({editor}) => {
-          props.handlerEnter(editor.getHTML())
-        },
-        autofocus:true,
-        content: props.value,
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      CodeBlockLowlight.configure({
+        lowlight
+      }),
+      Highlight.configure({
+        multicolor: true,
+      }),
+      Link,
+      TextStyle,
+      Underline,
+      TextAlign.configure({
+        types: ['heading', 'paragraph'],
+      }),
+      Image.configure({
+        allowBase64: true,
+      }),
+      Table.configure({
+        resizable: true,
+        allowTableNodeSelection: true
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
+      FontFamily.configure({
+        types: ['textStyle'],
       })
-    
-    if(editor)
-  return (
-    <div className='border rounded-md relative'>
-        <BubbleMenu editor={editor} tippyOptions={{ duration: 100, maxWidth:"none" }} className="rounded-md bg-white shadow-lg flex items-center w-fit gap-1">
-          <BubbleBar editor={editor}/>
+    ],
+    onUpdate: ({ editor }) => {
+      props.handlerEnter(editor.getHTML())
+    },
+    autofocus: true,
+    content: props.value,
+  })
+
+  useImperativeHandle(ref, () => ({
+    clearEditor: () => {
+      editor.chain().clearContent().run();
+    }
+  }));
+
+
+  if (editor)
+    return (
+      <div className='border rounded-md relative'>
+        <BubbleMenu editor={editor} tippyOptions={{ duration: 100, maxWidth: "none" }} className="rounded-md bg-white shadow-lg flex items-center w-fit gap-1">
+          <BubbleBar editor={editor} />
         </BubbleMenu>
-        <EditorContent className={`outline-none ${props.style}`} editor={editor}/>
+        <EditorContent className={`outline-none ${props.style}`} editor={editor} />
         <div className='absolute bottom-full bg-zinc-500 text-xs px-2 py-0.5 right-0 rounded-t-md text-white'>
           Select Text to Show Toolbar
         </div>
-    </div>
-  )
-}
+      </div>
+    )
+})
+
+export default TipTapTask;

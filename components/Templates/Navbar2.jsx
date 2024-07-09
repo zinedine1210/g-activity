@@ -26,7 +26,7 @@ export default function Navbar2(props) {
   useEffect(() => {
     window.onscroll = function () {
       const header = document.getElementById("header")
-      const fixedNav = header.offsetTop + 100
+      const fixedNav = header?.offsetTop + 100
 
       if (window?.pageYOffset > fixedNav) {
         setScroll(true)

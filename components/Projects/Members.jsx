@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../context/MyProvider";
 import WorkspacesRepository from "../../repositories/WorkspacesRepository";
 import ProjectRepository from "../../repositories/ProjectRepository";
+import CollectionData from "@repositories/CollectionData"
 import Swal from "sweetalert2";
 
 export default function Members(props) {
@@ -20,8 +21,9 @@ export default function Members(props) {
             confirmButtonText: 'Yes, delete it!'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const result = await ProjectRepository.deleteTeam({ xa: JSON.parse(localStorage.getItem("XA")), data: [value.uid], id: value.project_id })
-                console.log(result);
+                let obj = { "url": `project/${value.project_id}/team/rm`, "values": [value.id] }
+                const result = await CollectionData.deleteData(obj)
+                // const result = await ProjectRepository.deleteTeam({ xa: JSON.parse(localStorage.getItem("XA")), data: [value.uid], id: value.project_id })
 
                 if (result.status == 0) {
                     const newArr = JSON.parse(JSON.stringify(member)).filter(res => {
@@ -140,7 +142,6 @@ function ModalMembers(props) {
     const handlerSubmitEmail = async (e) => {
         e.preventDefault()
         setLoading(true)
-        // console.log(data.members);
         let dataFinal = []
         data.forEach(val => {
             if (val.uid) {
@@ -149,7 +150,6 @@ function ModalMembers(props) {
         })
         const getXA = JSON.parse(localStorage.getItem("XA"))
         const result = await ProjectRepository.postTeamProject({ data: dataFinal, xa: getXA, workspaceID: props.data.workspace_id, id: props.data.id })
-        console.log(result);
         if (result.status == 0) {
             Swal.fire({
                 icon: "success",
@@ -197,7 +197,6 @@ function ModalMembers(props) {
     useEffect(() => {
         async function getMember() {
             const result = await WorkspacesRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), type: 1, id: props.data.workspace_id })
-            console.log(result);
             setMember(result.data)
             setKeyword(result.data)
         }

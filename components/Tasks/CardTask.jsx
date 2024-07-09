@@ -237,10 +237,10 @@ export default function CardTask({ item, project, hide, status }) {
       <div className="w-full pt-2 border-t flex items-center justify-between">
         <div className="flex -space-x-3 rtl:space-x-reverse">
           {
-            item?.uid ? item.uid.map((asg, key) => {
+            item.assign ? item.assign.map((asg, key) => {
               return (
-                <div title={asg?.uid_docs?.username} className="flex items-center justify-center text-white uppercase font-bold w-7 h-7 border bg-zinc-500 border-zinc-300 rounded-full dark:border-gray-800" key={key}>
-                  {asg?.uid_docs?.username.charAt(0)}
+                <div title={asg.username} className="flex items-center justify-center text-white uppercase font-bold w-7 h-7 border bg-zinc-500 border-zinc-300 rounded-full dark:border-gray-800" key={key}>
+                  {asg.username.charAt(0)}
                 </div>
               )
             })
@@ -250,7 +250,7 @@ export default function CardTask({ item, project, hide, status }) {
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1 text-sm">
             <HiOutlineChat className="text-zinc-500 text-xl" />
-            2
+            {item.count_comment}
           </div>
           {
             item?.start_date && item?.due_task && (

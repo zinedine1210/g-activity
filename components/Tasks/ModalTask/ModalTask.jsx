@@ -9,6 +9,8 @@ import DescriptionTask from "../ActivityTask/DescriptionTask"
 import AssignedTask from "./AssignedTask"
 import TaskRepository from "../../../repositories/TaskRepository"
 import Swal from "sweetalert2"
+import moment from "moment"
+import {convertDate} from "@utils/function"
 
 export default function ModalTask() {
     const context = useContext(MyContext)
@@ -44,7 +46,6 @@ export default function ModalTask() {
     }
 
     const handlerAllSave = async () => {
-        console.log(item);
         const data = JSON.parse(JSON.stringify(item.task))
         delete data.is_owner
         delete data.id
@@ -128,11 +129,11 @@ export default function ModalTask() {
                                             <div className="flex items-center gap-5">
                                                 <div>
                                                     <h1 className="text-zinc-500 dark:text-zinc-300 text-xs">Start Date</h1>
-                                                    <input type="date" className="focus:outline-none border p-1" defaultValue={item.hasOwnProperty("start_date") ? item.start_date : null} onChange={(e) => handlerChange(e.target.value + " 00:00:00", "start_date")} />
+                                                    <input type="date" className="focus:outline-none border p-1" defaultValue={item.task.hasOwnProperty("start_date") ?  moment(convertDate(item.task.start_date)).local().format("YYYY-MM-DD") : null} onChange={(e) => handlerChange(e.target.value + " 00:00:00", "start_date")} />
                                                 </div>
                                                 <div>
                                                     <h1 className="text-zinc-500 dark:text-zinc-300 text-xs">Due Date</h1>
-                                                    <input type="date" defaultValue={item.hasOwnProperty("start_date") ? item.start_date : null} className="focus:outline-none border p-1" onChange={(e) => handlerChange(e.target.value + " 00:00:00", "due_task")} />
+                                                    <input type="date" defaultValue={item.task.hasOwnProperty("due_date") ? moment(convertDate(item.task.due_date)).local().format("YYYY-MM-DD") : null} className="focus:outline-none border p-1" onChange={(e) => handlerChange(e.target.value + " 00:00:00", "due_date")} />
                                                 </div>
                                             </div>
                                         </div>

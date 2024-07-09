@@ -31,7 +31,7 @@ export default function ModalProject(props) {
 
     const handlerDefault = () => {
         setData({})
-        setOption([])
+        // setOption([])
         context.setData({ ...context, activeProject: false })
     }
 

@@ -17,6 +17,8 @@ function MinuteOfMeeting(props) {
 
     useEffect(() => {
       async function getData(){
+        console.log("disini bangg")
+        console.log(props.query)
         const result = await MomRepository.getMomByID({xa:JSON.parse(localStorage.getItem("XA")), id:props.query.id})
         console.log("mom_data", result);
         const members = await MomRepository.getTeam({xa:JSON.parse(localStorage.getItem("XA")), id:props.query.id, type:1})

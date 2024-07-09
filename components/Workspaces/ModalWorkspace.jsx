@@ -261,7 +261,7 @@ export default function ModalWorkspace(props) {
                                             <div className="h-full max-h-72 overflow-y-scroll">
                                                 {
                                                     dataMemberKeyword ?
-                                                    dataMemberKeyword.data.data.length > 0 ?
+                                                    dataMemberKeyword.data?.data?.length > 0 ?
                                                     dataMemberKeyword.data.data.filter(res => {
                                                         const find = data.members.find(opt => {
                                                             return opt.id == res.id
