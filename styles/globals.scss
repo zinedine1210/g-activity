@@ -264,11 +264,11 @@ body {
   }
 
   .btn-primary {
-    @apply flex items-center justify-center px-3 xl:px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600 disabled:bg-zinc-500 disabled:cursor-not-allowed;
+    @apply flex items-center justify-center px-3 xl:px-5 py-2.5 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600 disabled:bg-zinc-500 disabled:cursor-not-allowed;
   }
 
   .btn-secondary {
-    @apply px-3 xl:px-5 py-2 text-sm text-zinc-800 transition-colors duration-200 bg-white border rounded-lg w-auto dark:hover:bg-zinc-800 dark:bg-zinc-900 hover:bg-zinc-100 dark:text-white dark:border-zinc-700 flex items-center justify-center gap-x-2 disabled:bg-zinc-500 disabled:cursor-not-allowed disabled:text-zinc-300;
+    @apply px-3 xl:px-5 py-2.5 text-sm text-zinc-800 transition-colors duration-200 bg-white border rounded-lg w-auto dark:hover:bg-zinc-800 dark:bg-zinc-900 hover:bg-zinc-100 dark:text-white dark:border-zinc-700 flex items-center justify-center gap-x-2 disabled:bg-zinc-500 disabled:cursor-not-allowed disabled:text-zinc-300;
   }
 
   .input-search {
