@@ -122,7 +122,7 @@ export default function CardStatus(props) {
             if(props.item.tasks.length > 0){
                 return Swal.fire({
                     icon:"warning",
-                    title:"Invalid",
+                    title:"Invalid, can't drop data here",
                     timer:1000,
                     showConfirmButton:false
                 })

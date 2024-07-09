@@ -120,13 +120,14 @@ export default function CardTask({ item, project, hide, status }) {
     e.preventDefault()
 
     const dragStatus = JSON.parse(e.dataTransfer.getData("json"))
+
+    if (!dragStatus.status_id || !dropStatus.status_id) {
+      return Swal.fire("Invalid, you can't drop data here")
+    }
+
     document.getElementById(dropStatus.id).style.border = "none"
     document.getElementById(dragStatus.id).style.border = "none"
     document.getElementById(dragStatus.status_id).style.border = "none"
-
-    if (!dragStatus.hasOwnProperty("status_id") || !dropStatus.hasOwnProperty("status_id")) {
-      return Swal.fire("Invalid, you can't drop data here")
-    }
 
     if (dropStatus.status_id == dragStatus.status_id) {
       handlerChangePosition(dropStatus, dragStatus)
