@@ -51,10 +51,12 @@ export default function MenuWorkspaces(props) {
                 :
                 dataMyWorkspace?.data?.data.map((menu, key) => {
                     return (
-                        <li key={key} onClick={() => handlerRouter(`/usr/workspaces/${menu.name}?id=${menu.id}`)} className={`cursor-pointer px-10 py-2 text-sm text-zinc-200 font-semibold flex items-center gap-2 ${`/usr/workspaces/${menu.name}?id=${menu.id}` == router.asPath ? "text-black bg-blue-100 dark:bg-darkSecondary":"hover:bg-zinc-100 hover:text-black dark:hover:text-white dark:hover:bg-dark"}`}>
-                            <span className="w-2 h-2 rounded-full bg-green-400 block"></span>
-                            {menu.name}
-                        </li>
+                        <>
+                            <li key={key} onClick={() => handlerRouter(`/usr/workspaces/${menu.name}?id=${menu.id}`)} className={`cursor-pointer px-10 py-2 text-sm text-zinc-200 font-semibold flex items-center gap-2 ${`/usr/workspaces/${menu.name}?id=${menu.id}` == router.asPath ? "text-black bg-blue-100 dark:bg-darkSecondary":"hover:bg-zinc-100 hover:text-black dark:hover:text-white dark:hover:bg-dark"}`}>
+                                <span className="w-2 h-2 rounded-full bg-green-400 block"></span>
+                                {menu.name}
+                            </li>
+                        </>
                     )
                 })
             }

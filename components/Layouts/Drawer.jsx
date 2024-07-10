@@ -7,6 +7,7 @@ import { FaGreaterThan, FaRocketchat, FaVideo } from "react-icons/fa";
 import LibraryGPTMenu from "./LibraryGPTMenu";
 import { HiChevronLeft } from "react-icons/hi";
 import Link from "next/link";
+import { BsChat } from "react-icons/bs";
 
 
 export default function Drawer(props) {
@@ -48,6 +49,10 @@ export default function Drawer(props) {
                 <li onClick={() => handlerRouter("/usr/videoCall")} className={`${"/usr/videoCall" == router.asPath ? "bg-gradient-to-r dark:from-zinc-500 dark:to-zinc-600 from-blue-400 to-blue-500 dark:bg-darkSecondary":""} flex items-center px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 dark:hover:bg-dark cursor-pointer`}>
                     <FaVideo className="w-5 h-5 text-white transition duration-75 group-hover:text-white dark:group-hover:text-white"/>
                     <span className="ml-3">Video Call</span>
+                </li>
+                <li onClick={() => handlerRouter("/usr/chat")} className={`${"/usr/chat" == router.asPath ? "bg-gradient-to-r dark:from-zinc-500 dark:to-zinc-600 from-blue-400 to-blue-500 dark:bg-darkSecondary":""} flex items-center px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 dark:hover:bg-dark cursor-pointer`}>
+                    <BsChat className="w-5 h-5 text-white transition duration-75 group-hover:text-white dark:group-hover:text-white"/>
+                    <span className="ml-3">Chat</span>
                 </li>
                 {/* <LibraryGPTMenu /> */}
             </ul>
