@@ -44,7 +44,7 @@ export default function ParticipantsMOM2() {
 
             <div className="space-y-1">
                 {
-                    data.participants.map((item, key) => {
+                    data.participants && data.participants.map((item, key) => {
                         return (
                             <div className="flex items-center gap-2">
                                 <h1 className="font-bold text-zinc-500">

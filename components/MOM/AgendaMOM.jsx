@@ -5,7 +5,6 @@ export default function AgendaMOM() {
     const context = useContext(MyContext)
     const data = context.dataDocumentation
 
-
     const handlerKey = async (e, index) => {
         data.agenda[index] = e.target.innerHTML
 

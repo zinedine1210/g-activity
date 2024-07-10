@@ -27,26 +27,38 @@ import Image from "@tiptap/extension-image"
 import Collaboration from '@tiptap/extension-collaboration'
 import * as Y from 'yjs'
 import { WebrtcProvider } from 'y-webrtc'
+import { getYDocInstance, cleanUpYDocInstance } from '@components/YDoc/ydoc';
 import NoteRepository from "../../repositories/NoteRepository";
+
 
 lowlight.registerLanguage('html', html)
 lowlight.registerLanguage('css', css)
 lowlight.registerLanguage('js', js)
 lowlight.registerLanguage('ts', ts)
 
-const ydoc = new Y.Doc()
+// const ydoc = new Y.Doc()
 
 export default function NotesEditor(props) {
+  const ydoc = getYDocInstance();
+
+  console.log("apa isinya ydoc", ydoc)
+
   const {t} = useTranslation("common")
   const context = useContext(MyContext)
   const [provider, setProvider] = useState(null)
   
   useEffect(() => {
-    if(!provider){
+    console.log("disini use effect")
+    if (!provider) {
       setProvider(new WebrtcProvider(props.data.id, ydoc))
     }
     context.setDataDocumentation(props.data)
-  }, [])
+
+    // Clean up Y.Doc when component unmounts or when props.data.id changes
+    return () => {
+      cleanUpYDocInstance(ydoc, props.data.id);
+    };
+  }, [props.data.id])
 
   const handlerEditor = (value) => {
     props.data.content = value

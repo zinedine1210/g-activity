@@ -30,12 +30,14 @@ export default function Application({ data, t, profileData }) {
 
         const getXA = JSON.parse(localStorage.getItem("XA"))
         const result = await NoteRepository.postNote({ xa: getXA, data: obj })
-        console.log(result);
+        console.log("post result note", result);
         if (result.status == 0) {
             mutate(["notes", 1, data.id], cache => {
                 cache.data.push(result.data)
                 return cache
             }, false)
+            console.log("context", context)
+            context.dataDocumentation = result.data
             context.setDataDocumentation(context.dataDocumentation)
             Swal.fire({
                 icon: "success",
@@ -83,15 +85,47 @@ export default function Application({ data, t, profileData }) {
             privacy: -1
         }
 
-        console.log(obj)
-
         const result = await MomRepository.postMom({ xa: JSON.parse(localStorage.getItem("XA")), data: obj })
-        console.log(result);
         if (result.status == 0) {
-            mutate(["mom", 1, data.id], cache => {
-                cache.data.push(result.data)
-                return cache
-            }, false)
+            if(!result.data.header){
+                result.data.header = [
+                    {
+                      "name": "Meeting Result",
+                      "id": "1678516541022736888695",
+                      "align": "start",
+                      "type": "freeText"
+                    },
+                    {
+                      "name": "Target Date",
+                      "id": "1678516541022488185986",
+                      "align": "start",
+                      "type": "datetime"
+                    },
+                    {
+                      "name": "PIC",
+                      "id": "1678516541022295981233",
+                      "align": "start",
+                      "type": "mention"
+                    },
+                    {
+                      "name": "Stated By",
+                      "id": "1678516541022063365596",
+                      "align": "start",
+                      "type": "mention"
+                    }
+                  ]
+            }
+
+            const mutateCache = async () => {
+                await mutate(["mom", 1, data.id], cache => {
+                    console.log("cache yaitu", cache);
+                    cache.data.push(result.data);
+                    return cache;
+                }, false);
+            };
+
+            await mutateCache();
+            context.dataDocumentation = result.data
             context.setDataDocumentation(context.dataDocumentation)
             Swal.fire({
                 icon: "success",

@@ -54,6 +54,7 @@ export default function NavbarNote(props) {
     }
 
     const handlerSave = async () => {
+        console.log("context put", context)
         const result = await NoteRepository.putNote({ data: context.dataDocumentation, id: context.dataDocumentation.id, xa: JSON.parse(localStorage.getItem("XA")) })
         console.log(result);
         if (result.status == 0) {
@@ -117,7 +118,7 @@ export default function NavbarNote(props) {
                         <button title="Print"><FaPrint className="w-4 h-4" /></button>
                         <div className="flex -space-x-3">
                             {
-                                context.dataDocumentation ? context.dataDocumentation.assigns.slice(0, 3).map((item, key) => {
+                                context.dataDocumentation?.assigns ? context.dataDocumentation.assigns.slice(0, 3).map((item, key) => {
                                     if (key == 2)
                                         return (
                                             <span key={key} className="w-10 h-10 border ring-2 ring-offset-1 ring-zinc-200 rounded-full relative bg-zinc-500 border-zinc-300 flex items-center justify-center text-sm text-white uppercase group font-bold">
