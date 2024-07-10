@@ -56,7 +56,7 @@ export default function Navbar(props) {
 
         const returnRes = await DocumentationRepository.putDocumentation({ xa: JSON.parse(localStorage.getItem("XA")), id: newDocumentation.id, data: newDocumentation })
         if (returnRes.status == 0) {
-            Swal.fire({
+            Swal.fire({ 
                 icon: "success",
                 position: "top-end",
                 title: "Changes saved successfully",
@@ -65,6 +65,9 @@ export default function Navbar(props) {
             })
 
             mutate(['documentation', 1, context.dataDocumentation.project_id], cache => {
+                if (!cache) {
+                    cache = { data: [] };
+                  }
                 const indexData = findIndex(cache?.data, { id: returnRes.data.id })
                 cache.data[indexData] = returnRes.data
                 return cache
@@ -216,7 +219,6 @@ function ModalAssign(props) {
     const handlerSubmitEmail = async (e) => {
         e.preventDefault()
         setLoading(true)
-        console.log(data);
         let dataFinal = {
             add: [],
             delete: []
@@ -242,12 +244,9 @@ function ModalAssign(props) {
             }
         })
 
-        console.log(dataFinal);
-
         const getXA = JSON.parse(localStorage.getItem("XA"))
         if (dataFinal.add.length > 0) {
             const result = await DocumentationRepository.postTeamDocumentation({ data: dataFinal.add, xa: getXA, projectID: context.dataDocumentation.project_id, id: context.dataDocumentation.id })
-            console.log(result);
         }
 
         if (dataFinal.delete.length > 0) {
@@ -306,7 +305,6 @@ function ModalAssign(props) {
     useEffect(() => {
         async function getMember() {
             const result = await ProjectRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), type: 1, id: context.dataDocumentation.project_id })
-            console.log(result);
             setMember(result.data)
             setKeyword(result.data)
         }

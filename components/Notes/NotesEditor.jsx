@@ -41,8 +41,6 @@ lowlight.registerLanguage('ts', ts)
 export default function NotesEditor(props) {
   const ydoc = getYDocInstance();
 
-  console.log("apa isinya ydoc", ydoc)
-
   const {t} = useTranslation("common")
   const context = useContext(MyContext)
   const [provider, setProvider] = useState(null)
@@ -54,7 +52,6 @@ export default function NotesEditor(props) {
     }
     context.setDataDocumentation(props.data)
 
-    // Clean up Y.Doc when component unmounts or when props.data.id changes
     return () => {
       cleanUpYDocInstance(ydoc, props.data.id);
     };

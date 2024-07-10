@@ -37,6 +37,7 @@ export default function Application({ data, t, profileData }) {
                 return cache
             }, false)
             console.log("context", context)
+            result.data.assigns = []
             context.dataDocumentation = result.data
             context.setDataDocumentation(context.dataDocumentation)
             Swal.fire({

@@ -54,7 +54,6 @@ export default function NavbarNote(props) {
     }
 
     const handlerSave = async () => {
-        console.log("context put", context)
         const result = await NoteRepository.putNote({ data: context.dataDocumentation, id: context.dataDocumentation.id, xa: JSON.parse(localStorage.getItem("XA")) })
         console.log(result);
         if (result.status == 0) {
@@ -155,7 +154,7 @@ export default function NavbarNote(props) {
 function ModalAssign(props) {
     const context = useContext(MyContext)
     const [loading, setLoading] = useState(false)
-    const [data, setData] = useState(JSON.parse(JSON.stringify(context.dataDocumentation.assigns)))
+    const [data, setData] = useState(JSON.parse(JSON.stringify(context.dataDocumentation?.assigns? context.dataDocumentation.assigns:[])))
     const [keyword, setKeyword] = useState(null)
     const [member, setMember] = useState(null)
     const [datatimeout, setDatatimeout] = useState(null)
@@ -168,16 +167,21 @@ function ModalAssign(props) {
             add: [],
             delete: []
         }
+        console.log("context context", context)
 
-        context.dataDocumentation.assigns.forEach((val, key) => {
-            const findData = data.find(res => {
-                return res.uid == val.uid
-            })
-
-            if (!findData) {
-                dataFinal.delete.push(val.uid)
-            }
-        });
+        
+        if(context.dataDocumentation.assigns.length > 0){
+            context.dataDocumentation.assigns.forEach((val, key) => {
+                const findData = data.find(res => {
+                    return res.uid == val.uid
+                })
+    
+                if (!findData) {
+                    dataFinal.delete.push(val.uid)
+                }
+            });
+        }
+     
 
         data.forEach((val) => {
             const findData = context.dataDocumentation.assigns.find(res => {
