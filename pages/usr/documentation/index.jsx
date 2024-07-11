@@ -40,13 +40,14 @@ function Editor(props) {
       const result = await DocumentationRepository.getDocumentationByID({ xa: getXA, id: id })
       
       const members = await DocumentationRepository.getTeam({ id: id, type: 1, xa: JSON.parse(localStorage.getItem("XA")) })
-      
+      console.log("apakah ada memberss", members)
       // dapatkan data utama documentation file dan member didalamnya
       result.data['assigns'] = members.data
       context.setDataDocumentation(result.data)
     }
 
     context.setDataDocumentation(null);
+    console.log("tak ada id", id)
     if (id) {
       getData()
     }
@@ -69,6 +70,7 @@ function Editor(props) {
   return (
     <Layout title="HOME" desc="HALAMAN UTAMA" lang={t}>
       <Navbar lang={t} />
+      {console.log("context.dataDocumentation", context)}
       {
         context.dataDocumentation ?
           <Suspense fallback={"Loading"}>

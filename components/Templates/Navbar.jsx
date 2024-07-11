@@ -307,6 +307,7 @@ function ModalAssign(props) {
     useEffect(() => {
         async function getMember() {
             const result = await ProjectRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), type: 1, id: context.dataDocumentation.project_id })
+            console.log("sini bang??", result)
             setMember(result.data)
             setKeyword(result.data)
         }
