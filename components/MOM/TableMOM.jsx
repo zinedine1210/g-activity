@@ -75,7 +75,7 @@ export default function TableMOM() {
                                         <th></th>
                                         <th className="w-5 relative font-bold p-3 text-sm border-r text-left rtl:text-right text-zinc-500 dark:text-zinc-400">No</th>
                                         {
-                                            data.header.map((header, key) => {
+                                            data.header && data.header.map((header, key) => {
                                                 return (
                                                     <RecordHeader key={key} header={header} />
                                                 )

@@ -2,6 +2,8 @@ import { ThemeProvider } from 'next-themes'
 import '../styles/globals.scss'
 import "../styles/pencil.css"
 import "../styles/loading.css"
+import '@utils/noconsole';
+
 // import "../build.css"
 import {appWithTranslation} from "next-i18next"
 import { useEffect, useState } from 'react'

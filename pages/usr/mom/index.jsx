@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Suspense, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,16 +15,21 @@ function MinuteOfMeeting(props) {
     const {t} = useTranslation("common")
     const [size, setSize] = useState(1)
     const context = useContext(MyContext)
+    const router = useRouter();
+    const { id } = router.query;
+    
+
+  console.log("emang id apa??", id)
 
     useEffect(() => {
       async function getData(){
-        console.log("disini bangg")
+        console.log("disini bangg load lagi")
         console.log(props.query)
-        const result = await MomRepository.getMomByID({xa:JSON.parse(localStorage.getItem("XA")), id:props.query.id})
-        console.log("mom_data", result);
-        const members = await MomRepository.getTeam({xa:JSON.parse(localStorage.getItem("XA")), id:props.query.id, type:1})
-        console.log("members", members);
-        const participant = await MomRepository.getParticipant({xa:JSON.parse(localStorage.getItem("XA")), momID:props.query.id})
+        const result = await MomRepository.getMomByID({xa:JSON.parse(localStorage.getItem("XA")), id:id})
+        console.log("result mom", result);
+        const members = await MomRepository.getTeam({xa:JSON.parse(localStorage.getItem("XA")), id:id, type:1})
+        console.log("result mom members", members);
+        const participant = await MomRepository.getParticipant({xa:JSON.parse(localStorage.getItem("XA")), momID:id})
         console.log("participant",participant);
         result.data.assigns = members.data
         result.data.participants = participant.data
@@ -58,10 +64,11 @@ function MinuteOfMeeting(props) {
           context.setDataDocumentation(result.data)
         }
       }
-      if(!context.dataDocumentation){
+      context.setDataDocumentation(null);
+      if(id){
         getData()
       }
-    }, [])
+    }, [id])
 
 
     const handlerAddSize = () => {

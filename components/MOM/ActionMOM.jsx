@@ -44,7 +44,7 @@ export default function ActionMOM() {
         <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-300 mb-2">Add action items that you create during the meeting and check off boxes as you make progress.</p>
         <div className="space-y-2">
             {
-                data.action_list.map((action, key) => {
+                data.action_list && data.action_list.map((action, key) => {
                     return (
                         <div className="flex items-center gap-3" key={key}>
                             <input type="checkbox" className="w-4 h-4" checked={action.checked} onChange={e => handlerChange(e.target.checked, "check", key)} />

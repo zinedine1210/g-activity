@@ -1,3 +1,6 @@
+
+import { useContext } from "react";
+import { useRouter } from 'next/router'
 import Layout from "../../../components/Layouts/Layout";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -5,7 +8,6 @@ import { Suspense } from "react";
 import Sidebar from "../../../components/Templates/Sidebar";
 import Main from "../../../components/Content/Main";
 import Tools from "../../../components/Content/Tools";
-import { useContext } from "react";
 import { MyContext } from "../../../context/MyProvider";
 import { useEffect } from "react";
 import Navbar from "../../../components/Templates/Navbar";
@@ -15,7 +17,40 @@ import DocumentationRepository from "../../../repositories/DocumentationReposito
 function Editor(props) {
   const { t } = useTranslation("common")
   const context = useContext(MyContext)
+  const router = useRouter();
+  const { id } = router.query;
+
+  // useEffect(() => {
+  //   const handleBeforeUnload = (e) => {
+  //     e.preventDefault();
+  //     e.returnValue = '';
+  //   };
+
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
+
+  //   return () => {
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //   };
+  // }, [id]);
+
+
   useEffect(() => {
+    const getXA = JSON.parse(localStorage.getItem("XA"))
+    async function getData() {
+      const result = await DocumentationRepository.getDocumentationByID({ xa: getXA, id: id })
+      
+      const members = await DocumentationRepository.getTeam({ id: id, type: 1, xa: JSON.parse(localStorage.getItem("XA")) })
+      
+      // dapatkan data utama documentation file dan member didalamnya
+      result.data['assigns'] = members.data
+      context.setDataDocumentation(result.data)
+    }
+
+    context.setDataDocumentation(null);
+    if (id) {
+      getData()
+    }
+
     const handleBeforeUnload = (e) => {
       e.preventDefault();
       e.returnValue = '';
@@ -26,25 +61,8 @@ function Editor(props) {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, []);
 
-
-  useEffect(() => {
-    const getXA = JSON.parse(localStorage.getItem("XA"))
-    async function getData() {
-      const result = await DocumentationRepository.getDocumentationByID({ xa: getXA, id: props.query.id })
-      const members = await DocumentationRepository.getTeam({ id: props.query.id, type: 1, xa: JSON.parse(localStorage.getItem("XA")) })
-      // console.log(members, result);
-      // dapatkan data utama documentation file dan member didalamnya
-      result.data['assigns'] = members.data
-      context.setDataDocumentation(result.data)
-    }
-
-
-    if (!context.dataDocumentation) {
-      getData()
-    }
-  }, [])
+  }, [id])
 
 
 

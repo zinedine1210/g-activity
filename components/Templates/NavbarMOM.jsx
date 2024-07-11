@@ -10,6 +10,7 @@ import CardAssign from "./CardAssign";
 import Swal from "sweetalert2";
 
 export default function NavbarMOM(props) {
+    console.log("dipanggil???")
     const { lang, editor } = props
     const [active, setActive] = useState(false)
     const { theme, setTheme } = useTheme()
@@ -118,7 +119,8 @@ export default function NavbarMOM(props) {
                     <div className="flex items-center gap-3">
                         <div className="flex -space-x-3">
                             {
-                                context.dataDocumentation?.assign ? context.dataDocumentation.assigns.slice(0, 3).map((item, key) => {
+                                context.dataDocumentation?.assigns ? context.dataDocumentation.assigns.slice(0, 3).map((item, key) => {
+                                    console.log("ini kah map item mom", item)
                                     if (key == 3)
                                         return (
                                             <span key={key} className="w-10 h-10 border ring-2 ring-offset-1 ring-zinc-200 rounded-full relative bg-zinc-500 border-zinc-300 flex items-center justify-center text-sm text-white uppercase group font-bold">

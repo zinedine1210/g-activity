@@ -55,7 +55,6 @@ export default function NavbarNote(props) {
 
     const handlerSave = async () => {
         const result = await NoteRepository.putNote({ data: context.dataDocumentation, id: context.dataDocumentation.id, xa: JSON.parse(localStorage.getItem("XA")) })
-        console.log(result);
         if (result.status == 0) {
             Swal.fire({
                 icon: "success",
@@ -162,13 +161,10 @@ function ModalAssign(props) {
     const handlerSubmitEmail = async (e) => {
         e.preventDefault()
         setLoading(true)
-        console.log(data);
         let dataFinal = {
             add: [],
             delete: []
         }
-        console.log("context context", context)
-
         
         if(context.dataDocumentation.assigns.length > 0){
             context.dataDocumentation.assigns.forEach((val, key) => {
@@ -192,17 +188,14 @@ function ModalAssign(props) {
                 dataFinal.add.push(val.uid)
             }
         })
-        console.log(dataFinal);
 
         const getXA = JSON.parse(localStorage.getItem("XA"))
         if (dataFinal.add.length > 0) {
             const result = await NoteRepository.postTeamNote({ data: dataFinal.add, xa: getXA, projectID: context.dataDocumentation.project_id, id: context.dataDocumentation.id })
-            console.log(result);
         }
 
         if (dataFinal.delete.length > 0) {
             const deleteData = await NoteRepository.deleteTeam({ xa: JSON.parse(localStorage.getItem("XA")), id: context.dataDocumentation.id, data: dataFinal.delete })
-            console.log(deleteData);
         }
         context.dataDocumentation.assigns = data
         context.setDataDocumentation(context.dataDocumentation)
@@ -248,7 +241,6 @@ function ModalAssign(props) {
     useEffect(() => {
         async function getMember() {
             const result = await ProjectRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), type: 1, id: context.dataDocumentation.project_id })
-            console.log(result);
             setMember(result.data)
             setKeyword(result.data)
         }

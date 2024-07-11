@@ -1,5 +1,6 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useContext, useEffect } from "react";
+import { useRouter } from 'next/router'
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "react-i18next";
 import { FaChevronRight } from "react-icons/fa";
 import Layout from "../../../components/Layouts/Layout";
@@ -17,14 +18,17 @@ import Swal from "sweetalert2";
 function BoardEditor(props) {
   const { t } = useTranslation()
   const { profileData } = props
-  // const status = useStatus(JSON.parse(localStorage.getItem("XA")), props.query.id)
+  // const status = useStatus(JSON.parse(localStorage.getItem("XA")), id)
   const context = useContext(MyContext)
+  const router = useRouter();
+  const { id } = router.query;
 
   useEffect(() => {
+    console.log("use effect taskboard active??")
     async function getData() {
-      const result = await ProjectRepository.getProjectByID({ xa: JSON.parse(localStorage.getItem("XA")), id: props.query.id })
-      const status = await TaskRepository.getStatusTask({ xa: JSON.parse(localStorage.getItem("XA")), id: props.query.id })
-      const tasks = await TaskRepository.getTask({ xa: JSON.parse(localStorage.getItem("XA")), id: props.query.id })
+      const result = await ProjectRepository.getProjectByID({ xa: JSON.parse(localStorage.getItem("XA")), id: id })
+      const status = await TaskRepository.getStatusTask({ xa: JSON.parse(localStorage.getItem("XA")), id: id })
+      const tasks = await TaskRepository.getTask({ xa: JSON.parse(localStorage.getItem("XA")), id: id })
       console.log(result, status, tasks);
 
       // IF error
@@ -58,10 +62,11 @@ function BoardEditor(props) {
     }
 
 
-    if (!context.dataDocumentation) {
+    context.setDataDocumentation(null);
+    if(id){
       getData()
     }
-  }, [props.query, context.dataDocumentation])
+  }, [id])
 
   if (context.dataDocumentation) {
     // Board mode
@@ -74,20 +79,22 @@ function BoardEditor(props) {
             <div className="h-1/6 border-b p-5 w-full">
               <div>
                 <div className="flex items-center gap-3">
-                  <Link href={`/usr/workspaces/project/${context.dataDocumentation.project.name}?id=${context.dataDocumentation.project.id}`}>
+                  <Link href={`/usr/workspaces/project/${context.dataDocumentation?.project?.name}?id=${context.dataDocumentation?.project?.id}`}>
                     <h1 className="text-zinc-500 hover:text-blue-500 dark:text-zinc-400 flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-green-500"></span>Project Detail</h1>
                   </Link>
                   <FaChevronRight className="text-zinc-500 text-sm" />
                   <h1 className="font-semibold text-zinc-500 dark:text-zinc-400">Kanban Board Project</h1>
                 </div>
-                <p className="text-2xl font-bold capitalize">{context.dataDocumentation.project.name}</p>
+                <p className="text-2xl font-bold capitalize">{context.dataDocumentation?.project?.name}</p>
               </div>
-              <MenuBoard lang={t} />
+              {
+                context.dataDocumentation?.project?.workspace_id && <MenuBoard lang={t} />
+              }
             </div>
 
             <div className="flex gap-5 p-5 h-5/6 overflow-x-auto w-screen bg-zinc-100">
               {
-                context.dataDocumentation.data.map((list, idx) => {
+                context.dataDocumentation?.data?.map((list, idx) => {
                   return (
                     <CardStatus item={list} project={context.dataDocumentation.project} key={idx} />
                   )

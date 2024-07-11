@@ -5,6 +5,8 @@ export default function AgendaMOM() {
     const context = useContext(MyContext)
     const data = context.dataDocumentation
 
+    console.log("adakah data document", data)
+
     const handlerKey = async (e, index) => {
         data.agenda[index] = e.target.innerHTML
 
@@ -36,7 +38,7 @@ export default function AgendaMOM() {
         <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-300 mb-2">Add discussion topics before the meeting.</p>
         <div>
             {
-                data.agenda.map((text, key) => {
+                data.agenda && data.agenda.map((text, key) => {
                     return (
                         <div className="flex items-center gap-3">
                             <span className="w-1.5 h-1.5 rounded-full bg-black dark:bg-white"></span>

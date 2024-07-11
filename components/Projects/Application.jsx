@@ -126,6 +126,7 @@ export default function Application({ data, t, profileData }) {
             };
 
             await mutateCache();
+            result.data.assigns = []
             context.dataDocumentation = result.data
             context.setDataDocumentation(context.dataDocumentation)
             Swal.fire({
@@ -163,6 +164,8 @@ export default function Application({ data, t, profileData }) {
                 cache.data.push(result.data)
                 return cache
             }, false)
+            result.data.assigns = []
+            context.dataDocumentation = result.data
             context.setDataDocumentation(context.dataDocumentation)
             Swal.fire({
                 icon: "success",
@@ -300,7 +303,7 @@ export default function Application({ data, t, profileData }) {
                             </button>
                     }
                 </div>
-                <div className="w-full h-20 flex">
+                {/* <div className="w-full h-20 flex">
                     <div className="w-3/4 border-l-2 rounded-l-xl border-y-2 p-4 flex items-center">
                         <div>
                             <h1 className="font-semibold text-sm uppercase">Error Knowledge</h1>
@@ -321,7 +324,7 @@ export default function Application({ data, t, profileData }) {
                                 </svg>
                             </button>
                     }
-                </div>
+                </div> */}
             </div>
 
             {/* APPLICATION */}

@@ -17,7 +17,6 @@ async function getPage(context) {
     })
     arr = result.data
   } else {
-    console.log("kesana");
     arr = context.realDocumentation
   }
 
@@ -61,7 +60,7 @@ export default function Sidebar({ lang }) {
     if (!context.dataDocumentation.hasOwnProperty("pages") && context.dataDocumentation.pages == undefined) {
       getAllData()
     }
-  }, [context.realDocumentation])
+  }, [context.dataDocumentation])
 
   const handlerAddPage = async () => {
     const posNow = context?.realDocumentation.length + 1 ?? 1
@@ -88,7 +87,7 @@ export default function Sidebar({ lang }) {
     }
 
     const result = await DocumentationRepository.postPageDocumentation({ xa: JSON.parse(localStorage.getItem("XA")), data: obj })
-    console.log(result);
+  
     if (result.status == 0) {
       context.dataDocumentation.pages.unshift(result.data)
       context.setDataDocumentation(context.dataDocumentation)
@@ -137,7 +136,7 @@ export default function Sidebar({ lang }) {
         }
 
         await getIdData(findData)
-        console.log(arr);
+       
         const result = await DocumentationRepository.deletePageDocumentation({ data: arr, xa: JSON.parse(localStorage.getItem("XA")) })
         if (result.status == 0) {
           context.dataDocumentation.pages = newArr
@@ -246,7 +245,7 @@ export default function Sidebar({ lang }) {
 
             <ul className="mt-2">
               {
-                dataDoc?.pages && dataDoc.pages !== undefined ? dataDoc.pages.map((item, idx) => {
+                dataDoc?.pages ? dataDoc.pages.map((item, idx) => {
                   return (
                     <ListPage lang={lang} handlerAddPage={(value) => handlerAddPage(value)} item={item} key={idx} defaultHide={false} idx={idx} handlerDeletePage={(e) => handlerDeletePage(e)} handleDragStart={(e, value) => handleDragStart(e, value)} handleDrop={(e, idx, type, item) => handleDrop(e, idx, type, item)} />
                   )

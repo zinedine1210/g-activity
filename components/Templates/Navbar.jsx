@@ -20,6 +20,8 @@ export default function Navbar(props) {
     const [language, setLanguage] = useState(defaultLocale)
     const [open, setOpen] = useState(false)
 
+    console.log("context navbar doc", context)
+
     const settingsLanguage = (value) => {
         if (value == "id") {
             router.push(router.asPath, router.asPath, { locale: "id" })
@@ -125,7 +127,7 @@ export default function Navbar(props) {
                                 <div className="flex items-center">
                                     <div className="flex -space-x-3">
                                         {
-                                            context.dataDocumentation ? context.dataDocumentation.assigns.slice(0, 3).map((item, key) => {
+                                            context.dataDocumentation?.assigns ? context.dataDocumentation.assigns.slice(0, 3).map((item, key) => {
                                                 if (key == 3)
                                                     return (
                                                         <span key={key} className="w-10 h-10 border ring-2 ring-offset-1 ring-zinc-200 rounded-full relative bg-zinc-500 border-zinc-300 flex items-center justify-center text-sm text-white uppercase group font-bold">
