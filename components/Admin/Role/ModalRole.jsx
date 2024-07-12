@@ -48,7 +48,8 @@ export default function ModalRole({ statename }) {
                     data: value
                 })
                 if (result.status == 0) {
-                    context.setData({ ...context, [statename]: null, modal: null })
+                    const filter = context[statename].data.filter(res => res.id !== value.id)
+                    context.setData({ ...context, [statename]: { data: [ result.data, ...filter ]}, modal: null })
                     Notify("Updated", "info")
                 }
             }
@@ -64,7 +65,7 @@ export default function ModalRole({ statename }) {
                 })
                 console.log(result)
                 if (result.status == 0) {
-                    context.setData({ ...context, [statename]: null, modal: null })
+                    context.setData({ ...context, [statename]: { data: [ result.data , ...context[statename].data ]}, modal: null })
                     Notify("Success", "info")
                 }
             }

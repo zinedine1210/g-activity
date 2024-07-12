@@ -3,11 +3,13 @@ import { MyContext } from "../../../context/MyProvider"
 import RecordUser from "./RecordUser"
 import UserRepository from "../../../repositories/UserRepository"
 import RoleRepository from "../../../repositories/RoleRepository"
+import { Notify } from "@utils/scriptApp"
 
 export default function TableUser({
     keyword
 }) {
     const context = useContext(MyContext)
+    const [roles, setRoles] = useState(null)
 
     const getUserData = async () => {
         const getxa = JSON.parse(localStorage.getItem("XA"))
@@ -22,10 +24,7 @@ export default function TableUser({
         });
         const result = await UserRepository.getUser({ XA: getxa })
         if (result.status == 0) {
-            result.data.map((list) => {
-                const findRole = resultbyids.data.find(res => res.id == list.r_id)
-                list.rolename = findRole
-            })
+            setRoles(resultbyids.data)
             context.setData({ ...context, dataUserAdmin: result, options: { ...context.options, roleOptions: arr } })
         }
     }
@@ -56,6 +55,10 @@ export default function TableUser({
                                             return true
                                         })
                                         .map((item, key) => {
+                                            if(roles){
+                                                const findRole = roles.find(res => res.id == item.r_id)
+                                                item.rolename = findRole
+                                            }
                                             return <RecordUser key={key} data={item} />
                                         })
     return (
@@ -72,7 +75,7 @@ export default function TableUser({
                                                 <tr>
                                                     <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-zinc-500 dark:text-zinc-400">
                                                         <div className="flex items-center gap-x-3">
-                                                            <input type="checkbox" onChange={() => handlerSelectAll()} className="text-blue-500 border-zinc-300 rounded dark:bg-zinc-900 dark:ring-offset-zinc-900 dark:border-zinc-700" />
+                                                            <input type="checkbox" onChange={() => Notify("Action not found", "info")} className="text-blue-500 border-zinc-300 rounded dark:bg-zinc-900 dark:ring-offset-zinc-900 dark:border-zinc-700" />
                                                             <span>Username</span>
                                                         </div>
                                                     </th>

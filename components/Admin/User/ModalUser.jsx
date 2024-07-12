@@ -16,6 +16,7 @@ export default function ModalUser(props) {
     const [typename, setTypename] = useState("")
     const [optionsRole, setOptionsRole] = useState(null)
 
+
     const handlerChange = (valueinput, target) => {
         setValue({ ...value, [target]: valueinput })
     }
@@ -27,10 +28,8 @@ export default function ModalUser(props) {
     const getComboRole = async () => {
         const getxa = JSON.parse(localStorage.getItem("XA"))
         const result = await RoleRepository.getRoleComboBox({ xa: getxa })
-        console.log(result)
         if (result.status == 0) {
             let arr = []
-
             result.data.forEach(element => {
                 let obj = {
                     value: element.id,
@@ -72,8 +71,6 @@ export default function ModalUser(props) {
         if (!value?._active || !value?.r_id) return alert("Please fill input is null")
         // console.log(value)
         actionUser[type].action(value)
-
-        // context.setData({ ...context, dataUserAdmin: null })
     }
 
     let actionUser = {
@@ -87,7 +84,8 @@ export default function ModalUser(props) {
                     data: value
                 })
                 if (result.status == 0) {
-                    context.setData({ ...context, dataUserAdmin: null, modal: null })
+                    const filter = context.dataUserAdmin.data.filter(res => res.id !== value.id)
+                    context.setData({ ...context, dataUserAdmin: { data: [ result.data, ...filter ]}, modal: null })
                     Notify("Updated", "info")
                 }
             }
@@ -102,7 +100,7 @@ export default function ModalUser(props) {
                 })
                 console.log(result)
                 if (result.status == 0) {
-                    context.setData({ ...context, dataUserAdmin: null, modal: null })
+                    context.setData({ ...context, dataUserAdmin: { data: [ result.data , ...context.dataUserAdmin.data ]}, modal: null })
                     setOptionsRole(null)
                     Notify("Berhasil ditambahkan", "info")
                 }

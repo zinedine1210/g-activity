@@ -14,8 +14,9 @@ export default function RecordEnum({ data, statename, enumSelf }) {
             xa: JSON.parse(localStorage.getItem("XA")),
             data: [payload.id]
         })
-        console.log(result)
         if(result.status == 0){
+            const filter = context[statename].data.filter(res => res.id !== payload.id)
+            context.setData({ ...context, [statename]: { ...context[statename], data: filter }})
             Notify("Deleted", "success")
         }else{
             alert("Something went wrong")

@@ -3,6 +3,7 @@ import SelectReusable from "../Partials/SelectReusable";
 import { BsTrash, BsPencil, BsEye } from "react-icons/bs"
 import { useContext } from "react";
 import { MyContext } from "../../../context/MyProvider";
+import { Notify } from "@utils/scriptApp";
 
 export default function RecordUser({ data }) {
     const context = useContext(MyContext)
@@ -38,7 +39,7 @@ export default function RecordUser({ data }) {
         <tr>
             <td className="px-4 py-4 text-sm font-medium text-zinc-700 dark:text-white whitespace-nowrap">
                 <div className="inline-flex items-center gap-x-3">
-                    <input type="checkbox" onChange={e => handlerCheckbox(file.id)} className="text-blue-500 border-zinc-300 rounded dark:bg-zinc-900 dark:ring-offset-zinc-900 dark:border-zinc-700" />
+                    <input type="checkbox" onChange={e => Notify("Action not found", "info")} className="text-blue-500 border-zinc-300 rounded dark:bg-zinc-900 dark:ring-offset-zinc-900 dark:border-zinc-700" />
                     <h1>{data?.username}</h1>
                 </div>
             </td>

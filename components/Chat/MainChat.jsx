@@ -102,8 +102,8 @@ export default function MainChat({
     }
 
     const intervalId = setInterval(() => {
-      fetchNewMessage();
-    }, 5000); // Interval set to 5 seconds
+      if(roomId) fetchNewMessage();
+    }, 5000);
 
     // Cleanup interval on component unmount
     return () => clearInterval(intervalId);

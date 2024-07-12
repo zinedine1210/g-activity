@@ -67,7 +67,7 @@ export default function SidebarAdmin({ profileData }) {
                 </div>
 
                 <footer className="py-5">
-                    <div className="p-2">
+                    {/* <div className="p-2">
                         <div className="p-3 bg-blue-100 rounded-lg dark:bg-gray-800">
                             <h2 className="text-sm font-medium text-gray-800 dark:text-white">New feature availabel!</h2>
 
@@ -75,7 +75,7 @@ export default function SidebarAdmin({ profileData }) {
 
                             <img className="object-cover w-full h-32 mt-2 rounded-lg" src="https://images.unsplash.com/photo-1658953229664-e8d5ebd039ba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&h=1374&q=80" alt="" />
                         </div>
-                    </div>
+                    </div> */}
                     <Link href={"/usr"}>
                         <button className={`py-3 px-5 duration-300 hover:bg-blue-400 w-full text-start flex items-center gap-3 text-white text-lg`}>
                             <BsViewList className="text-2xl" />
