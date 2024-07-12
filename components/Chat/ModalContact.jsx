@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import RoleRepository from "@repositories/RoleRepository"
 import { Notify } from "@utils/scriptApp"
 import { MyContext } from "context/MyProvider"
+import ChatCollection from "@repositories/ChatCollection"
 
 export default function ModalContact({ statename }) {
     const context = useContext(MyContext)
@@ -14,13 +15,20 @@ export default function ModalContact({ statename }) {
     }
 
     useEffect(() => {
+        console.log(data)
         if (type == "create") {
             setTypename("Create Contact")
+            setValue({
+                username: data?.username ?? "",
+                user_id: data?.id ?? ""
+            })
         } else if (type == "update") {
             let obj = {
-                color: data?.color ?? "",
-                rolename: data?.rolename ?? "",
-                id: data?.id ?? ""
+                username: data?.username ?? "",
+                user_id: data?.user_id ?? "",
+                first_name: data?.first_name ?? "",
+                last_name: data?.last_name ?? "",
+                id: data?.id
             }
             setValue(obj)
             setTypename("Update Contact")
@@ -32,7 +40,6 @@ export default function ModalContact({ statename }) {
 
     const handlerSubmit = async (e) => {
         e.preventDefault()
-        if (!value?.color) return alert("Please fill input is null")
         actionUser[type].action(value)
     }
 
@@ -56,8 +63,7 @@ export default function ModalContact({ statename }) {
             name: "create",
             action: async (value) => {
                 const getxa = JSON.parse(localStorage.getItem("XA"))
-                console.log(value)
-                const result = await RoleRepository.postRole({
+                const result = await ChatCollection.postContact({
                     xa: getxa,
                     data: value
                 })
@@ -69,7 +75,6 @@ export default function ModalContact({ statename }) {
             }
         }
     }
-
 
     const isDisabledView = type == "view" ? true : false
 
@@ -86,8 +91,16 @@ export default function ModalContact({ statename }) {
                                 value && (
                                     <div className="w-full mt-10 space-y-5 overflow-y-auto flex-1">
                                         <div>
-                                            <h1 className="font-semibold">Rolename</h1>
-                                            <input type="text" disabled={isDisabledView} required value={value.rolename} name="rolename" onInput={e => handlerChange(e.target.value, e.target.name)} className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white" autoComplete="off" />
+                                            <h1 className="font-semibold">Username</h1>
+                                            <input type="text" disabled required value={value.username} name="username" onInput={e => handlerChange(e.target.value, e.target.name)} className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white" autoComplete="off" />
+                                        </div>
+                                        <div>
+                                            <h1 className="font-semibold">First Name</h1>
+                                            <input type="text" disabled={isDisabledView} required value={value.first_name} name="first_name" onInput={e => handlerChange(e.target.value, e.target.name)} className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white" autoComplete="off" />
+                                        </div>
+                                        <div>
+                                            <h1 className="font-semibold">Last Name</h1>
+                                            <input type="text" disabled={isDisabledView} required value={value.last_name} name="last_name" onInput={e => handlerChange(e.target.value, e.target.name)} className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white" autoComplete="off" />
                                         </div>
                                     </div>
                                 )

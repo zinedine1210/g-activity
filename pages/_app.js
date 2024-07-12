@@ -2,6 +2,7 @@ import { ThemeProvider } from 'next-themes'
 import '../styles/globals.scss'
 import "../styles/pencil.css"
 import "../styles/loading.css"
+import "../styles/loadingchat.css"
 import '@utils/noconsole';
 
 // import "../build.css"

@@ -14,8 +14,10 @@ export default function LayoutChat({ children, profileData, title, desc, image }
       <section className="w-full h-screen overflow-hidden flex">
           <PanelSide profileData={profileData}/>
           <div className="flex w-full">
+            <div className='w-1/3 border-r-2'>
               {children}
-              <MainChat profileData={profileData}/>
+            </div>
+            <MainChat profileData={profileData}/>
           </div>
       </section>
     </>

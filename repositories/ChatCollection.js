@@ -5,7 +5,31 @@ class ChatCollection {
     async postContact(params) {
         const data = cbor.encode(params.data)
         const reponse = await Repository.post(
-            `${baseUrl}/_role`,
+            `${baseUrl}/chat-contact`,
+            data,
+            {
+                headers: {
+                    xa: params.xa
+                },
+                contentType:"application/cbor",
+                responseType:"arraybuffer"
+            }
+        )
+        .then((response) => {
+            const data = cbor.decode(response.data)
+            return data;
+        })
+        .catch((error) => {
+            if(error?.response) return cbor.decode(error.response.data)
+                else error
+        });
+        return reponse;
+    }
+
+    async findContact(params) {
+        const data = cbor.encode(params.data)
+        const reponse = await Repository.post(
+            `${baseUrl}/chat-contact/search`,
             data,
             {
                 headers: {
@@ -27,12 +51,14 @@ class ChatCollection {
     }
 
     async deleteContact(params) {
+        const data = cbor.encode(params.data)
         const reponse = await Repository.delete(
-            `${baseUrl}/_role/${params.id}`,
+            `${baseUrl}/chat-contact`,
             {
                 headers:{
                     xa: params.xa
                 },
+                data: data,
                 contentType:"application/cbor",
                 responseType:"arraybuffer"
             }
@@ -51,7 +77,7 @@ class ChatCollection {
     async putContact(params) {
         const data = cbor.encode(params.data)
         const reponse = await Repository.put(
-            `${baseUrl}/_role/${params.id}`,
+            `${baseUrl}/chat-contact/${params.id}`,
             data,
             {
                 headers:{
@@ -92,9 +118,105 @@ class ChatCollection {
         return reponse;
     }
 
-    async getRoleComboBox(params){
+    async postRoom(params) {
+        const data = cbor.encode(params.data)
+        const reponse = await Repository.post(
+            `${baseUrl}/chat-room`,
+            data,
+            {
+                headers: {
+                    xa: params.xa
+                },
+                contentType:"application/cbor",
+                responseType:"arraybuffer"
+            }
+        )
+        .then((response) => {
+            const data = cbor.decode(response.data)
+            return data;
+        })
+        .catch((error) => {
+            if(error?.response) return cbor.decode(error.response.data)
+                else error
+        });
+        return reponse;
+    }
+
+    async dataNewRoom(params) {
+        const data = cbor.encode(params.data)
+        const reponse = await Repository.post(
+            `${baseUrl}/chat-room/new-messages`,
+            data,
+            {
+                headers: {
+                    xa: params.xa
+                },
+                contentType:"application/cbor",
+                responseType:"arraybuffer"
+            }
+        )
+        .then((response) => {
+            const data = cbor.decode(response.data)
+            return data;
+        })
+        .catch((error) => {
+            if(error?.response) return cbor.decode(error.response.data)
+                else error
+        });
+        return reponse;
+    }
+
+    async deleteRoom(params) {
+        const data = cbor.encode(params.data)
+        const reponse = await Repository.delete(
+            `${baseUrl}/chat-room`,
+            {
+                headers:{
+                    xa: params.xa
+                },
+                data: data,
+                contentType:"application/cbor",
+                responseType:"arraybuffer"
+            }
+        )
+        .then((response) => {
+            const data = cbor.decode(response.data)
+            return data;
+        })
+        .catch((error) => {
+            if(error?.response) return cbor.decode(error.response.data)
+                else error
+        });
+        return reponse;
+    }
+
+    async putRoom(params) {
+        const data = cbor.encode(params.data)
+        const reponse = await Repository.put(
+            `${baseUrl}/chat-room/${params.id}`,
+            data,
+            {
+                headers:{
+                    xa: params.xa
+                },
+                contentType: "application/cbor",
+                responseType: "arraybuffer"
+            }
+        )
+        .then((response) => {
+            const data = cbor.decode(response.data)
+            return data;
+        })
+        .catch((error) => {
+            if(error?.response) return cbor.decode(error.response.data)
+                else error
+        });
+        return reponse;
+    }
+
+    async getRoom(params){
         const reponse = await Repository.get(
-            `${baseUrl}/_rolecombo`,
+            `${baseUrl}/chat-room`,
             {
                 headers: params,
                 contentType:"application/cbor",
@@ -111,12 +233,110 @@ class ChatCollection {
         });
         return reponse;
     }
-    
-    async getRoleByIds(params){
-        const reponse = await Repository.get(
-            `${baseUrl}/_role/${params.ids}`,
+
+    async postChat(params) {
+        const data = cbor.encode(params.data)
+        const reponse = await Repository.post(
+            `${baseUrl}/chat-msg`,
+            data,
             {
-                headers: params.xa,
+                headers: {
+                    xa: params.xa
+                },
+                contentType:"application/cbor",
+                responseType:"arraybuffer"
+            }
+        )
+        .then((response) => {
+            const data = cbor.decode(response.data)
+            return data;
+        })
+        .catch((error) => {
+            if(error?.response) return cbor.decode(error.response.data)
+                else error
+        });
+        return reponse;
+    }
+
+    async fetchNewChatMessage(params) {
+        const data = cbor.encode(params.data)
+        const reponse = await Repository.post(
+            `${baseUrl}/chat-msg/new-messages`,
+            data,
+            {
+                headers: {
+                    xa: params.xa
+                },
+                contentType:"application/cbor",
+                responseType:"arraybuffer"
+            }
+        )
+        .then((response) => {
+            const data = cbor.decode(response.data)
+            return data;
+        })
+        .catch((error) => {
+            if(error?.response) return cbor.decode(error.response.data)
+                else error
+        });
+        return reponse;
+    }
+
+    async deleteChat(params) {
+        const data = cbor.encode(params.data)
+        const reponse = await Repository.delete(
+            `${baseUrl}/chat-msg`,
+            {
+                headers:{
+                    xa: params.xa
+                },
+                data: data,
+                contentType:"application/cbor",
+                responseType:"arraybuffer"
+            }
+        )
+        .then((response) => {
+            const data = cbor.decode(response.data)
+            return data;
+        })
+        .catch((error) => {
+            if(error?.response) return cbor.decode(error.response.data)
+                else error
+        });
+        return reponse;
+    }
+
+    async putIsRead(params) {
+        const data = cbor.encode(params.data)
+        const reponse = await Repository.post(
+            `${baseUrl}/chat-msg/isread`,
+            data,
+            {
+                headers:{
+                    xa: params.xa
+                },
+                contentType: "application/cbor",
+                responseType: "arraybuffer"
+            }
+        )
+        .then((response) => {
+            const data = cbor.decode(response.data)
+            return data;
+        })
+        .catch((error) => {
+            if(error?.response) return cbor.decode(error.response.data)
+                else error
+        });
+        return reponse;
+    }
+
+    async getChatByRoomId(params){
+        const reponse = await Repository.get(
+            `${baseUrl}/chat-msg?room_id=${params.roomId}`,
+            {
+                headers: {
+                    xa: params.xa
+                },
                 contentType:"application/cbor",
                 responseType: "arraybuffer"
             }
