@@ -19,6 +19,7 @@ import { FaChevronRight, FaProjectDiagram } from "react-icons/fa";
 
 function DetailWorkspaces(props) {
   const router = useRouter()
+  const { id } = router.query;
   const { profileData } = props
   const { query } = props
   const [loading, setLoading] = useState(false)
@@ -27,17 +28,19 @@ function DetailWorkspaces(props) {
   // console.log(workspace);
   const context = useContext(MyContext)
   
+  console.log("id query", id)
+
   useEffect(() => {
+    console.log("ini pasti sekali")
     async function getWorkspaceTeam(){
       const result = await WorkspacesRepository.getTeam({type:1, id:query.id, xa:JSON.parse(localStorage.getItem("XA"))})
       console.log("result teeam", result)
       setMember(result?.data)
     }
 
-    if(!member){
-      getWorkspaceTeam()
-    }
-  }, [])
+    getWorkspaceTeam()
+    
+  }, [id])
   
   const dataWorkspace = workspace?.data?.data
   const workspaceOwner = dataWorkspace?.is_owner !== 0
@@ -188,9 +191,9 @@ function DetailWorkspaces(props) {
                     </>
                     )
                   }
-                  <button className={`${active == 5 ? "border-b-2 border-primary pb-2":"pb-2.5"} px-3 text-sm md:text-base`} onClick={() => handleTab(5)}>
+                  {/* <button className={`${active == 5 ? "border-b-2 border-primary pb-2":"pb-2.5"} px-3 text-sm md:text-base`} onClick={() => handleTab(5)}>
                       Forum
-                  </button>
+                  </button> */}
               </div>
 
               {

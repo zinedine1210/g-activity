@@ -12,6 +12,8 @@ export default function ListProject(props) {
     const context = useContext(MyContext)
     const dataMyProjects = useProjects(1, JSON.parse(localStorage.getItem("XA")), props.workspace.data.data.id)
     const dataShareProjects = useProjects(2, JSON.parse(localStorage.getItem("XA")), props.workspace.data.data.id)
+    const { id } = router.query;
+    console.log("id", id)
     // console.log(dataMyProjects)
 
     useEffect(() => {
@@ -27,7 +29,7 @@ export default function ListProject(props) {
                 query: { ...router.query, tabProject: "shareProject" }
             }, undefined, { shallow: true })
         }
-    }, [])
+    }, [id])
 
     const handleTab = async title => {
         setActive(title)

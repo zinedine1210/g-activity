@@ -45,12 +45,12 @@ export default function ModalProject(props) {
         }
         let newData = []
         data.members.forEach(val => {
-            newData.push(val.uid)
+            newData.unshift(val.uid)
         })
 
         // kalo bukan ownernya
         if (props.data?.is_owner == 0) {
-            newData.push(props.data?._cb)
+            newData.unshift(props.data?._cb)
         }
         const joinData = newData ? newData.join(",") : null
         data.assigned = joinData

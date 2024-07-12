@@ -184,18 +184,18 @@ function Project(props) {
                   <FaCog className="w-5 h-5 text-zinc-500" />
                   General
                 </button>
-                <button onClick={() => handleTab(4)} className={`${active == 4 ? "bg-zinc-200 dark:bg-darkSecondary" : "dark:hover:bg-darkSecondary hover:bg-zinc-100"} rounded-md w-full py-2 px-6 text-center font-semibold flex items-center gap-4 transition-all`}>
+                {/* <button onClick={() => handleTab(4)} className={`${active == 4 ? "bg-zinc-200 dark:bg-darkSecondary" : "dark:hover:bg-darkSecondary hover:bg-zinc-100"} rounded-md w-full py-2 px-6 text-center font-semibold flex items-center gap-4 transition-all`}>
                   <FaFirstdraft className="w-5 h-5 text-zinc-500" />
                   Draft
-                </button>
+                </button> */}
                 <button onClick={() => handleTab(5)} className={`${active == 5 ? "bg-zinc-200 dark:bg-darkSecondary" : "dark:hover:bg-darkSecondary hover:bg-zinc-100"} rounded-md w-full py-2 px-6 text-center font-semibold flex items-center gap-4 transition-all`}>
                   <FaUsers className="w-5 h-5 text-zinc-500" />
                   Members
                 </button>
-                <button onClick={() => handleTab(6)} className={`${active == 6 ? "bg-zinc-200 dark:bg-darkSecondary" : "dark:hover:bg-darkSecondary hover:bg-zinc-100"} rounded-md w-full py-2 px-6 text-center font-semibold flex items-center gap-4 transition-all`}>
+                {/* <button onClick={() => handleTab(6)} className={`${active == 6 ? "bg-zinc-200 dark:bg-darkSecondary" : "dark:hover:bg-darkSecondary hover:bg-zinc-100"} rounded-md w-full py-2 px-6 text-center font-semibold flex items-center gap-4 transition-all`}>
                   <FaComment className="w-5 h-5 text-zinc-500" />
                   Forum
-                </button>
+                </button> */}
                 {
                   projectOwner && (
                     <button onClick={() => handleTab(7)} className={`${active == 7 ? "bg-zinc-200 dark:bg-darkSecondary" : "dark:hover:bg-darkSecondary hover:bg-zinc-100"} rounded-md w-full py-2 px-6 text-center font-semibold flex items-center gap-4 transition-all`}>

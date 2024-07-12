@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 
 export default function Members(props) {
     const member = props.member
+    const isOwner = props.data?.is_owner !== 0;
+    const ownerInfo = props.data?.owner_info
     const [loading, setLoading] = useState(false)
     const [active, setActive] = useState(false)
 
@@ -55,7 +57,7 @@ export default function Members(props) {
                                     <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
                                     </svg>
-                                    <h1>Invite Workspace members</h1>
+                                    <h1>Invite Project members</h1>
                                 </button>
                             </div>
                         )
@@ -63,13 +65,16 @@ export default function Members(props) {
                 </div>
                 <ul className="mt-5 py-5">
                     <li className="w-full flex items-center justify-between gap-2 py-3 relative border-b">
-                        <div className="flex items-center gap-2">
-                            <span className="w-12 h-12 bg-black rounded-full flex items-center text-white font-bold justify-center"></span>
+                        <div className="flex items-center gap-2 md:w-96">
+                            <span className="w-12 h-12 bg-black rounded-full flex items-center text-white font-bold justify-center uppercase">{ownerInfo.username.charAt(0)}</span>
                             <div>
-                                <h1 className="font-semibold text-sm">Owner</h1>
+                                <h1 className="font-semibold text-sm">{ownerInfo.fullname}</h1>
+                                <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-sm">{ownerInfo.username}</p>
                             </div>
                         </div>
-                        <h1 className="text-zinc-600 dark:text-zinc-300">Owner</h1>
+                        <div className="md:min-w-24 bg-blue-600 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">
+                            <h1 className="text-white dark:text-zinc-300">Owner</h1>
+                        </div>
                         <div className="flex items-center gap-2">
                             <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
                                 <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -77,12 +82,16 @@ export default function Members(props) {
                                 </svg>
                                 Hubungi
                             </button>
-                            <button disabled className="bg-zinc-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
-                                <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                                Kick
-                            </button>
+                            {
+                                isOwner && (
+                                    <button disabled className="bg-zinc-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
+                                        <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                        Kick
+                                    </button>
+                                )
+                            }
                         </div>
                     </li>
                     {
@@ -90,14 +99,16 @@ export default function Members(props) {
                             if (item.uid_docs)
                                 return (
                                     <li key={key} className="w-full flex items-center justify-between gap-2 py-3 relative border-b">
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2 md:w-96">
                                             <span className="w-12 h-12 bg-black rounded-full uppercase flex items-center text-white font-bold justify-center">{item.uid_docs.username.charAt(0)}</span>
                                             <div>
                                                 <h1 className="font-semibold text-sm">{item.uid_docs.fullname}</h1>
                                                 <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-sm">{item.uid_docs.username}</p>
                                             </div>
                                         </div>
-                                        <h1 className="text-zinc-600 dark:text-zinc-300">Member</h1>
+                                        <div className="md:min-w-24 bg-gray-500 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">
+                                            <h1 className="text-white dark:text-zinc-300">Member</h1>
+                                        </div>
                                         <div className="flex items-center gap-2">
                                             <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
                                                 <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -133,11 +144,13 @@ export default function Members(props) {
 
 function ModalMembers(props) {
     const [data, setData] = useState([])
-    const [keyword, setKeyword] = useState(null)
+    const [keyword, setKeyword] = useState("")
     const [member, setMember] = useState(null)
+    const [suggestMember, setSuggestMember] = useState(null)
     const [datatimeout, setDatatimeout] = useState(null)
     const context = useContext(MyContext)
     const [loading, setLoading] = useState(false)
+
 
     const handlerSubmitEmail = async (e) => {
         e.preventDefault()
@@ -162,7 +175,7 @@ function ModalMembers(props) {
 
         const newData = JSON.parse(JSON.stringify(props.members))
         data.forEach(val => {
-            newData.push(val)
+            newData.unshift(val)
         });
 
         setData([])
@@ -198,7 +211,8 @@ function ModalMembers(props) {
         async function getMember() {
             const result = await WorkspacesRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), type: 1, id: props.data.workspace_id })
             setMember(result.data)
-            setKeyword(result.data)
+            console.log("result", result)
+            setSuggestMember(result.data)
         }
 
 
@@ -218,7 +232,7 @@ function ModalMembers(props) {
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
-                            <h1 className="font-bold text-xl">Share this Workspace</h1>
+                            <h1 className="font-bold text-xl">Share this Project</h1>
                             <p className="text-zinc-600 text-sm md:text-base dark:text-zinc-300">This team only comes with 1 project, but getting more is easy.</p>
                             <div className="my-2">
                                 <div>
@@ -226,10 +240,11 @@ function ModalMembers(props) {
                                         <input type="search" onChange={(e) => handlerKeyword(e.target.value)} placeholder="Filter by name" className="dark:hover:bg-zinc-800 dark:focus:bg-zinc-800 text-sm py-2 px-5 outline-none border-2 hover:bg-zinc-100 focus:bg-white focus:border-primary peer w-1/2" />
                                         <div className="top-full bg-white dark:bg-dark max-h-80 overflow-y-scroll absolute left-0 shadow-lg  w-full md:w-1/2 hover:visible peer-focus:visible invisible">
                                             <h1 className="text-sm text-zinc-400 mb-2 p-2">Sharing Suggestions</h1>
+                                            {console.log("keyword", keyword)}
                                             {
-                                                keyword ?
-                                                    keyword.length > 0 ?
-                                                        keyword.filter(res => {
+                                                suggestMember || keyword != "" ?
+                                                    suggestMember.length > 0 ?
+                                                        suggestMember.filter(res => {
                                                             function getOption() {
                                                                 const find = props.members.find(opt => {
                                                                     return opt.uid == res.uid
@@ -246,9 +261,9 @@ function ModalMembers(props) {
 
                                                             const mantap = getOption()
 
-                                                            if (mantap) {
-                                                                return res
-                                                            }
+                                                            if (mantap && (res.uid_docs.username.toLowerCase().includes(keyword.toLowerCase()) || res.uid_docs.fullname.toLowerCase().includes(keyword.toLowerCase()))) {
+                                                                return res;
+                                                              }
                                                         }).map((item, key) => {
                                                             return (
                                                                 <button key={key} onClick={() => handlerAddEmail(item)} className="outline-none disabled:bg-zinc-200 focus:bg-blue-100 hover:bg-blue-100 p-2 transition-all duration-300 w-full text-start flex items-center gap-2 dark:hover:bg-darkPrimary dark:focus:bg-darkSecondary">
