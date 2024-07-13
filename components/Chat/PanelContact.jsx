@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { BsChevronLeft, BsSearch } from "react-icons/bs";
 import ModalContact from "./ModalContact";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 export default function PanelContact({
     profileData
@@ -51,28 +52,40 @@ export default function PanelContact({
     }
 
     const handleAddNewRoom = async cont => {
-        // buat private room
-        console.log(cont)
-        let obj = {
-            label: "",
-            type: 1,
-            type_msg: 1,
-            msg: "Hallo",
-            list_user: [
-                cont.user_id // contact userid
-            ]
-        }
         
-        // tambahkan confirm apakah yakin membuat room
-        const result = await ChatCollection.postRoom({
-            xa: JSON.parse(localStorage.getItem("XA")),
-            data: obj
-        })
-        console.log(result)
-        if(result.status == 0){
-            context.setData({ ...context, dataRoom: null })
-            router.push(`/usr/chat?roomId=${result.data.id}`)
-        } else Notify("Something went wrong", "error")
+        Swal.fire({
+            title:`Do you want to start a conversation with ${cont?.first_name} ${cont?.last_name}`,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, say hallo'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // buat private room
+                let obj = {
+                    label: "",
+                    type: 1,
+                    type_msg: 1,
+                    msg: "Hallo " + cont?.username,
+                    list_user: [
+                        cont.user_id // contact userid
+                    ]
+                }
+
+                // tambahkan confirm apakah yakin membuat room
+                const result = await ChatCollection.postRoom({
+                    xa: JSON.parse(localStorage.getItem("XA")),
+                    data: obj
+                })
+                console.log(result)
+                if(result.status == 0){
+                    context.setData({ ...context, dataRoom: null, dataChat: null, dataDetailRoom: null })
+                    router.push(`/usr/chat?roomId=${result.data.room.id}`)
+                } else Notify("Something went wrong", "error")
+            }
+          })
+        
     }
 
     const handleAddNewContact = async cont => {
@@ -124,8 +137,8 @@ export default function PanelContact({
                                 )
                             })
                             :
-                            <div className="text-center text-red-500">
-                                <h1>Contact not found</h1>
+                            <div className="text-center mt-5 text-red-500">
+                                <h1 className="font-bold">Contact not found</h1>
                             </div>
                         }
                     </div>
@@ -150,8 +163,12 @@ export default function PanelContact({
   return (
     <div className="w-full xl:w-full h-screen overflow-y-hidden">
         <div className="flex-col flex h-full">
-            <header className="w-full border-b-2 border-blue-500 shadow-md px-2 py-1">
-                <div className="flex items-center">
+            <header className="w-full border-b-2 border-blue-500 shadow-md px-2 py-2.5">
+                <div className="pl-3 mb-5">
+                    <h1 className="font-bold">My Contact</h1>
+                    <p className="text-sm text-zinc-600 font-semibold">Search your contacts or new contacts by username</p>
+                </div>
+                <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1">
                         <button onClick={() => router.push({ pathname: `/usr/chat`, query: router.query }, undefined, { shallow: true })} className="w-10 h-10 hover:bg-zinc-500/20 rounded-md flex items-center justify-center">
                             <BsChevronLeft />
@@ -159,7 +176,7 @@ export default function PanelContact({
                     </div>
                     <div className="relative w-full">
                         <BsSearch className="absolute top-1/2 -translate-y-1/2 left-3"/>
-                        <input type="search" onChange={(e) => handleSearch(e.target.value)} className="outline-none w-full py-3 pl-10 text-sm placeholder:text-zinc-500" placeholder="Search Contact" />
+                        <input type="search" onChange={(e) => handleSearch(e.target.value)} className="focus:bg-zinc-300 duration-300 rounded-md outline-none w-full py-3 pl-10 text-sm placeholder:text-zinc-500" placeholder="Search Contact or new contact" />
                     </div>
                 </div>
             </header>

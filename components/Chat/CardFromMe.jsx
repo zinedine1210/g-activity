@@ -44,7 +44,6 @@ export default function CardFromMe({
         <div className="flex items-start gap-2.5 ml-auto">
             <DropdownChat options={optionsChat} label={<FaEllipsisV className="text-zinc-500"/>} />
             <div className={`pt-3 pb-7 px-3 rounded-s-lg rounded-ee-lg bg-teal-500 text-white relative shadow-xl max-w-[500px] w-full ${isContext ? "min-w-72":"min-w-56"}`}>
-                <p className="text-sm">{data?.msg}</p>
                 {
                     isContext && (
                         <a href={`#${isContext.id}`} className="border-s-4 block border-teal-800 mt-2 bg-teal-100 w-full rounded-md p-3">
@@ -53,6 +52,7 @@ export default function CardFromMe({
                         </a>
                     )
                 }
+                <p className="text-sm font-normal py-1.5 dark:text-white">{data?.msg}</p>
                 <div className="absolute bottom-1 right-2 flex items-center gap-2">
                     <div className={`flex items-center ${data?.is_read && "text-blue-500"}`}>
                         <HiOutlineCheck className={`text-xl font-bold`}/>

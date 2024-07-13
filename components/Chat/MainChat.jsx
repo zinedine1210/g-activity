@@ -3,21 +3,21 @@ import { Notify } from "@utils/scriptApp";
 import { MyContext } from "context/MyProvider";
 import { useRouter } from "next/router"
 import { useContext, useEffect, useRef, useState } from "react";
-import { BsPlus, BsSearch, BsSend, BsTelephoneFill, BsX } from "react-icons/bs";
+import { BsPlus, BsSend, BsX } from "react-icons/bs";
 import CardFromMe from "./CardFromMe";
 import CardFromContact from "./CardFromContact";
 import HeaderMainChat from "./HeaderMainChat";
-import ChatLoading from "@components/Templates/Loading/ChatLoading";
 
 export default function MainChat({
-  profileData
+  profileData,
+  roomId
 }) {
   const context = useContext(MyContext)
-  const router = useRouter()
-  const { roomId } = router.query;
-  const statename = "dataChat"
   const containerRef = useRef(null);
   const [text, setText] = useState("")
+  const [timestamp, setTimestamp] = useState("")
+  const [dataChat, setDataChat] = useState(null)
+  const [roomInfo, setRoomInfo] = useState(null)
 
   const getAllChat = async () => {
     const getxa = JSON.parse(localStorage.getItem("XA"))
@@ -25,11 +25,29 @@ export default function MainChat({
       xa: getxa,
       roomId: roomId
     })
-    console.log("panel list chat", result)
+    // console.log(roomId)
     if(result.status == 0){
-      context.setData({ ...context, [statename]: result.data })
+      setDataChat(result.data)
+      setTimestamp(new Date().toISOString())
     }else Notify("Something went wrong when get all chat", "error")
   }
+
+  const getThisRoom = async () => {
+    const getxa = JSON.parse(localStorage.getItem("XA"))
+    let find = null
+    if(context?.dataRoom){
+      find = context.dataRoom.find(res => res.id == roomId)
+    }else{
+      const result = await ChatCollection.getRoom({
+        xa: getxa
+      })
+      if(result.status == 0) {
+        find = result.data.find(res => res.id == roomId)
+      }
+    }
+    setRoomInfo(find)
+  }
+  
   const replyChat = context?.dataReply ?? null
 
   const handleSubmit = async e => {
@@ -57,8 +75,9 @@ export default function MainChat({
       data: obj
     })
     if(result.status == 0){
-      context.dataChat.push(result.data)
-      context.setData({ ...context, dataChat: context.dataChat, dataReply: null }) // push data baru ke mapping
+      dataChat.push(result.data)
+      setDataChat(dataChat)
+      context.setData({ ...context, dataReply: null })
       containerRef.current?.scrollIntoView({ behavior: "auto" }); // scroll kebawah
       setText("") // kosongkan lagi input editor
     }
@@ -66,48 +85,62 @@ export default function MainChat({
 
   const fetchNewMessage = async () => {
     const getxa = JSON.parse(localStorage.getItem("XA"))
-        const currentTimestamp = new Date().toISOString();
-        const result = await ChatCollection.fetchNewChatMessage({
-            xa: getxa,
-            data: {
-                date: currentTimestamp,
-                room_id: roomId
-            }
-        })
-        if(result.status == 0){
-          if(result.data.length > 0){
-            result.data.forEach(async (el, index) => {
-              if(context?.[statename]){
-                const find = context[statename].find(res => res.id == el.id)
-                if(!find) {
-                  if(index == 0){
-                    await ChatCollection.putIsRead({
-                      xa: getxa,
-                      data: {
-                          room_id: roomId
-                      }
-                    })
-                  }
-                  context.setData({ ...context, [statename]: [ ...context[statename], el ]})
-                }
-              }
-            });
-          }
+    let currentTimestamp = ""
+        if(timestamp == ""){
+            const now = new Date().toISOString()
+            setTimestamp(now)
+            currentTimestamp = now
+        }else{
+            currentTimestamp = timestamp
         }
+    // console.log(currentTimestamp)
+    const result = await ChatCollection.fetchNewChatMessage({
+        xa: getxa,
+        data: {
+            date: currentTimestamp,
+            room_id: roomId
+        }
+    })
+
+    if(result.status == 0){
+      if(result.data.length > 0){
+        const now = new Date();
+        const timeInMillis = now.getTime();
+        const newTimeInMillis = timeInMillis + 2000; // Tambahkan 2000 milidetik (2 detik)
+        const newTime = new Date(newTimeInMillis);
+        const isoString = newTime.toISOString();
+        setTimestamp(isoString)
+        result.data.forEach(async (el, index) => {
+          const find = JSON.parse(JSON.stringify(dataChat)).find(res => res.id == el.id)
+          if(!find) {
+            if(index == 0){
+              await ChatCollection.putIsRead({
+                xa: getxa,
+                data: {
+                  room_id: roomId
+                }
+              })
+            }
+            setDataChat([ ...dataChat, el ])
+          }
+        });
+      }
+    }
   }
 
   useEffect(() => {
-    if(roomId && !context[statename]) {
+    if(!dataChat) {
+      getThisRoom()
       getAllChat()
     }
 
     const intervalId = setInterval(() => {
-      if(roomId) fetchNewMessage();
-    }, 5000);
+      if(dataChat) fetchNewMessage();
+    }, 2000);
 
     // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
-  }, [roomId, context[statename]])
+  }, [dataChat])
 
 
   const groupByDay = (data) => {
@@ -128,12 +161,12 @@ export default function MainChat({
 
   useEffect(() => {
     ScrollOnTop("auto")
-  }, [context[statename]])
+  }, [dataChat])
 
 
   const mapAllChat = () => {
-    if(context?.[statename]){
-      const sortdata = context[statename].sort((a, b) => a._cd.epoch_time - b._cd.epoch_time)
+    if(dataChat){
+      const sortdata = dataChat.sort((a, b) => a._cd.epoch_time - b._cd.epoch_time)
       const grouped = groupByDay(sortdata)
       return (
         Object.keys(grouped).map((day, index) => {
@@ -157,7 +190,7 @@ export default function MainChat({
                       
                       if(isMe) return <CardFromMe data={item} key={key}/>
                       else {
-                        item.label = context?.dataDetailRoom?.label ?? "Searching"
+                        item.label = roomInfo?.label ?? ""
                         return <CardFromContact data={item} key={key}/>
                       }
                     })
@@ -167,12 +200,6 @@ export default function MainChat({
               </div>
             )
           })
-      )
-    }else{
-      return (
-        <div className="w-full h-full flex items-center justify-center">
-            <ChatLoading />
-        </div>
       )
     }
   }
@@ -185,7 +212,7 @@ export default function MainChat({
     return (
       <div className="w-full xl:w-full h-screen overflow-y-hidden bg-zinc-300 image bg-cover bg-center" >
           <div className="flex-col flex h-full">
-              <HeaderMainChat />
+              <HeaderMainChat roomInfo={roomInfo}/>
               
               <div className="w-full flex-1 overflow-y-auto space-y-4 px-10 py-5">
                 {
@@ -198,10 +225,10 @@ export default function MainChat({
                 <div className="bg-white shadow-xl rounded-2xl w-3/4 mx-auto px-5 pb-2 pt-3">
                   {
                     replyChat && (
-                      <div className="w-full border-s-4 border-green-500 rounded-md py-3 px-5 relative">
-                        <h1 className="font-bold">{replyChat.isMe ? "You":replyChat.label}</h1>
+                      <div className="w-full border-s-4 border-teal-500 bg-teal-50 rounded-md py-3 px-5 relative">
+                        <h1 className="font-bold text-teal-500">{replyChat.isMe ? "You":replyChat.label}</h1>
                         <p className="text-sm">{replyChat?.msg}</p>
-                        <button type="button" className="absolute top-1/2 -translate-y-1/2 right-2" onClick={() => {context.setData({...context, dataReply: null}); ScrollOnTop("smooth")}}>
+                        <button type="button" className="absolute top-1/2 -translate-y-1/2 right-2" onClick={() => {context.setData({ ...context, dataReply: null }); ScrollOnTop("smooth")}}>
                           <BsX className="text-red-500 text-3xl"/>
                         </button>
                       </div>

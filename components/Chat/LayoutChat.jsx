@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PanelSide from './PanelSide'
 import MainChat from './MainChat'
 import Seo from '@components/seo'
+import { MyContext } from 'context/MyProvider'
 
-export default function LayoutChat({ children, profileData, title, desc, image }) {
+export default function LayoutChat({ children, profileData, title, desc, image, roomId }) {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    if(roomId){
+      setMounted(false)
+      setTimeout(() => {
+        setMounted(true)
+      }, 500);
+    }
+  }, [roomId])
+  
+  const mountingMainChat = () => {
+    if(mounted)
+    return <MainChat roomId={roomId} profileData={profileData}/>
+  }
+
   return (
     <>
       <Seo 
@@ -17,7 +34,11 @@ export default function LayoutChat({ children, profileData, title, desc, image }
             <div className='w-1/3 border-r-2'>
               {children}
             </div>
-            <MainChat profileData={profileData}/>
+            <div className='w-full'>
+              {
+                mountingMainChat()
+              }
+            </div>
           </div>
       </section>
     </>

@@ -3,22 +3,32 @@ import { FaAddressBook, FaEllipsisV, FaUsers } from "react-icons/fa";
 import DropdownChat from "./DropdownChat";
 import { useRouter } from "next/router";
 import { Notify } from "@utils/scriptApp";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { MyContext } from "context/MyProvider";
 import ChatCollection from "@repositories/ChatCollection";
+import { HiRefresh } from "react-icons/hi";
 
 export default function PanelList({
-    profileData
+    profileData,
+    roomId
 }) {
     const router = useRouter()
-    const { roomId } = router.query;
     const statename = "dataRoom"
     const context = useContext(MyContext)
     const [keyword, setKeyword] = useState("")
+    const [timestamp, setTimestamp] = useState("")
+    const intervalRef = useRef(null)
 
     const fetchNewMessageRoom = async () => {
         const getxa = JSON.parse(localStorage.getItem("XA"))
-        const currentTimestamp = new Date().toISOString();
+        let currentTimestamp = ""
+        if(timestamp == ""){
+            const now = new Date().toISOString()
+            setTimestamp(now)
+            currentTimestamp = now
+        }else{
+            currentTimestamp = timestamp
+        }
         const result = await ChatCollection.dataNewRoom({
             xa: getxa,
             data: {
@@ -26,23 +36,30 @@ export default function PanelList({
             }
         })
         if(result.status == 0){
-            // console.log(result.data, context[statename])
-            result.data.forEach(el => {
-                const find = context[statename].find(res => res.id == el.id)
-                // console.log(find)
-                if(find){ // kalau roomnya udah ada berarti cuma update msg
-                    const filter = context[statename].filter(res => res.id != el.id)
-                    let obj = {
-                        last_msg: el.last_msg,
-                        last_msg_uid: el.last_msg_uid,
-                        last_msg_username: el.last_msg_username
+            // console.log(result, timestamp)
+            if(result.data.length > 0){
+                const now = new Date();
+                const timeInMillis = now.getTime();
+                const newTimeInMillis = timeInMillis + 2000; // Tambahkan 2000 milidetik (2 detik)
+                const newTime = new Date(newTimeInMillis);
+                const isoString = newTime.toISOString();
+                setTimestamp(isoString)
+                result.data.forEach((el, index) => {
+                    const find = JSON.parse(JSON.stringify(context[statename])).find(res => res.id == el.id)
+                    if(find){ // kalau roomnya udah ada berarti cuma update msg
+                        const filter = JSON.parse(JSON.stringify(context[statename])).filter(res => res.id != el.id)
+                        let obj = {
+                            last_msg: el.last_msg,
+                            last_msg_uid: el.last_msg_uid,
+                            last_msg_username: el.last_msg_username
+                        }
+                        const mergeObj = { ...find, ...obj }
+                        context.setData({ ...context, [statename]: [ mergeObj, ...filter ] })
+                    }else{
+                        context.setData({ ...context, [statename]: [ ...context[statename], el ] })
                     }
-                    const mergeObj = { ...find, ...obj }
-                    context.setData({ ...context, [statename]: [ mergeObj, ...filter ] })
-                }else{
-                    context.setData({ ...context, [statename]: [ ...context[statename], el ]})
-                }
-            });
+                });
+            }
         }
     }
     
@@ -54,19 +71,20 @@ export default function PanelList({
         // console.log(result)
         if(result.status == 0){
             context.setData({ ...context, [statename]: result.data })
+            setTimestamp(new Date().toISOString())
         }else Notify("Something went wrong when get room")
     }
 
     useEffect(() => {
-        if(!context?.[statename]) getAllRoom()
+        if(!context[statename]) getAllRoom()
 
-        const intervalId = setInterval(() => {
-            fetchNewMessageRoom();
-        }, 5000); // Interval set to 5 seconds
+        intervalRef.current = setInterval(() => {
+            if(context[statename]) fetchNewMessageRoom();
+        }, 2000); // Interval set to 5 seconds
       
         // Cleanup interval on component unmount
-        return () => clearInterval(intervalId);
-    }, [context[statename]])
+        return () => clearInterval(intervalRef.current);
+    }, [context[statename], roomId])
 
     let optionsChat = [
         {
@@ -96,19 +114,18 @@ export default function PanelList({
     ]
 
     const handleStartChat = async item => {
-        router.push({
-            pathname: router.pathname,
-            query: { ...router.query, roomId: item.id }
-        }, undefined, { shallow: true })
         const getxa = JSON.parse(localStorage.getItem("XA"))
-        const result = await ChatCollection.putIsRead({
+        await ChatCollection.putIsRead({
             xa: getxa,
             data: {
                 room_id: item.id
             }
         })
-        console.log(result)
-        context.setData({ ...context, dataChat: null, dataDetailRoom: null }) // hapus semua data
+        // context.setData({ ...context, dataChat: null, dataDetailRoom: null, dataReply: null }) // hapus semua data
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+        }
+        router.push(`/usr/chat?roomId=${item.id}`)
     }
 
     const mapDataRoom = () => {
@@ -135,8 +152,8 @@ export default function PanelList({
                                 )
                             })
                             :
-                            <div className="text-center text-red-500">
-                                <h1>Room not found</h1>
+                            <div className="text-center text-red-500 mt-5">
+                                <h1 className="font-bold">Room not found</h1>
                             </div>
                         }
                     </div>
@@ -161,13 +178,30 @@ export default function PanelList({
     <div className="w-full xl:w-full h-screen overflow-y-hidden">
         <div className="flex-col flex h-full">
             <header className="w-full border-b-2 border-blue-500 shadow-md px-2 py-2.5">
+                <div className="w-full flex items-center justify-between mb-5">
+                    <div className="flex items-center gap-2">
+                        <span className='w-10 h-10 shadow-md rounded-full flex items-center justify-center text-white font-bold text-xl uppercase bg-gradient-to-br from-blue-600 to-blue-200'>
+                            {profileData?.username.charAt(0)}
+                        </span>
+                        <h1 className="font-bold">{profileData?.username}</h1>
+                    </div>
+                    <div className="flex items-center gap-1">
+                        <button onClick={() => router.push({
+                            pathname: "/usr/chat/contact",
+                            query: router.query
+                        }, undefined, { shallow: true })} className="w-10 h-10 hover:bg-zinc-500/20 rounded-md flex items-center justify-center">
+                            <FaAddressBook className="text-blue-500 text-xl" />
+                        </button>
+                        <button onClick={() => context.setData({ ...context, dataRoom: null })} className="w-10 h-10 hover:bg-zinc-500/20 rounded-md flex items-center justify-center">
+                            <HiRefresh className="text-blue-500 text-xl" />
+                        </button>
+                        <DropdownChat options={optionsChat} label={<FaEllipsisV className="text-blue-500"/>} />
+                    </div>
+                </div>
                 <div className="flex items-center gap-2">
                     <div className="relative w-full">
                         <BsSearch className="absolute top-1/2 -translate-y-1/2 left-3"/>
-                        <input type="search" value={keyword} onChange={(e) => setKeyword(e.target.value)} className="outline-none w-full py-3 pl-10 text-sm placeholder:text-zinc-500" placeholder="Search available room chat" />
-                    </div>
-                    <div className="flex items-center gap-1">
-                        <DropdownChat options={optionsChat} label={<FaEllipsisV className="text-blue-500"/>} />
+                        <input type="search" value={keyword} onChange={(e) => setKeyword(e.target.value)} className="focus:bg-zinc-300 duration-300 rounded-md outline-none w-full py-3 pl-10 text-sm placeholder:text-zinc-500" placeholder="Search available room chat" />
                     </div>
                 </div>
             </header>
