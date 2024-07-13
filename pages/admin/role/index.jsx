@@ -12,7 +12,7 @@ export default function RoleAdmin({ profileData }) {
             </header>
 
             <section>
-                <MainRole />
+                <MainRole profileData={profileData}/>
             </section>
         </div>
     </LayoutAdmin>

@@ -1,12 +1,11 @@
 import { useContext, useEffect } from "react"
 import { MyContext } from "../../../context/MyProvider"
-import RecordFeature from "./RecordRole"
-import FeatureRepository from "../../../repositories/FeatureRepository"
 import RoleRepository from "../../../repositories/RoleRepository"
 import RecordRole from "./RecordRole"
 
 export default function TableRole({
     statename,
+    profileData,
     keyword
 }) {
     const context = useContext(MyContext)
@@ -47,7 +46,7 @@ export default function TableRole({
                                             return true
                                         })
                                         .map((item, key) => {
-                                            return <RecordRole statename={statename} key={key} data={item} />
+                                            return <RecordRole profileData={profileData} statename={statename} key={key} data={item} />
                                         })
     return (
         <div className="w-full">

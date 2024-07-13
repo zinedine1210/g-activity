@@ -12,7 +12,7 @@ export default function UserAdmin({ profileData }) {
             </header>
 
             <section>
-                <MainUser />
+                <MainUser profileData={profileData}/>
             </section>
         </div>
     </LayoutAdmin>

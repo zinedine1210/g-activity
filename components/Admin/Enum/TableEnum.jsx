@@ -5,6 +5,7 @@ import EnumRepository from "../../../repositories/EnumRepository"
 
 export default function TableEnum({
     statename,
+    profileData,
     keyword
 }) {
     const context = useContext(MyContext)
@@ -60,7 +61,7 @@ export default function TableEnum({
                                             return true
                                         })
                                         .map((item, key) => {
-                                            return <RecordEnum statename={statename} key={key} data={item} />
+                                            return <RecordEnum profileData={profileData} statename={statename} key={key} data={item} />
                                         })
     return (
         <div className="w-full">

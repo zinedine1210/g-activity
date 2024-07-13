@@ -18,7 +18,6 @@ export default function LayoutAdmin({ children, image, desc, title, profileData 
             console.log(profileData)
             const bitws = profileData._bitws
             const featureaccess = profileData._feature
-            console.log(router.pathname)
             let isdeny = false
             switch (router.pathname) {
                 case "/admin/user":

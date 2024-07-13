@@ -5,7 +5,7 @@ import { MyContext } from "../../../context/MyProvider";
 import { Notify } from "../../../utils/scriptApp";
 import SelectReusable from "../Partials/SelectReusable";
 
-export default function RecordRole({ data, statename }) {
+export default function RecordRole({ data, statename, profileData }) {
     const context = useContext(MyContext)
 
     const handleDelete = async (payload) => {
@@ -22,11 +22,20 @@ export default function RecordRole({ data, statename }) {
         // }
     }
 
+    const bitws = profileData._bitws
+    const featureaccess = profileData._feature
+
+    const rolePermission = (feature, action) => {
+        const isAllow = Number(featureaccess[feature] & bitws[action]) == 0 ? false:true
+        return isAllow
+    }
+
     const bulkOptions = [
         {
             label: "Delete",
             iconLabel: <BsTrash className='text-red-500' />,
             onClick: (data) => {
+                if(!rolePermission("_role", "delete")) return Notify("Permission Denied", "warning")
                 handleDelete(data)
             }
         },
@@ -34,6 +43,7 @@ export default function RecordRole({ data, statename }) {
             label: "Update",
             iconLabel: <BsPencil className='text-blue-500' />,
             onClick: (data) => {
+                if(!rolePermission("_role", "edit")) return Notify("Permission Denied", "warning")
                 context.setData({ ...context, modal: { name: "modalRole", type: "update", data: data } })
             }
         },
@@ -41,6 +51,7 @@ export default function RecordRole({ data, statename }) {
             label: "View",
             iconLabel: <BsEye className='text-blue-500' />,
             onClick: (data) => {
+                if(!rolePermission("_role", "view")) return Notify("Permission Denied", "warning")
                 context.setData({ ...context, modal: { name: "modalRole", type: "view", data: data } })
             }
         },

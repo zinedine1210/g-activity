@@ -84,8 +84,9 @@ export default function ModalUser(props) {
                     data: value
                 })
                 if (result.status == 0) {
-                    const filter = context.dataUserAdmin.data.filter(res => res.id !== value.id)
-                    context.setData({ ...context, dataUserAdmin: { data: [ result.data, ...filter ]}, modal: null })
+                    const findIndex = context.dataUserAdmin.data.findIndex(res => res.id == value.id)
+                    context.dataUserAdmin.data[findIndex] = result.data
+                    context.setData({ ...context, dataUserAdmin: context.dataUserAdmin, modal: null })
                     Notify("Updated", "info")
                 }
             }

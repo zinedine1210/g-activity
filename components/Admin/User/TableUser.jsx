@@ -6,7 +6,8 @@ import RoleRepository from "../../../repositories/RoleRepository"
 import { Notify } from "@utils/scriptApp"
 
 export default function TableUser({
-    keyword
+    keyword,
+    profileData
 }) {
     const context = useContext(MyContext)
     const [roles, setRoles] = useState(null)
@@ -59,7 +60,7 @@ export default function TableUser({
                                                 const findRole = roles.find(res => res.id == item.r_id)
                                                 item.rolename = findRole
                                             }
-                                            return <RecordUser key={key} data={item} />
+                                            return <RecordUser profileData={profileData} key={key} data={item} />
                                         })
     return (
         <div className="w-full">

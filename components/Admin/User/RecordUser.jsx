@@ -5,11 +5,19 @@ import { useContext } from "react";
 import { MyContext } from "../../../context/MyProvider";
 import { Notify } from "@utils/scriptApp";
 
-export default function RecordUser({ data }) {
+export default function RecordUser({ data, profileData }) {
     const context = useContext(MyContext)
     const handleDelete = async () => {
         alert("Action not found")
     }
+    const bitws = profileData._bitws
+    const featureaccess = profileData._feature
+
+    const rolePermission = (feature, action) => {
+        const isAllow = Number(featureaccess[feature] & bitws[action]) == 0 ? false:true
+        return isAllow
+    }
+
 
     const bulkOptions = [
         {
@@ -23,14 +31,18 @@ export default function RecordUser({ data }) {
             label: "Update",
             iconLabel: <BsPencil className='text-blue-500' />,
             onClick: (data) => {
-                context.setData({ ...context, modal: { name: "modalUser", type: "update", data: data } })
+                if(rolePermission("_user", "edit")){
+                    context.setData({ ...context, modal: { name: "modalUser", type: "update", data: data } })
+                }else Notify("Permission denied", "warning")
             }
         },
         {
             label: "View",
             iconLabel: <BsEye className='text-blue-500' />,
             onClick: (data) => {
-                context.setData({ ...context, modal: { name: "modalUser", type: "view", data: data } })
+                if(rolePermission("_user", "view")){
+                    context.setData({ ...context, modal: { name: "modalUser", type: "view", data: data } })
+                }else Notify("Permission denied", "warning")
             }
         },
 

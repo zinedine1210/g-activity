@@ -3,6 +3,7 @@ import MainEnum from "../../../components/Admin/Enum/MainEnum"
 import { BsListCheck } from "react-icons/bs";
 
 export default function RoleAdmin({ profileData }) {
+  
   return (
     <LayoutAdmin title={"Enum"} desc="Halaman Pengaturan Enum" profileData={profileData}>
         <div className="p-5">
@@ -12,7 +13,7 @@ export default function RoleAdmin({ profileData }) {
             </header>
 
             <section>
-                <MainEnum />
+                <MainEnum profileData={profileData}/>
             </section>
         </div>
     </LayoutAdmin>

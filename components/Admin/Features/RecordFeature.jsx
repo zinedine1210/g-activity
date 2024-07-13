@@ -6,10 +6,19 @@ import FeatureRepository from "../../../repositories/FeatureRepository";
 import Swal from "sweetalert2";
 import { Notify } from "../../../utils/scriptApp";
 
-export default function RecordFeature({ data, statename }) {
+export default function RecordFeature({ data, statename, profileData }) {
     const context = useContext(MyContext)
+    const bitws = profileData._bitws
+    const featureaccess = profileData._feature
+
+    const rolePermission = (feature, action) => {
+        const isAllow = Number(featureaccess[feature] & bitws[action]) == 0 ? false:true
+        return isAllow
+    }
 
     const handleChange = async (action) => {
+        if(!rolePermission("_feature", "edit")) return Notify("Permission Denied", "warning")
+
         const getxa = JSON.parse(localStorage.getItem("XA"))
         let payload = {
             f_id: data.id, // fitur id

@@ -6,8 +6,15 @@ import { Notify } from "../../../utils/scriptApp";
 import SelectReusable from "../Partials/SelectReusable";
 import EnumRepository from "../../../repositories/EnumRepository";
 
-export default function RecordEnum({ data, statename, enumSelf }) {
+export default function RecordEnum({ data, statename, enumSelf, profileData }) {
     const context = useContext(MyContext)
+    const bitws = profileData._bitws
+    const featureaccess = profileData._feature
+
+    const rolePermission = (feature, action) => {
+        const isAllow = Number(featureaccess[feature] & bitws[action]) == 0 ? false:true
+        return isAllow
+    }
 
     const handleDelete = async (payload) => {
         const result = await EnumRepository.deleteEnum({
@@ -28,21 +35,27 @@ export default function RecordEnum({ data, statename, enumSelf }) {
             label: "Delete",
             iconLabel: <BsTrash className='text-red-500' />,
             onClick: (data) => {
-                handleDelete(data)
+                if(rolePermission("_enum", "delete")){
+                    handleDelete(data)
+                }else Notify("Permission Denied")
             }
         },
         {
             label: "Update",
             iconLabel: <BsPencil className='text-blue-500' />,
             onClick: (data) => {
-                context.setData({ ...context, modal: { name: "modalEnum", type: "update", data: data } })
+                if(rolePermission("_enum", "edit")){
+                    context.setData({ ...context, modal: { name: "modalEnum", type: "update", data: data } })
+                }else Notify("Permission Denied")
             }
         },
         {
             label: "View",
             iconLabel: <BsEye className='text-blue-500' />,
             onClick: (data) => {
-                context.setData({ ...context, modal: { name: "modalEnum", type: "view", data: data } })
+                if(rolePermission("_enum", "view")){
+                    context.setData({ ...context, modal: { name: "modalEnum", type: "view", data: data } })
+                }else Notify("Permission Denied")
             }
         },
 

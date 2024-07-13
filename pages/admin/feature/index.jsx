@@ -12,7 +12,7 @@ export default function FeatureAdmin({ profileData }) {
             </header>
 
             <section>
-                <MainFeature />
+                <MainFeature profileData={profileData}/>
             </section>
         </div>
     </LayoutAdmin>

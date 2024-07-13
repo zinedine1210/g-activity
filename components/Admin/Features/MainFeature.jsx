@@ -4,7 +4,9 @@ import TableFeature from "./TableFeature";
 import SelectInput from "../../Input/SelectInput";
 import RoleRepository from "../../../repositories/RoleRepository";
 
-export default function MainFeature() {
+export default function MainFeature({
+    profileData
+}) {
     const context = useContext(MyContext)
     const [keyword, setKeyword] = useState("")
     const statename = "dataFeatureAdmin"
@@ -62,7 +64,7 @@ export default function MainFeature() {
                 </div>
             </div>
             <div>
-                <TableFeature filter={filter} statename={statename} keyword={keyword} />
+                <TableFeature profileData={profileData} filter={filter} statename={statename} keyword={keyword} />
             </div>
         </div>
     </div>

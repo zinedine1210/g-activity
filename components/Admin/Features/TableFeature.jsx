@@ -5,6 +5,7 @@ import FeatureRepository from "../../../repositories/FeatureRepository"
 
 export default function TableFeature({
     statename,
+    profileData,
     keyword,
     filter
 }) {
@@ -48,7 +49,7 @@ export default function TableFeature({
                                             return true
                                         })
                                         .map((item, key) => {
-                                            return <RecordFeature statename={statename} key={key} data={item} />
+                                            return <RecordFeature profileData={profileData} statename={statename} key={key} data={item} />
                                         })
     return (
         <div className="w-full">
