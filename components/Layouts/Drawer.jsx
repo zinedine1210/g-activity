@@ -81,7 +81,7 @@ export default function Drawer(props) {
                     </div>
                 </button>
             </div>
-            <div className="hidden xl:block py-2">
+            <div className="hidden md:block py-2">
                 {
                     isAdmin() && (
                         <Link href={`/admin`}>

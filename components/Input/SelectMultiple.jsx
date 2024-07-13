@@ -16,7 +16,6 @@ export default function SelectMultiple({name, options, loading, create, change, 
 
     const handlerOptions = (value, target) => {
         setData(value)
-
         let obj = []
         for(let val of value){
             obj.push(val.value)
