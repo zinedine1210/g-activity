@@ -8,8 +8,43 @@ export function getTimeDate(timestamp) {
     const Hours = new Date(timestamp).getHours().toString().padStart(2, '0')
     const Minute = new Date(timestamp).getMinutes().toString().padStart(2, '0')
     const date = `${Hours}:${Minute}`
-
     return date
+}
+
+export function timeUntil(epochTime) {
+    const now = new Date();
+    const futureDate = new Date(epochTime);
+    const difference = futureDate - now;
+  
+    if (difference <= 0) {
+      return "Waktu sudah berlalu";
+    }
+  
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+  
+    if (days > 3) {
+        const tgl = futureDate.toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: "numeric"
+          });
+      return tgl
+    } else if (days > 0) {
+      return `${days} hari lagi`;
+    } else if (hours > 0) {
+      return `${hours} jam lagi`;
+    } else if (minutes > 0) {
+      return `${minutes} menit lagi`;
+    } else if (seconds > 0) {
+      return `${seconds} detik lagi`;
+    } else {
+      return "Kurang dari 1 detik lagi";
+    }
 }
 
 export function getSizeWindow(type) {

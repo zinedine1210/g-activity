@@ -1,0 +1,94 @@
+### Meeting (Add)
+POST https://g-activity.gnusa.id/service/meet HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "title":"Rapat 1",
+    "about":"Rapat 1",
+    "passcode":"123456",
+    "date":"2023-03-20 00:00:00",
+    "audience":"uid_1,uid_2,uid_3"
+}
+
+
+### Meeting (Edit)
+# https://g-activity.gnusa.id/service/meet/:id
+PUT https://g-activity.gnusa.id/service/meet/c5a20c09-5b1f-4bb3-af72-84365a7c577c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "title":"Rapat 1",
+    "about":"Rapat 1",
+    "passcode":"123456",
+}
+
+
+### Meeting (Set Status)
+# https://g-activity.gnusa.id/service/meet/:id
+# status: 2=Active, 4=Done, -1=Cancel
+PUT https://g-activity.gnusa.id/service/meet/c5a20c09-5b1f-4bb3-af72-84365a7c577c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "status":2
+}
+
+
+### Meeting (Delete) Jangan di implement dulu
+DELETE https://g-activity.gnusa.id/service/workspace/9c39c88d-bfe7-4337-8045-039a39805f37 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Meeting - My own meeting (GET)
+GET https://g-activity.gnusa.id/service/meet HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Meeting - Detail (GET)
+GET https://g-activity.gnusa.id/service/meet/c5a20c09-5b1f-4bb3-af72-84365a7c577c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Meeting Audience - List (Get)
+# https://g-activity.gnusa.id/service/meet_audience/:id/:flag
+GET https://g-activity.gnusa.id/service/meet_audience/c5a20c09-5b1f-4bb3-af72-84365a7c577c/1 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Meeting Audience - Count (Get)
+# https://g-activity.gnusa.id/service/meet_audience/:id/2
+GET https://g-activity.gnusa.id/service/meet_audience/c5a20c09-5b1f-4bb3-af72-84365a7c577c/2 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Meeting My Invitation - List (Get)
+# https://g-activity.gnusa.id/service/meet_by_audience/:flag
+GET https://g-activity.gnusa.id/service/meet_by_audience/1 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+
+### Meeting My Invitation - Count (Get)
+# https://g-activity.gnusa.id/service/meet_by_audience/2
+GET https://g-activity.gnusa.id/service/meet_by_audience//2 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+### Meeting Audience Update Status (Set Status)
+# https://g-activity.gnusa.id/service/meet_audience_status/:id
+# status: 1:Hadir
+PUT https://g-activity.gnusa.id/service/meet_audience_status/c5a20c09-5b1f-4bb3-af72-84365a7c577c HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I
+
+{
+    "status":1
+}

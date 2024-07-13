@@ -9,7 +9,8 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 
 export default function PanelContact({
-    profileData
+    profileData,
+    roomId
 }) {
     const context = useContext(MyContext)
     const statename = "dataContact"

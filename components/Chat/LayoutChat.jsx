@@ -12,7 +12,7 @@ export default function LayoutChat({ children, profileData, title, desc, image, 
       setMounted(false)
       setTimeout(() => {
         setMounted(true)
-      }, 500);
+      }, 200);
     }
   }, [roomId])
   
