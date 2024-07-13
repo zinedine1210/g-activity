@@ -89,7 +89,24 @@ export default function ModalCreateMeeting(props) {
         setDatatimeout(getdatatimeout)
     }
 
+    const getCurrentDateTimeLocal = () => {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        return now.toISOString().slice(0,16);
+    };
+
     const handlerChange = (valueinput, target) => {
+        if(target == "date"){
+            const selectedDateTime = valueinput;
+            const currentDateTimeLocal = getCurrentDateTimeLocal();
+
+            // Validasi input: jika tanggal dan waktu yang dipilih kurang dari tanggal dan waktu saat ini
+            if (selectedDateTime < currentDateTimeLocal) {
+                Notify('Tanggal dan waktu tidak boleh sebelum saat ini.');
+                return false
+            }
+        }
+        
         setValue({ ...value, [target]: valueinput })
     }
 
@@ -196,7 +213,7 @@ export default function ModalCreateMeeting(props) {
                                         </div>
                                         <div>
                                             <h1 className="font-semibold">Date</h1>
-                                            <input type="datetime-local" disabled={isDisabledView} required value={value.date} name="date" onInput={e => handlerChange(e.target.value, e.target.name)} className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white" autoComplete="off" />
+                                            <input type="datetime-local" min={getCurrentDateTimeLocal()} disabled={isDisabledView} required value={value.date} name="date" onInput={e => handlerChange(e.target.value, e.target.name)} className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white" autoComplete="off" />
                                         </div>
                                         <PasswordInput isRequired={false} label={"Passcode"} value={value.passcode} handlerChange={(value, target) => handlerChange(value, target)} name={"passcode"} />
 

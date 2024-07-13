@@ -1,13 +1,15 @@
 import MeetingRepository from '@repositories/MeetingRepository';
 import { Notify } from '@utils/scriptApp';
+import { MyContext } from 'context/MyProvider';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 const JitsiComponent = dynamic(() => import('@components/JitsiMeet/JitsiComponent'), { ssr: false });
 
 export default function MeetingJitsi({ profileData, meetingId }) {
     const router = useRouter()
+    const context = useContext(MyContext)
     const [showVideoCall, setShowVideoCall] = useState(false);
     const [dataUser, setDataUser] = useState(null);
     const [dataMeet, setDataMeet] = useState(null);
@@ -23,8 +25,8 @@ export default function MeetingJitsi({ profileData, meetingId }) {
             const data = result.data
             setDataMeet({
                 "title": data?.title,
-                "use_password": 1, // 0 no password, 1 use password
-                "password": ""
+                "use_password": data?.passcode ? 1 : 0, // 0 no password, 1 use password
+                "password": data?.passcode
             })
             setAudioOnly(false)
             setDataUser(profileData)
@@ -42,13 +44,27 @@ export default function MeetingJitsi({ profileData, meetingId }) {
         }
     }, [meetingId])
 
-    const handleLeaveMeet = () => {
+    const handleLeaveMeet = async () => {
         setShowVideoCall(false)
         setDataMeet(null)
         setDataUser(null)
         setAudioOnly(null)
-        Notify("You leave the meeting", "info")
         // ubah status ke finish
+        const result = await MeetingRepository.setStatusMeeting({
+            xa: JSON.parse(localStorage.getItem("XA")),
+            id: meetingId,
+            data: {
+                status: 3
+            }
+        })
+        if(result.status == 0){
+            if(context.dataMeeting){
+                const findIndex = context.dataMeeting.findIndex(res => res.id == meetingId)
+                context.dataMeeting[findIndex] = result.data
+                context.setData({ ...context, dataMeeting: context.dataMeeting })
+            }
+            Notify("You leave the meeting", "info")
+        }
         router.push("/usr/videoCall")
     }
 

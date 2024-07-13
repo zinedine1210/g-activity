@@ -1,7 +1,7 @@
 import MeetingRepository from '@repositories/MeetingRepository'
 import { Notify } from '@utils/scriptApp'
 import { MyContext } from 'context/MyProvider'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import RecordMeeting from './RecordMeeting'
 
 export default function TableMeeting({
@@ -15,10 +15,13 @@ export default function TableMeeting({
         const result = await MeetingRepository.getMeeting({
             xa: getxa
         })
-
-        console.log(result)
-        if(result.status == 0){
-            context.setData({ ...context, [statename]: result.data })
+        const inviteResult = await MeetingRepository.getInvitationAudience({
+            flag: 1,
+            xa: getxa
+        })
+        console.log(result, inviteResult)
+        if(result.status == 0 && inviteResult.status == 0){
+            context.setData({ ...context, [statename]: [ ...result.data, ...inviteResult.data ] })
         }else Notify("Something went wrong", 'error')
     }
 
@@ -61,6 +64,9 @@ export default function TableMeeting({
 
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         About
+                                    </th>
+                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        Passcode
                                     </th>
 
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Audiences</th>

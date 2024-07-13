@@ -140,6 +140,77 @@ class MeetingRepository {
         return reponse;
     }
 
+
+    async setStatusAudience(params) {
+        const data = cbor.encode(params.data)
+        const reponse = await Repository.put(
+            `${baseUrl}/meet_audience_status/${params.id}`,
+            data,
+            {
+                headers: {
+                    xa: params.xa
+                },
+                contentType:"application/cbor",
+                responseType:"arraybuffer"
+            }
+        )
+        .then((response) => {
+            const data = cbor.decode(response.data)
+            return data;
+        })
+        .catch((error) => {
+            if(error?.response) return cbor.decode(error.response.data)
+                else error
+        });
+        return reponse;
+    }
+
+    // flag = 1: list 2: count
+    async getAudience(params){
+        const reponse = await Repository.get(
+            `${baseUrl}/meet_audience/${params.id}/${params.flag}`,
+            {
+                headers: {
+                    xa: params.xa
+                },
+                contentType:"application/cbor",
+                responseType: "arraybuffer"
+            }
+        )
+        .then((response) => {
+            const data = cbor.decode(response.data)
+            return data
+        })
+        .catch((error) => {
+            if(error?.response) return cbor.decode(error.response.data)
+                else return error
+        });
+        return reponse;
+    }
+
+    // flag = 1: list 2: count
+    async getInvitationAudience(params){
+        const reponse = await Repository.get(
+            `${baseUrl}/meet_by_audience/${params.flag}`,
+            {
+                headers: {
+                    xa: params.xa
+                },
+                contentType:"application/cbor",
+                responseType: "arraybuffer"
+            }
+        )
+        .then((response) => {
+            const data = cbor.decode(response.data)
+            return data
+        })
+        .catch((error) => {
+            if(error?.response) return cbor.decode(error.response.data)
+                else return error
+        });
+        return reponse;
+    }
+
 }
 
 export default new MeetingRepository();

@@ -66,7 +66,7 @@ export default function TableUser({
             <div className="flex flex-col">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6">
                     <div className="inline-block min-w-full py-2 align-middle xl:px-6 lg:px-8">
-                        <div className="overflow-hidden">
+                        <div className="">
                             {
                                 dataList ?
                                     dataList.length > 0 ?

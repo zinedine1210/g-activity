@@ -114,7 +114,7 @@ export default function ModalWorkspace(props) {
             data.members = dataFinal
         }
         const getXA = JSON.parse(localStorage.getItem("XA"))
-        const result = await WorkspacesRepository.postTeamWorkspace({data:dataFinal, xa:getXA, workspaceID:data.id})
+        const result = await WorkspacesRepository.postTeamWorkspace({ data: dataFinal, xa:getXA, workspaceID:data.id })
         console.log(result);
         if(result.status == 0 || result?.data?.data?.type == "success"){
             Swal.fire({
