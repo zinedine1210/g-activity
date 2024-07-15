@@ -8,16 +8,24 @@ const JitsiComponent = ({ width, height, dataUser, dataMeet, audioOnly, onConfer
   console.log("audioOnly adalah", audioOnly)
 
   useEffect(() => {
-    let interfaceOverwrite = {}
+    let interfaceOverwrite = {
+      TOOLBAR_BUTTONS: [
+        'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
+        'fodeviceselection', 'hangup', 'profile', 'chat', 'etherpad', 'settings', 'raisehand',
+        'videoquality', 'filmstrip', 'stats', 'shortcuts',
+        'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone', 'security'
+      ]
+    }
     if (audioOnly) {
       interfaceOverwrite = {
         ...interfaceOverwrite,
         TOOLBAR_BUTTONS: [
           'microphone', 'hangup', 'fullscreen', 'fodeviceselection', 'info', 'security'
-        ],
-        SHOW_PROMOTIONAL_CLOSE_PAGE: false
+        ]
       }
     }
+    interfaceOverwrite['SHOW_PROMOTIONAL_CLOSE_PAGE'] = false
+
     const loadJitsiScript = () => {
       const script = document.createElement('script');
       script.src = 'https://meet.jit.si/external_api.js';
