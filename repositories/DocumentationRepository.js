@@ -84,7 +84,7 @@ class DocumentationRepository {
             }
         )
         .then((response) => {
-            const data = cbor.decode(response.data)
+            const data  = cbor.decode(response.data)
             return data
         })
         .catch((error) => {

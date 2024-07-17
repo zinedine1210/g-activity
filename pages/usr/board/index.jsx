@@ -93,6 +93,7 @@ function BoardEditor(props) {
             </div>
 
             <div className="flex gap-5 p-5 h-5/6 overflow-x-auto w-screen bg-zinc-100 lg:mt-16">
+            {console.log("data document card status", context.dataDocumentation)}
               {
                 context.dataDocumentation?.data?.map((list, idx) => {
                   return (

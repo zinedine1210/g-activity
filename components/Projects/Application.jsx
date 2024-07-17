@@ -165,8 +165,12 @@ export default function Application({ data, t, profileData }) {
                 return cache
             }, false)
             result.data.assigns = []
+            console.log("set new context")
             context.dataDocumentation = result.data
-            context.setDataDocumentation(context.dataDocumentation)
+            context.dataDocumentation.pages = []
+            context.setData({ ...context, active: null, activeDocumentation: false, dataDocumentation: context.dataDocumentation})
+            // context.setDataDocumentation(context.dataDocumentation)
+            console.log("final new data context", context)
             Swal.fire({
                 icon: "success",
                 title: "Successfully created",

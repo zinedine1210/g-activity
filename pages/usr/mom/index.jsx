@@ -26,11 +26,12 @@ function MinuteOfMeeting(props) {
         console.log("disini bangg load lagi")
         console.log(props.query)
         const result = await MomRepository.getMomByID({xa:JSON.parse(localStorage.getItem("XA")), id:id})
-        console.log("result mom", result);
+        console.log("result mom yaituuu", result);
         const members = await MomRepository.getTeam({xa:JSON.parse(localStorage.getItem("XA")), id:id, type:1})
         console.log("result mom members", members);
         const participant = await MomRepository.getParticipant({xa:JSON.parse(localStorage.getItem("XA")), momID:id})
         console.log("participant",participant);
+        result.data.record = result.data.record ? result.data.record:[]
         result.data.assigns = members.data
         result.data.participants = participant.data
         result.data.header = [

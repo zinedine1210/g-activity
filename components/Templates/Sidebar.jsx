@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react"
+import { useRouter } from 'next/router'
 import { MyContext } from "../../context/MyProvider"
 import ListComponent from "../Pages/ListComponent"
 import ListPage from "../Pages/ListPage"
@@ -7,18 +8,19 @@ import _, { findIndex } from "lodash"
 import DocumentationRepository from "../../repositories/DocumentationRepository"
 import Swal from "sweetalert2"
 
-async function getPage(context) {
+async function getPage(context, id) {
   let arr = null
 
-  if (!context.realDocumentation) {
-    const result = await DocumentationRepository.getPageDocumentation({
-      xa: JSON.parse(localStorage.getItem("XA")),
-      id: context.dataDocumentation.id
-    })
-    arr = result.data
-  } else {
-    arr = context.realDocumentation
-  }
+  console.log("id get page sidebar", id)
+  // if (!context.realDocumentation) {
+  const result = await DocumentationRepository.getPageDocumentation({
+    xa: JSON.parse(localStorage.getItem("XA")),
+    id: context.dataDocumentation.id
+  })
+  arr = result.data
+  // } else {
+  //   arr = context.realDocumentation
+  // }
 
   function buildTree(arr, parentId) {
     let tree = [];
@@ -44,23 +46,34 @@ async function getPage(context) {
 
 export default function Sidebar({ lang }) {
   const [active, setActive] = useState(true)
+  // const [dataDoc, setDataDoc] = useState(null)
   const context = useContext(MyContext)
+  const router = useRouter();
+  const { id } = router.query;
 
   const dataDoc = context.dataDocumentation
 
-  const getAllData = async () => {
-    const dataReturn = await getPage(context)
+  const getAllData = async (id) => {
+    // console.log("id berapa??", id)
+    const dataReturn = await getPage(context, id)
+    // console.log("dataReturn.finalData adalah", dataReturn.finalData)
     context.dataDocumentation.pages = dataReturn.finalData
-    context.setDataDocumentation(context.dataDocumentation)
-    context.setData({ ...context, realDocumentation: dataReturn.result })
+    // console.log("dataReturn.result", dataReturn.result)
+    // console.log("context.dataDocumentation", context.dataDocumentation)
+    context.setData({ ...context, active: null, breadcrumb: null, activeDocumentation: false, dataDocumentation: context.dataDocumentation, realDocumentation: dataReturn.result})
+    // context.setDataDocumentation(context.dataDocumentation)
+    // context.setData({ ...context, realDocumentation: dataReturn.result })
+    return dataReturn
   }
 
 
   useEffect(() => {
-    if (!context.dataDocumentation.hasOwnProperty("pages") && context.dataDocumentation.pages == undefined) {
-      getAllData()
-    }
-  }, [context.dataDocumentation])
+    console.log("use effect sidebar", id)
+    // if (!context.dataDocumentation.hasOwnProperty("pages") && context.dataDocumentation.pages == undefined) {
+      getAllData(id)
+    // console.log("resAllData", resAllData)
+    // }
+  }, [id])
 
   const handlerAddPage = async () => {
     const posNow = context?.realDocumentation.length + 1 ?? 1
@@ -87,7 +100,7 @@ export default function Sidebar({ lang }) {
     }
 
     const result = await DocumentationRepository.postPageDocumentation({ xa: JSON.parse(localStorage.getItem("XA")), data: obj })
-  
+
     if (result.status == 0) {
       context.dataDocumentation.pages.unshift(result.data)
       context.setDataDocumentation(context.dataDocumentation)
@@ -136,7 +149,7 @@ export default function Sidebar({ lang }) {
         }
 
         await getIdData(findData)
-       
+
         const result = await DocumentationRepository.deletePageDocumentation({ data: arr, xa: JSON.parse(localStorage.getItem("XA")) })
         if (result.status == 0) {
           context.dataDocumentation.pages = newArr

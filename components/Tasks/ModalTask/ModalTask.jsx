@@ -60,7 +60,8 @@ export default function ModalTask() {
         if (result.status == 0) {
             const indexStatus = findIndex(context.dataDocumentation.data, { id: item.status.id })
             const indexTask = findIndex(context.dataDocumentation.data[indexStatus].tasks, { id: item.task.id })
-            context.dataDocumentation.data[indexStatus].tasks[indexTask] = item.task
+            context.dataDocumentation.data[indexStatus].tasks[indexTask] = result.data
+            // context.dataDocumentation.start_date = moment(convertDate(item.task.start_date)).local().format("YYYY-MM-DD")
             context.setDataDocumentation(context.dataDocumentation)
             context.setData({ ...context, activeTask: null })
             Swal.fire({

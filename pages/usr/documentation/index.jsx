@@ -38,14 +38,18 @@ function Editor(props) {
     const getXA = JSON.parse(localStorage.getItem("XA"))
     async function getData() {
       const result = await DocumentationRepository.getDocumentationByID({ xa: getXA, id: id })
-      
+      console.log("result adalah", result)
+
       const members = await DocumentationRepository.getTeam({ id: id, type: 1, xa: JSON.parse(localStorage.getItem("XA")) })
       console.log("apakah ada memberss", members)
+      console.log("id data", id)
       // dapatkan data utama documentation file dan member didalamnya
       result.data['assigns'] = members.data
+      console.log("set data adalah apaa", context)
+      result.data['pages'] = result.data.pages ? result.data.pages:[]
       context.setDataDocumentation(result.data)
     }
-
+    
     context.setDataDocumentation(null);
     console.log("tak ada id", id)
     if (id) {

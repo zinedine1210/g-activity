@@ -1,8 +1,8 @@
 import axios from 'axios';
 export const baseDomain = 'https://g-activity.gnusa.id'; // API for products (PRODUCTION MODE)
 // const baseDomainAPI = 'https://psychotest-client.gnusa.id/psychotest-service'; // API for product (PRODUCTION MODE)
-const baseDomainAPI = 'https://g-activity.gnusa.id/service'; // API for product (DEVELOPMENT MODE)
-// const baseDomainAPI = 'http://localhost:7792/service'; // API for product (DEVELOPMENT MODE 2)
+// const baseDomainAPI = 'https://g-activity.gnusa.id/service'; // API for product (DEVELOPMENT MODE)
+const baseDomainAPI = 'http://localhost:7792/service'; // API for product (DEVELOPMENT MODE 2)
 export const WebsiteTitle = 'Gnusa Activity'
 export const hostName = typeof window === 'object' ? `http://${window.location.hostname}` : "";
 

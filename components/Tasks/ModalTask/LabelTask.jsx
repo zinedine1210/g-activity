@@ -83,7 +83,7 @@ export default function LabelTask({item}) {
 
   return (
     <div className='mt-5'> 
-        <h1 className="flex items-center gap-3 font-bold text-sm text-zinc-500 dark:text-zinc-300"><FaTags /> Labels</h1>
+        <h1 className="flex items-center gap-3 font-bold text-sm text-zinc-500 dark:text-zinc-300"><FaTags /> Labels (type a label and then press enter to add the label)</h1>
         <div className="flex items-center gap-2 flex-wrap mt-2">
             {
                 item.hasOwnProperty("label") ? item.label.map((label, key) => {
