@@ -9,11 +9,14 @@ import { useFindMembers } from "../../utils/swr";
 export default function Members(props) {
     const router = useRouter()
     const members = props.members
+    const profileData = props.profileData
     const [loading, setLoading] = useState(false)
     const [active, setActive] = useState(false)
     const context = useContext(MyContext)
     const ownerInfo = props.data?.owner_info
     const isOwner = props.data?.is_owner !== 0;
+
+    console.log("sini kah broo??", profileData)
 
 
     const handlerResend = async (value) => {
@@ -92,12 +95,17 @@ export default function Members(props) {
                                 <h1 className="text-white dark:text-zinc-300">Owner</h1>
                             </div>
                             <div className="flex items-center gap-2 md:w-56 justify-end">
-                                <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
-                                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-                                    </svg>
-                                    Hubungi
-                                </button>
+                                {console.log("owner info", ownerInfo)}
+                                {console.log("profile user", profileData)}
+                                {
+                                    ownerInfo.username != profileData.username && <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
+                                        <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                                        </svg>
+                                        Hubungi
+                                    </button>
+                                }
+
                                 {
                                     isOwner && (
                                         <button disabled className="bg-zinc-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
@@ -151,16 +159,20 @@ export default function Members(props) {
                                                     <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-sm">{item.uid_docs.username}</p>
                                                 </div>
                                             </div>
+                                            {console.log("user user name", item)}
                                             <div className="md:min-w-24 bg-gray-500 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">
                                                 <h1 className="text-white dark:text-zinc-300">Member</h1>
                                             </div>
                                             <div className="flex items-center gap-2 md:w-56 justify-end">
-                                                <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
-                                                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-                                                    </svg>
-                                                    Hubungi
-                                                </button>
+                                                {
+                                                    item.uid != profileData.id && <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
+                                                        <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                                                        </svg>
+                                                        Hubungi
+                                                    </button>
+                                                }
+
                                                 {
                                                     isOwner && (
                                                         <button onClick={() => handlerCancel(item)} className="bg-red-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">

@@ -208,7 +208,7 @@ function DetailWorkspaces(props) {
               }
               {
                 active == 4?
-                <Members data={dataWorkspace} members={member} setMember={val => setMember(val)}/>
+                <Members data={dataWorkspace} members={member} setMember={val => setMember(val)} profileData={profileData} />
                 :""
               }
               {

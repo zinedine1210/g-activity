@@ -34,7 +34,16 @@ export default function AssignedTask(props) {
         async function getDataMember() {
             const getXA = JSON.parse(localStorage.getItem("XA"))
             const result = await ProjectRepository.getTeam({ id: context.dataDocumentation.project.id, type: 1, xa: getXA })
-            // console.log("getteam", result);
+            const ownerMember = {
+                'uid': context.dataDocumentation.project._cb,
+                'uid_docs': {
+                    'fullname': context.dataDocumentation.project.owner_info.fullname,
+                    'username': context.dataDocumentation.project.owner_info.username,
+                    'email': context.dataDocumentation.project.owner_info.username,
+                    'project_id': context.dataDocumentation.project.id
+                }
+            }
+            result.data.unshift(ownerMember)
             context.dataDocumentation.project.members = result.data
             context.setDataDocumentation(context.dataDocumentation)
         }

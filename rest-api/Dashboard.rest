@@ -1,0 +1,4 @@
+### User Dashboard (Logged in)
+GET https://g-activity.gnusa.id/service/dashboard HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW5AaXBtLmlkIiwicGFzc3dvcmQiOiI5ODkzMzRjZjYzYjQ0YzE1NDJiYmU4NDRmMDk2ZjVmYTc4MjVhNTc0In0.UhuyYiicBaRzf_6_MSFTn64MgmNsdBDU_FMfvuxeA7I

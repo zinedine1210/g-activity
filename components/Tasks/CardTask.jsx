@@ -26,14 +26,15 @@ export default function CardTask({ item, project, hide, status }) {
   };
 
   const handlerActiveTask = () => {
-    let obj = JSON.parse(JSON.stringify(item))
+    console.log("sini kah active??")
+    // let obj = JSON.parse(JSON.stringify(item))
 
-    let data = {
-      task: obj,
-      status: status
-    }
+    // let data = {
+    //   task: obj,
+    //   status: status
+    // }
 
-    context.setData({ ...context, activeTask: data })
+    // context.setData({ ...context, activeTask: data })
   }
 
   const handlerResolveTask = async (e) => {
