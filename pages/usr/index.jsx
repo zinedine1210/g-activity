@@ -108,7 +108,7 @@ function User(props) {
             <div className="w-full relative h-44 from-purple-500 via-indigo-600 to-purple-800 transition-all duration-300 ease-in-out hover:from-purple-400 hover:via-indigo-500 hover:to-purple-700 rounded-md bg-gradient-to-br p-3">
               <div>
                 <h1 className="font-extrabold text-lg text-white">Task</h1>
-                <p className="text-sm text-white">Create a mom</p>
+                <p className="text-sm text-white">Create a task</p>
               </div>
               <div className="text-xs absolute bottom-2 left-3 text-white flex gap-1">
               Last Edit {dataDashboard?._task?.d && moment(convertDate(dataDashboard._task.d)).local().format("YYYY-MM-DD")}

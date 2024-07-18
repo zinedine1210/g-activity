@@ -182,12 +182,15 @@ function Project(props) {
                   <FaClock className="w-5 h-5 text-zinc-500" />
                   Recent
                 </button>
-                <Link href={`/usr/board?id=${dataDataProject?.id}`}>
-                  <button className={`rounded-md w-full py-2 px-6 text-center font-semibold flex items-center gap-4 transition-all`}>
-                    <FaTable className="w-5 h-5 text-zinc-500" />
-                    Task Board
-                  </button>
-                </Link>
+                {
+                  (profileData['_bitws']['view'] & profileData['_feature']['ga_task']) ? <Link href={`/usr/board?id=${dataDataProject?.id}`}>
+                    <button className={`rounded-md w-full py-2 px-6 text-center font-semibold flex items-center gap-4 transition-all`}>
+                      <FaTable className="w-5 h-5 text-zinc-500" />
+                      Task Board
+                    </button>
+                  </Link> : null
+                }
+
                 <button onClick={() => handleTab(3)} className={`${active == 3 ? "bg-zinc-200 dark:bg-darkSecondary" : "dark:hover:bg-darkSecondary hover:bg-zinc-100"} rounded-md w-full py-2 px-6 text-center font-semibold flex items-center gap-4 transition-all`}>
                   <FaCog className="w-5 h-5 text-zinc-500" />
                   General
@@ -205,12 +208,12 @@ function Project(props) {
                   Forum
                 </button> */}
                 {
-                   projectOwner && (profileData['_bitws']['delete'] & profileData['_feature']['project']) ? (
+                  projectOwner && (profileData['_bitws']['delete'] & profileData['_feature']['project']) ? (
                     <button onClick={() => handleTab(7)} className={`${active == 7 ? "bg-zinc-200 dark:bg-darkSecondary" : "dark:hover:bg-darkSecondary hover:bg-zinc-100"} rounded-md w-full py-2 px-6 text-center font-semibold flex items-center gap-4 transition-all`}>
                       <FaTrash className="w-5 h-5 text-red-500" />
                       Delete
                     </button>
-                  ): null
+                  ) : null
                 }
               </div>
 

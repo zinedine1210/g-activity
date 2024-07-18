@@ -72,7 +72,7 @@ function Workspace(props) {
                 {/* YOUR WORK */}
                 {
                     active == "myWork" && <> {
-                        // check permission add workspace
+                        // check permission add documentation
                         (profileData['_bitws']['add'] & profileData['_feature']['workspace']) ? <div className="py-5">
                             <h1 className="font-bold text-xl">Your Own Workspaces</h1>
                             <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-5 mt-5`}>

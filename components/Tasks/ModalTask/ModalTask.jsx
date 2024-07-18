@@ -10,14 +10,12 @@ import AssignedTask from "./AssignedTask"
 import TaskRepository from "../../../repositories/TaskRepository"
 import Swal from "sweetalert2"
 import moment from "moment"
-import {convertDate} from "@utils/function"
+import { convertDate } from "@utils/function"
 
-export default function ModalTask() {
+export default function ModalTask(props) {
     const context = useContext(MyContext)
     const item = context.activeTask
-
-    console.log("disini modal task", item);
-    
+    const { profileData } = props
 
     const handlerPrevious = () => {
         const getIndex = findIndex(item.status.tasks, { id: item.task.id })
@@ -59,7 +57,7 @@ export default function ModalTask() {
         // console.log("apa datanya", data);
 
         const result = await TaskRepository.putTask({ id: item.task.id, data: data, xa: JSON.parse(localStorage.getItem("XA")) })
-      
+
         if (result.status == 0) {
             const indexStatus = findIndex(context.dataDocumentation.data, { id: item.status.id })
             const indexTask = findIndex(context.dataDocumentation.data[indexStatus].tasks, { id: item.task.id })
@@ -106,9 +104,11 @@ export default function ModalTask() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                                             </svg>
                                         </button>
-                                        <button className="hover:bg-green-200 transition-all duration-300 p-2 rounded-md border" onClick={() => handlerAllSave()}>
-                                            <FaCheck />
-                                        </button>
+                                        {
+                                            (profileData['_bitws']['edit'] & profileData['_feature']['ga_task']) ? <button className="hover:bg-green-200 transition-all duration-300 p-2 rounded-md border" onClick={() => handlerAllSave()}>
+                                                <FaCheck />
+                                            </button> : null
+                                        }
                                     </div>
                                 </div>
 
@@ -133,7 +133,7 @@ export default function ModalTask() {
                                             <div className="flex items-center gap-5">
                                                 <div>
                                                     <h1 className="text-zinc-500 dark:text-zinc-300 text-xs">Start Date</h1>
-                                                    <input type="date" className="focus:outline-none border p-1" defaultValue={item.task.hasOwnProperty("start_date") ?  moment(convertDate(item.task.start_date)).local().format("YYYY-MM-DD") : null} onChange={(e) => handlerChange(e.target.value + " 00:00:00", "start_date")} />
+                                                    <input type="date" className="focus:outline-none border p-1" defaultValue={item.task.hasOwnProperty("start_date") ? moment(convertDate(item.task.start_date)).local().format("YYYY-MM-DD") : null} onChange={(e) => handlerChange(e.target.value + " 00:00:00", "start_date")} />
                                                 </div>
                                                 <div>
                                                     <h1 className="text-zinc-500 dark:text-zinc-300 text-xs">Due Date</h1>

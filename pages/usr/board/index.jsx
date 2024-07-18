@@ -14,6 +14,7 @@ import TaskRepository from "../../../repositories/TaskRepository";
 import MenuBoard from "../../../components/Templates/MenuBoard";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import NotFound from "@components/NotFound/NotFound";
 
 function BoardEditor(props) {
   const { t } = useTranslation()
@@ -28,45 +29,52 @@ function BoardEditor(props) {
     async function getData() {
       const result = await ProjectRepository.getProjectByID({ xa: JSON.parse(localStorage.getItem("XA")), id: id })
       const status = await TaskRepository.getStatusTask({ xa: JSON.parse(localStorage.getItem("XA")), id: id })
-      const tasks = await TaskRepository.getTask({ xa: JSON.parse(localStorage.getItem("XA")), id: id })
-      console.log(result, status, tasks);
+      if (status.status == 0) {
+        const tasks = await TaskRepository.getTask({ xa: JSON.parse(localStorage.getItem("XA")), id: id })
+        console.log(result, status, tasks);
 
-      // IF error
-      let newArr = []
-      status.data.forEach((val, key) => {
-        let filter = null
-        if (tasks?.data) {
-          filter = tasks?.data ? tasks.data.filter(res => {
-            return res.status_id == val.id
-          }) : []
-        } else {
-          Swal.fire({
-            title: "Something went wrong",
-            text: "Can't get task on status",
-            icon: "error"
-          })
-          filter = []
+        // IF error
+        let newArr = []
+        status.data.forEach((val, key) => {
+          let filter = null
+          if (tasks?.data) {
+            filter = tasks?.data ? tasks.data.filter(res => {
+              return res.status_id == val.id
+            }) : []
+          } else {
+            Swal.fire({
+              title: "Something went wrong",
+              text: "Can't get task on status",
+              icon: "error"
+            })
+            filter = []
+          }
+          val.tasks = filter
+          newArr.push(val)
+        });
+        const sequence = newArr.sort((a, b) => {
+          return a.sequence - b.sequence
+        })
+        let obj = {
+          project: result.data,
+          profileData,
+          data: sequence
         }
-        val.tasks = filter
-        newArr.push(val)
-      });
-      const sequence = newArr.sort((a, b) => {
-        return a.sequence - b.sequence
-      })
-      let obj = {
-        project: result.data,
-        profileData,
-        data: sequence
+        context.setDataDocumentation(obj)
       }
-      context.setDataDocumentation(obj)
     }
 
 
     context.setDataDocumentation(null);
-    if(id){
+    if (id) {
       getData()
     }
   }, [id])
+
+  // check permission view task
+  if ((profileData['_bitws']['view'] & profileData['_feature']['ga_task']) == 0) {
+    return <NotFound />
+  }
 
   if (context.dataDocumentation) {
     // Board mode
@@ -88,24 +96,24 @@ function BoardEditor(props) {
                 <p className="text-2xl font-bold capitalize">{context.dataDocumentation?.project?.name}</p>
               </div>
               {
-                context.dataDocumentation?.project?.workspace_id && <MenuBoard lang={t} />
+                context.dataDocumentation?.project?.workspace_id && <MenuBoard lang={t} profileData={profileData} />
               }
             </div>
 
             <div className="flex gap-5 p-5 h-5/6 overflow-x-auto w-screen bg-zinc-100 lg:mt-16">
-            {console.log("data document card status", context.dataDocumentation)}
+              {console.log("data document card status", context.dataDocumentation)}
               {
                 context.dataDocumentation?.data?.map((list, idx) => {
                   return (
-                    <CardStatus item={list} project={context.dataDocumentation.project} key={idx} />
+                    <CardStatus item={list} project={context.dataDocumentation.project} key={idx} profileData={profileData} />
                   )
                 })
               }
-              <CardAddList project={context.dataDocumentation.project} />
+              <CardAddList project={context.dataDocumentation.project} profileData={profileData} />
             </div>
           </div>
         </section>
-        <ModalTask />
+        <ModalTask profileData={profileData} />
       </Layout>
     )
 

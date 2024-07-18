@@ -18,6 +18,8 @@ export default function Application({ data, t, profileData }) {
     const [active, setActive] = useState("myProject")
     const [loading, setLoading] = useState(false)
 
+    console.log("profileData", profileData)
+
     const handlerCreateNote = async () => {
         setLoading(true)
         let obj = {
@@ -88,33 +90,33 @@ export default function Application({ data, t, profileData }) {
 
         const result = await MomRepository.postMom({ xa: JSON.parse(localStorage.getItem("XA")), data: obj })
         if (result.status == 0) {
-            if(!result.data.header){
+            if (!result.data.header) {
                 result.data.header = [
                     {
-                      "name": "Meeting Result",
-                      "id": "1678516541022736888695",
-                      "align": "start",
-                      "type": "freeText"
+                        "name": "Meeting Result",
+                        "id": "1678516541022736888695",
+                        "align": "start",
+                        "type": "freeText"
                     },
                     {
-                      "name": "Target Date",
-                      "id": "1678516541022488185986",
-                      "align": "start",
-                      "type": "datetime"
+                        "name": "Target Date",
+                        "id": "1678516541022488185986",
+                        "align": "start",
+                        "type": "datetime"
                     },
                     {
-                      "name": "PIC",
-                      "id": "1678516541022295981233",
-                      "align": "start",
-                      "type": "mention"
+                        "name": "PIC",
+                        "id": "1678516541022295981233",
+                        "align": "start",
+                        "type": "mention"
                     },
                     {
-                      "name": "Stated By",
-                      "id": "1678516541022063365596",
-                      "align": "start",
-                      "type": "mention"
+                        "name": "Stated By",
+                        "id": "1678516541022063365596",
+                        "align": "start",
+                        "type": "mention"
                     }
-                  ]
+                ]
             }
 
             const mutateCache = async () => {
@@ -168,7 +170,7 @@ export default function Application({ data, t, profileData }) {
             console.log("set new context")
             context.dataDocumentation = result.data
             context.dataDocumentation.pages = []
-            context.setData({ ...context, active: null, activeDocumentation: false, dataDocumentation: context.dataDocumentation})
+            context.setData({ ...context, active: null, activeDocumentation: false, dataDocumentation: context.dataDocumentation })
             // context.setDataDocumentation(context.dataDocumentation)
             console.log("final new data context", context)
             Swal.fire({
@@ -239,74 +241,86 @@ export default function Application({ data, t, profileData }) {
             </div>
             {/* APPLICATION CREATE BUTTON */}
             <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-2 mb-10">
-                <div className="w-full h-20 flex">
-                    <div className="w-3/4 border-l-2 rounded-l-xl border-y-2 p-4 flex items-center">
-                        <div>
-                            <h1 className="font-semibold text-sm uppercase">Documentation</h1>
-                            <p className="text-zinc-500 text-xs">Create a website documentation</p>
+                {   // check permission add documentation
+                    (profileData['_bitws']['add'] & profileData['_feature']['ga_documentation']) ? (<div className="w-full h-20 flex">
+                        <div className="w-3/4 border-l-2 rounded-l-xl border-y-2 p-4 flex items-center">
+                            <div>
+                                <h1 className="font-semibold text-sm uppercase">Documentation</h1>
+                                <p className="text-zinc-500 text-xs">Create a website documentation</p>
+                            </div>
                         </div>
-                    </div>
-                    {
-                        loading ?
-                            <button disabled={true} className="w-1/4 rounded-r-xl from-zinc-500 via-zinc-600 to-zinc-800 transition-all duration-300 ease-in-out hover:from-zinc-400 hover:via-zinc-500 hover:to-zinc-700 bg-gradient-to-br flex items-center justify-center">
-                                <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                </svg>
-                            </button>
-                            :
-                            <button onClick={() => handlerCreateDocumentation()} className="w-1/4 rounded-r-xl from-red-500 via-pink-600 to-red-800 transition-all duration-300 ease-in-out hover:from-red-400 hover:via-pink-500 hover:to-red-700 bg-gradient-to-br flex items-center justify-center">
-                                <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                </svg>
-                            </button>
+                        {
+                            loading ?
+                                <button disabled={true} className="w-1/4 rounded-r-xl from-zinc-500 via-zinc-600 to-zinc-800 transition-all duration-300 ease-in-out hover:from-zinc-400 hover:via-zinc-500 hover:to-zinc-700 bg-gradient-to-br flex items-center justify-center">
+                                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                </button>
+                                :
+                                <button onClick={() => handlerCreateDocumentation()} className="w-1/4 rounded-r-xl from-red-500 via-pink-600 to-red-800 transition-all duration-300 ease-in-out hover:from-red-400 hover:via-pink-500 hover:to-red-700 bg-gradient-to-br flex items-center justify-center">
+                                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                </button>
 
-                    }
-                </div>
-                <div className="w-full h-20 flex">
-                    <div className="w-3/4 border-l-2 rounded-l-xl border-y-2 p-4 flex items-center">
-                        <div>
-                            <h1 className="font-semibold text-sm uppercase">Minute of Meeting</h1>
-                            <p className="text-zinc-500 text-xs">Create a MOM</p>
+                        }
+                    </div>) : null
+                }
+                {   // check permission add mom
+                    (profileData['_bitws']['add'] & profileData['_feature']['ga_mom']) ? (<div className="w-full h-20 flex">
+                        <div className="w-3/4 border-l-2 rounded-l-xl border-y-2 p-4 flex items-center">
+                            <div>
+                                <h1 className="font-semibold text-sm uppercase">Minute of Meeting</h1>
+                                <p className="text-zinc-500 text-xs">Create a MOM</p>
+                            </div>
                         </div>
-                    </div>
-                    {
-                        loading ?
-                            <button disabled={true} className="w-1/4 rounded-r-xl from-zinc-500 via-zinc-600 to-zinc-800 transition-all duration-300 ease-in-out hover:from-zinc-400 hover:via-zinc-500 hover:to-zinc-700 bg-gradient-to-br flex items-center justify-center">
-                                <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                </svg>
-                            </button>
-                            :
-                            <button onClick={() => handlerCreateMOM()} className="w-1/4 rounded-r-xl from-green-500 via-lime-600 to-green-800 transition-all duration-300 ease-in-out hover:from-green-400 hover:via-lime-500 hover:to-green-700 bg-gradient-to-br flex items-center justify-center">
-                                <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                </svg>
-                            </button>
+                        {
+                            loading ?
+                                <button disabled={true} className="w-1/4 rounded-r-xl from-zinc-500 via-zinc-600 to-zinc-800 transition-all duration-300 ease-in-out hover:from-zinc-400 hover:via-zinc-500 hover:to-zinc-700 bg-gradient-to-br flex items-center justify-center">
+                                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                </button>
+                                :
+                                <button onClick={() => handlerCreateMOM()} className="w-1/4 rounded-r-xl from-green-500 via-lime-600 to-green-800 transition-all duration-300 ease-in-out hover:from-green-400 hover:via-lime-500 hover:to-green-700 bg-gradient-to-br flex items-center justify-center">
+                                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                </button>
 
-                    }
-                </div>
-                <div className="w-full h-20 flex">
-                    <div className="w-3/4 border-l-2 rounded-l-xl border-y-2 p-4 flex items-center">
-                        <div>
-                            <h1 className="font-semibold text-sm uppercase">Note</h1>
-                            <p className="text-zinc-500 text-xs">Create a note</p>
+                        }
+                    </div>): null
+                }
+
+
+                {   // check permission add note
+                    (profileData['_bitws']['add'] & profileData['_feature']['ga_note']) ? (
+                        <div className="w-full h-20 flex">
+                            <div className="w-3/4 border-l-2 rounded-l-xl border-y-2 p-4 flex items-center">
+                                <div>
+                                    <h1 className="font-semibold text-sm uppercase">Note</h1>
+                                    <p className="text-zinc-500 text-xs">Create a note</p>
+                                </div>
+                            </div>
+                            {
+                                loading ?
+                                    <button onClick={() => handlerCreateNote()} className="w-1/4 rounded-r-xl from-zinc-500 via-zinc-600 to-zinc-800 transition-all duration-300 ease-in-out hover:from-zinc-400 hover:via-zinc-500 hover:to-zinc-700 bg-gradient-to-br flex items-center justify-center">
+                                        <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                        </svg>
+                                    </button>
+                                    :
+                                    <button onClick={() => handlerCreateNote()} className="w-1/4 rounded-r-xl from-blue-500 via-cyan-600 to-blue-800 transition-all duration-300 ease-in-out hover:from-blue-400 hover:via-cyan-500 hover:to-blue-700 bg-gradient-to-br flex items-center justify-center">
+                                        <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                        </svg>
+                                    </button>
+                            }
                         </div>
-                    </div>
-                    {
-                        loading ?
-                            <button onClick={() => handlerCreateNote()} className="w-1/4 rounded-r-xl from-zinc-500 via-zinc-600 to-zinc-800 transition-all duration-300 ease-in-out hover:from-zinc-400 hover:via-zinc-500 hover:to-zinc-700 bg-gradient-to-br flex items-center justify-center">
-                                <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                </svg>
-                            </button>
-                            :
-                            <button onClick={() => handlerCreateNote()} className="w-1/4 rounded-r-xl from-blue-500 via-cyan-600 to-blue-800 transition-all duration-300 ease-in-out hover:from-blue-400 hover:via-cyan-500 hover:to-blue-700 bg-gradient-to-br flex items-center justify-center">
-                                <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-8 h-8 stroke-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                </svg>
-                            </button>
-                    }
-                </div>
+                    ) : null
+                }
+
+
                 {/* <div className="w-full h-20 flex">
                     <div className="w-3/4 border-l-2 rounded-l-xl border-y-2 p-4 flex items-center">
                         <div>
@@ -353,13 +367,13 @@ export default function Application({ data, t, profileData }) {
             </div>
             {
                 active == "myProject" ?
-                    <MyProjectApplication data={data} />
+                    <MyProjectApplication data={data} profileData={profileData} />
                     : ""
             }
 
             {
                 active == "shareProject" ?
-                    <ShareProjectApplication data={data} />
+                    <ShareProjectApplication data={data} profileData={profileData} />
                     : ""
             }
         </>

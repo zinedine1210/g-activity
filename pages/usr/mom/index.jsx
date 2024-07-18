@@ -9,29 +9,32 @@ import NavbarMOM from "../../../components/Templates/NavbarMOM";
 import { MyContext } from "../../../context/MyProvider";
 import { getSizeWindow } from "../../../utils/function";
 import MomRepository from "../../../repositories/MomRepository";
+import NotFound from "@components/NotFound/NotFound";
 
 
 function MinuteOfMeeting(props) {
-    const {t} = useTranslation("common")
-    const [size, setSize] = useState(1)
-    const context = useContext(MyContext)
-    const router = useRouter();
-    const { id } = router.query;
-    
+  const { t } = useTranslation("common")
+  const [size, setSize] = useState(1)
+  const context = useContext(MyContext)
+  const router = useRouter();
+  const { id } = router.query;
+  const { profileData } = props
+
 
   console.log("emang id apa??", id)
 
-    useEffect(() => {
-      async function getData(){
-        console.log("disini bangg load lagi")
-        console.log(props.query)
-        const result = await MomRepository.getMomByID({xa:JSON.parse(localStorage.getItem("XA")), id:id})
+  useEffect(() => {
+    async function getData() {
+      console.log("disini bangg load lagi")
+      console.log(props.query)
+      const result = await MomRepository.getMomByID({ xa: JSON.parse(localStorage.getItem("XA")), id: id })
+      if (result.status == 0) {
         console.log("result mom yaituuu", result);
-        const members = await MomRepository.getTeam({xa:JSON.parse(localStorage.getItem("XA")), id:id, type:1})
+        const members = await MomRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), id: id, type: 1 })
         console.log("result mom members", members);
-        const participant = await MomRepository.getParticipant({xa:JSON.parse(localStorage.getItem("XA")), momID:id})
-        console.log("participant",participant);
-        result.data.record = result.data.record ? result.data.record:[]
+        const participant = await MomRepository.getParticipant({ xa: JSON.parse(localStorage.getItem("XA")), momID: id })
+        console.log("participant", participant);
+        result.data.record = result.data.record ? result.data.record : []
         result.data.assigns = members.data
         result.data.participants = participant.data
         result.data.header = [
@@ -60,70 +63,77 @@ function MinuteOfMeeting(props) {
             "type": "mention"
           }
         ]
-        
-        if(result.status != -1){
+
+        if (result.status != -1) {
           context.setDataDocumentation(result.data)
         }
       }
-      context.setDataDocumentation(null);
-      if(id){
-        getData()
-      }
-    }, [id])
 
-
-    const handlerAddSize = () => {
-      const sizenow = context.dataDocumentation.size
-      if(sizenow == 3){
-        return alert("Invalid")
-      }
-      setSize(size + 1)
     }
-
-    const handlerDeleteSize = () => {
-      const sizenow = context.dataDocumentation.size
-      if(sizenow == 1){
-        return alert("Invalid")
-      }
-      setSize(size - 1)
+    context.setDataDocumentation(null);
+    if (id) {
+      getData()
     }
+  }, [id])
 
-    return (
-      <Layout title={"NOTES EDITOR"} desc="DESKRIPSI NOTES EDITOR" lang={t}>
-        <NavbarMOM lang={t}/>
-        <Suspense fallback={"Loading"}>
-          {
-            context.dataDocumentation ?
-              <div className="w-full h-screen overflow-y-scroll pt-20 pb-56 bg-zinc-100 dark:bg-darkSecondary">
-                <div className={`bg-white px-5 md:px-20 py-10 shadow-md rounded-lg mx-auto relative ${getSizeWindow(size)}`}>
-                  <div className="absolute top-2 right-2 flex items-center gap-1">
-                    <button className="flex items-center justify-center rounded-md w-8 h-8 hover:bg-blue-100 p-2 transition-all duration-300" onClick={() => handlerDeleteSize()}>
-                      <FaArrowRight className="w-5 h-5 mr-0.5"/>
-                      <FaArrowLeft className="w-5 h-5"/>
-                    </button>
-                    <button className="flex items-center justify-center rounded-md w-8 h-8 hover:bg-blue-100 p-2 transition-all duration-300" onClick={() => handlerAddSize()}>
-                      <FaArrowLeft className="w-5 h-5"/>
-                      <FaArrowRight className="w-5 h-5 ml-0.5"/>
-                    </button>
-                  </div>
-                  <EditorMOM />
+
+  const handlerAddSize = () => {
+    const sizenow = context.dataDocumentation.size
+    if (sizenow == 3) {
+      return alert("Invalid")
+    }
+    setSize(size + 1)
+  }
+
+  const handlerDeleteSize = () => {
+    const sizenow = context.dataDocumentation.size
+    if (sizenow == 1) {
+      return alert("Invalid")
+    }
+    setSize(size - 1)
+  }
+
+  // check permission view MOM
+  if ((profileData['_bitws']['view'] & profileData['_feature']['ga_mom']) == 0) {
+    return <NotFound />
+  }
+
+  return (
+    <Layout title={"MOM EDITOR"} desc="DESKRIPSI MOM EDITOR" lang={t}>
+      <NavbarMOM lang={t} />
+      <Suspense fallback={"Loading"}>
+        {
+          context.dataDocumentation ?
+            <div className="w-full h-screen overflow-y-scroll pt-20 pb-56 bg-zinc-100 dark:bg-darkSecondary">
+              <div className={`bg-white px-5 md:px-20 py-10 shadow-md rounded-lg mx-auto relative ${getSizeWindow(size)}`}>
+                <div className="absolute top-2 right-2 flex items-center gap-1">
+                  <button className="flex items-center justify-center rounded-md w-8 h-8 hover:bg-blue-100 p-2 transition-all duration-300" onClick={() => handlerDeleteSize()}>
+                    <FaArrowRight className="w-5 h-5 mr-0.5" />
+                    <FaArrowLeft className="w-5 h-5" />
+                  </button>
+                  <button className="flex items-center justify-center rounded-md w-8 h-8 hover:bg-blue-100 p-2 transition-all duration-300" onClick={() => handlerAddSize()}>
+                    <FaArrowLeft className="w-5 h-5" />
+                    <FaArrowRight className="w-5 h-5 ml-0.5" />
+                  </button>
                 </div>
+                <EditorMOM />
               </div>
-            :""
-          }
-        </Suspense>
-      </Layout>
-    )
+            </div>
+            : ""
+        }
+      </Suspense>
+    </Layout>
+  )
 }
 
 export async function getServerSideProps({ locale, query }) {
-    return {
-      props: {
-        ...(await serverSideTranslations(locale, ['common'])),
-        query:query
-        // Will be passed to the page component as props
-      }
-    };
-  }
-  
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+      query: query
+      // Will be passed to the page component as props
+    }
+  };
+}
+
 export default MinuteOfMeeting

@@ -13,6 +13,7 @@ export default function CardStatus(props) {
     const context = useContext(MyContext)
     const dropRef = useRef(null)
     const [open, setOpen] = useState(false)
+    const { profileData } = props
 
     const handleOutsideClick = (event) => {
         if (dropRef.current && !dropRef.current.contains(event.target)) {
@@ -33,7 +34,6 @@ export default function CardStatus(props) {
     }, []);
 
     const handlerDeleteStatus = async () => {
-        console.log("delete");
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -44,13 +44,13 @@ export default function CardStatus(props) {
             confirmButtonText: 'Yes, delete it!'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const result = await TaskRepository.deleteStatus({xa:JSON.parse(localStorage.getItem("XA")), id:props.item.id})
+                const result = await TaskRepository.deleteStatus({ xa: JSON.parse(localStorage.getItem("XA")), id: props.item.id })
                 console.log(result);
-                if(result.status == 0){
+                if (result.status == 0) {
                     const newData = JSON.parse(JSON.stringify(context.dataDocumentation.data)).filter(res => {
                         return res.id != props.item.id
                     })
-        
+
                     context.dataDocumentation.data = newData
                     context.setDataDocumentation(context.dataDocumentation)
                 }
@@ -62,15 +62,15 @@ export default function CardStatus(props) {
 
     const handleDragStart = (e, status) => {
         console.log("status start");
-        context.setData({...context, activeDrag:"status"})
+        context.setData({ ...context, activeDrag: "status" })
         e.dataTransfer.setData('json', JSON.stringify(status))
     }
 
     const handlerChangePosition = async (drag, drop) => {
         const arr = JSON.parse(JSON.stringify(context.dataDocumentation.data))
-        const dragIndex = findIndex(arr, {id:drag.id})
-        const dropIndex = findIndex(arr, {id:drop.id})
-        
+        const dragIndex = findIndex(arr, { id: drag.id })
+        const dropIndex = findIndex(arr, { id: drop.id })
+
         arr.splice(dragIndex, 1)
         arr.splice(dropIndex, 0, drag)
 
@@ -88,20 +88,20 @@ export default function CardStatus(props) {
         CollectionData.putData({ url: `task_status`, values: [getDataDrag, getDataDrop], id: '_repos_status' })
         context.dataDocumentation.data = arr
         context.setDataDocumentation(context.dataDocumentation)
-        
+
     }
 
     const handlerChangeStatus = async (drop, drag) => {
         const arr = JSON.parse(JSON.stringify(context.dataDocumentation.data))
-        const dropIndex = findIndex(arr, {id:drop.id})
-        const dragStatusIndex = findIndex(arr, {id:drag.status_id})
+        const dropIndex = findIndex(arr, { id: drop.id })
+        const dragStatusIndex = findIndex(arr, { id: drag.status_id })
         // console.log(dragStatusIndex);
         drag.status_id = drop.id
         arr[dropIndex].tasks.push(drag)
 
-        const dragIndex = findIndex(arr[dragStatusIndex].tasks, {id:drag.id})
+        const dragIndex = findIndex(arr[dragStatusIndex].tasks, { id: drag.id })
         arr[dragStatusIndex].tasks.splice(dragIndex, 1)
-        
+
         arr[dragStatusIndex].tasks.forEach((val, key) => {
             val.sequence = key + 1
         })
@@ -109,29 +109,29 @@ export default function CardStatus(props) {
         context.dataDocumentation.data = arr
         CollectionData.putData({ url: `task_status/_repos_task`, values: [drag], id: drop.id })
         context.setDataDocumentation(context.dataDocumentation)
-      }
-    
+    }
+
     const handleDrop = async (e, dropStatus, type) => {
         e.preventDefault()
         const dragStatus = JSON.parse(e.dataTransfer.getData("json"))
         document.getElementById(dropStatus.id).style.border = "none"
         document.getElementById(dragStatus.id).style.border = "none"
-        if(!dragStatus.hasOwnProperty("status_id")){
+        if (!dragStatus.hasOwnProperty("status_id")) {
             handlerChangePosition(dragStatus, dropStatus)
-        }else{
-            if(props.item.tasks.length > 0){
+        } else {
+            if (props.item.tasks.length > 0) {
                 return Swal.fire({
-                    icon:"warning",
-                    title:"Invalid, can't drop data here",
-                    timer:1000,
-                    showConfirmButton:false
+                    icon: "warning",
+                    title: "Invalid, can't drop data here",
+                    timer: 1000,
+                    showConfirmButton: false
                 })
             }
             handlerChangeStatus(dropStatus, dragStatus)
         }
 
         // document.getElementById(dragStatus.statusID).style.border = "none"
-        context.setData({...context, activeDrag:null})
+        context.setData({ ...context, activeDrag: null })
     }
 
     const handleDragEnter = (e, id) => {
@@ -141,15 +141,15 @@ export default function CardStatus(props) {
             dropzone.style.border = "none"
         }
         else {
-            if(context.activeDrag == "status"){
+            if (context.activeDrag == "status") {
                 dropzone.style.border = "3px solid blue"
-            }else{
+            } else {
                 dropzone.style.border = "3px solid red"
             }
         }
     }
 
-    
+
     const handlerDragLeave = (e, id) => {
         e.preventDefault()
         const dropzone = document.getElementById(id)
@@ -157,9 +157,9 @@ export default function CardStatus(props) {
             dropzone.style.border = "none"
         }
         else {
-            if(context.activeDrag == "status"){
+            if (context.activeDrag == "status") {
                 dropzone.style.border = "3px solid blue"
-            }else{
+            } else {
                 dropzone.style.border = "3px solid red"
             }
         }
@@ -178,7 +178,7 @@ export default function CardStatus(props) {
         // console.log(val);
         // const result = await TaskRepository.putTask({id:val.id, data:val, xa:JSON.parse(localStorage.getItem("XA"))})
         // console.log(result);
-    
+
         setOpen(false)
     }
 
@@ -196,10 +196,10 @@ export default function CardStatus(props) {
                     <h1 className="text-sm font-bold uppercase">{props.item.title}</h1>
                     <div className="relative" ref={dropRef}>
                         <button onClick={() => setOpen(true)} className="group-hover:visible invisible transition-all duration-300 bg-zinc-200 dark:bg-dark p-2 opacity-0 group-hover:opacity-100 focus:bg-zinc-500 focus:text-white rounded-md">
-                            <FaEllipsisH className="w-4 h-4"/>
+                            <FaEllipsisH className="w-4 h-4" />
                         </button>
 
-                        <div className={`absolute text-sm bg-white dark:bg-dark w-56 shadow-xl rounded-md z-20 transition-all duration-300  ${open ? "block opacity-100":"hidden opacity-0"}`}>
+                        <div className={`absolute text-sm bg-white dark:bg-dark w-56 shadow-xl rounded-md z-20 transition-all duration-300  ${open ? "block opacity-100" : "hidden opacity-0"}`}>
                             <div className="py-4 px-3 space-y-3 border-b">
                                 <div className="flex items-center justify-between">
                                     <h1>Total Task</h1>
@@ -218,12 +218,13 @@ export default function CardStatus(props) {
                                     <input type="checkbox" id="show" checked={hide} onChange={e => setHide(!hide)} className="w-4 h-4" />
                                 </label> */}
                             </div>
-                            <div className="space-y-1">
+                            {(profileData['_bitws']['delete'] & profileData['_feature']['ga_task']) ? <div className="space-y-1">
                                 {/* <button className="block w-full text-start hover:bg-zinc-100 p-3 dark:hover:bg-darkPrimary">Move Status...</button>
                                 <button className="block w-full text-start hover:bg-zinc-100 p-3 dark:hover:bg-darkPrimary">Copy Status...</button>
                                 <button className="block w-full text-start hover:bg-zinc-100 p-3 dark:hover:bg-darkPrimary" onClick={() => handlerResolveAllTask()}>Resolve all Task...</button> */}
                                 <button className="block w-full text-start hover:bg-zinc-100 p-3 dark:hover:bg-darkPrimary text-red-500" onClick={() => handlerDeleteStatus()}>Delete Status...</button>
-                            </div>
+                            </div> : null}
+
                         </div>
                     </div>
                 </div>
@@ -232,11 +233,11 @@ export default function CardStatus(props) {
                     {
                         props.item.tasks.map((task, idx2) => {
                             return (
-                                <CardTask status={props.item} item={task} hide={hide} project={props.project} key={idx2}/>
+                                <CardTask status={props.item} item={task} hide={hide} project={props.project} key={idx2} profileData={profileData} />
                             )
                         })
                     }
-                    <CardAddTask length={props.item.tasks.length} status={props.item}/>
+                    <CardAddTask length={props.item.tasks.length} status={props.item} />
                 </div>
             </div>
         </div>

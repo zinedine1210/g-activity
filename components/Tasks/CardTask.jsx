@@ -8,7 +8,7 @@ import { MyContext } from "../../context/MyProvider"
 import TaskRepository from "../../repositories/TaskRepository";
 import CollectionData from "@repositories/CollectionData"
 
-export default function CardTask({ item, project, hide, status }) {
+export default function CardTask({ item, project, hide, status, profileData }) {
   const context = useContext(MyContext)
   const [open, setOpen] = useState(false)
   const dropRef = useRef(null)
@@ -32,11 +32,11 @@ export default function CardTask({ item, project, hide, status }) {
 
       setTimeout(() => {
         context.setData({ ...context, activeTask: data });
-         // Remove boardId from URL
-         const { pathname, query } = router;
-         let updatedQuery = { ...query };
-         delete updatedQuery.boardId;  
-         router.replace({ pathname, query: updatedQuery }, undefined, { shallow: true });
+        // Remove boardId from URL
+        const { pathname, query } = router;
+        let updatedQuery = { ...query };
+        delete updatedQuery.boardId;
+        router.replace({ pathname, query: updatedQuery }, undefined, { shallow: true });
       }, 1000);
     }
   }, [boardId]);
@@ -242,7 +242,7 @@ export default function CardTask({ item, project, hide, status }) {
             }
           </div>
         </div>
-        <div ref={dropRef}>
+        {(profileData['_bitws']['delete'] & profileData['_feature']['ga_task']) ? <div ref={dropRef}>
           <button onClick={(e) => handlerOption(e)} className={`${open ? "opacity-100 visible" : "group-hover:visible invisible"} dark:bg-darkPrimary transition-all duration-300 bg-zinc-200 p-2 opacity-0 group-hover:opacity-100 focus:bg-zinc-500 dark:focus:bg-darkSecondary focus:text-white rounded-md`}>
             <FaEllipsisH className="w-3 h-3" />
           </button>
@@ -255,7 +255,8 @@ export default function CardTask({ item, project, hide, status }) {
               <button className="block w-full text-start hover:bg-blue-200 p-3 dark:hover:bg-darkPrimary text-red-500" onClick={(e) => handlerDeleteTask(e)}>Delete Task...</button>
             </div>
           </div>
-        </div>
+        </div> : null}
+
       </div>
       <div className="w-full pt-2 border-t flex items-center justify-between">
         <div className="flex -space-x-3 rtl:space-x-reverse">

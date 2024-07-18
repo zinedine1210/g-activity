@@ -144,12 +144,15 @@ export default function CardMOM({ item, profileData }) {
                                 Dapatkan Link
                             </button>
                         </li>
-                        <li className="border-t pt-2">
-                            <button className="hover:bg-red-100 w-full py-2 text-start px-3 font-semibold flex items-center gap-2" onClick={() => handlerDelete()}>
-                                <FaTrash className="text-red-500" />
-                                Hapus
-                            </button>
-                        </li>
+                        {
+                            (profileData['_bitws']['delete'] & profileData['_feature']['ga_mom']) ? <li className="border-t pt-2">
+                                <button className="hover:bg-red-100 w-full py-2 text-start px-3 font-semibold flex items-center gap-2" onClick={() => handlerDelete()}>
+                                    <FaTrash className="text-red-500" />
+                                    Hapus
+                                </button>
+                            </li> : null
+                        }
+
                     </ul>
                 </div>
             </div>

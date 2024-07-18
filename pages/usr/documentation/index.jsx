@@ -12,13 +12,14 @@ import { MyContext } from "../../../context/MyProvider";
 import { useEffect } from "react";
 import Navbar from "../../../components/Templates/Navbar";
 import DocumentationRepository from "../../../repositories/DocumentationRepository";
-
+import NotFound from "@components/NotFound/NotFound";
 
 function Editor(props) {
   const { t } = useTranslation("common")
   const context = useContext(MyContext)
   const router = useRouter();
   const { id } = router.query;
+  const { profileData } = props
 
   // useEffect(() => {
   //   const handleBeforeUnload = (e) => {
@@ -38,18 +39,20 @@ function Editor(props) {
     const getXA = JSON.parse(localStorage.getItem("XA"))
     async function getData() {
       const result = await DocumentationRepository.getDocumentationByID({ xa: getXA, id: id })
-      console.log("result adalah", result)
+      if (result.status == 0) {
+        console.log("result adalah", result)
 
-      const members = await DocumentationRepository.getTeam({ id: id, type: 1, xa: JSON.parse(localStorage.getItem("XA")) })
-      console.log("apakah ada memberss", members)
-      console.log("id data", id)
-      // dapatkan data utama documentation file dan member didalamnya
-      result.data['assigns'] = members.data
-      console.log("set data adalah apaa", context)
-      result.data['pages'] = result.data.pages ? result.data.pages:[]
-      context.setDataDocumentation(result.data)
+        const members = await DocumentationRepository.getTeam({ id: id, type: 1, xa: JSON.parse(localStorage.getItem("XA")) })
+        console.log("apakah ada memberss", members)
+        console.log("id data", id)
+        // dapatkan data utama documentation file dan member didalamnya
+        result.data['assigns'] = members.data
+        console.log("set data adalah apaa", context)
+        result.data['pages'] = result.data.pages ? result.data.pages : []
+        context.setDataDocumentation(result.data)
+      }
     }
-    
+
     context.setDataDocumentation(null);
     console.log("tak ada id", id)
     if (id) {
@@ -71,10 +74,14 @@ function Editor(props) {
 
 
 
+  // check permission view documentation
+  if ((profileData['_bitws']['view'] & profileData['_feature']['ga_documentation']) == 0) {
+    return <NotFound />
+  }
+
   return (
     <Layout title="HOME" desc="HALAMAN UTAMA" lang={t}>
       <Navbar lang={t} />
-      {console.log("context.dataDocumentation", context)}
       {
         context.dataDocumentation ?
           <Suspense fallback={"Loading"}>
