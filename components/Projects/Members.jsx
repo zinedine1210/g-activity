@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../context/MyProvider";
 import WorkspacesRepository from "../../repositories/WorkspacesRepository";
@@ -6,11 +7,15 @@ import CollectionData from "@repositories/CollectionData"
 import Swal from "sweetalert2";
 
 export default function Members(props) {
+    const router = useRouter()
     const member = props.member
+    const profileData = props.profileData
     const isOwner = props.data?.is_owner !== 0;
     const ownerInfo = props.data?.owner_info
     const [loading, setLoading] = useState(false)
     const [active, setActive] = useState(false)
+
+    console.log("profileData", profileData)
 
     const handlerRemoveMember = async (value) => {
         Swal.fire({
@@ -36,6 +41,21 @@ export default function Members(props) {
                 }
             }
         })
+    }
+
+    const handlerDm = async (value) => {
+        setLoading(true)
+        console.log("value dm", value)
+        const result = await CollectionData.postData({ url: `direct-message`, values: { "uid": value } })
+        console.log("helo result", result)
+        if (result['data']['room_id']) {
+            router.push(`/usr/chat?roomId=${result['data']['room_id']}`)
+        } else {
+            console.log("tak ada roomnya")
+            router.push(`/usr/chat`)
+        }
+
+        setLoading(false)
     }
 
     return (
@@ -76,12 +96,17 @@ export default function Members(props) {
                             <h1 className="text-white dark:text-zinc-300">Owner</h1>
                         </div>
                         <div className="flex items-center gap-2">
-                            <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
-                                <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-                                </svg>
-                                Hubungi
-                            </button>
+                            {
+                                ownerInfo.username != profileData.username && <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold" onClick={() => handlerDm(props.data._cb)}>
+                                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                                    </svg>
+                                    Hubungi
+                                </button>
+
+                            }
+
+
                             {
                                 isOwner && (
                                     <button disabled className="bg-zinc-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
@@ -110,7 +135,7 @@ export default function Members(props) {
                                             <h1 className="text-white dark:text-zinc-300">Member</h1>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
+                                            <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold" onClick={() => handlerDm(item.uid)}>
                                                 <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
                                                 </svg>
@@ -263,7 +288,7 @@ function ModalMembers(props) {
 
                                                             if (mantap && (res.uid_docs.username.toLowerCase().includes(keyword.toLowerCase()) || res.uid_docs.fullname.toLowerCase().includes(keyword.toLowerCase()))) {
                                                                 return res;
-                                                              }
+                                                            }
                                                         }).map((item, key) => {
                                                             return (
                                                                 <button key={key} onClick={() => handlerAddEmail(item)} className="outline-none disabled:bg-zinc-200 focus:bg-blue-100 hover:bg-blue-100 p-2 transition-all duration-300 w-full text-start flex items-center gap-2 dark:hover:bg-darkPrimary dark:focus:bg-darkSecondary">

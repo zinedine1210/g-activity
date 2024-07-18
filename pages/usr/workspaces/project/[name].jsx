@@ -236,7 +236,7 @@ function Project(props) {
                 }
                 {
                   active == 5 ?
-                    <Members data={dataDataProject} setMember={value => setMember(value)} member={member} />
+                    <Members data={dataDataProject} setMember={value => setMember(value)} member={member} profileData={profileData} />
                     : ""
                 }
                 {

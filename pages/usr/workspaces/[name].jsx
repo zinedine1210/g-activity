@@ -117,7 +117,7 @@ function DetailWorkspaces(props) {
   }
 
   // check permission view workspace
-  if ((profileData['_bitws']['view'] & profileData['_feature']['workspace']) == 0) {
+  if (!profileData['_bitws'] || (profileData['_bitws']['view'] & profileData['_feature']['workspace']) == 0) {
     return <NotFound />
   }
 

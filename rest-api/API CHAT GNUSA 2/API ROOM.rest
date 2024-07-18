@@ -36,3 +36,13 @@ XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInB
 {
     "date": "2024-06-21T06:22:03.152Z"
 }
+
+
+### DIRECT MESSAGE
+POST https://service-chat.gnusa.id/service/direct-message HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGF0YW5nQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMjZlOWE1NWQ1ZWEzMjQwOTk0ODdkYjI3NWFlMTIyNWI4ZjdiNGUzOCJ9.zGb7GhGdlES3nCWSxsA5f8Xq3x91cihSD3GwLb91SEE
+
+{
+    "uid": "d7694e14-d6c1-4dab-8f2a-3a295c1989eb"
+}

@@ -5,6 +5,7 @@ import { FaPlus } from "react-icons/fa"
 import { MyContext } from "../../context/MyProvider";
 import WorkspacesRepository from "../../repositories/WorkspacesRepository";
 import { useFindMembers } from "../../utils/swr";
+import CollectionData from "@repositories/CollectionData"
 
 export default function Members(props) {
     const router = useRouter()
@@ -51,6 +52,20 @@ export default function Members(props) {
         })
     }
 
+    const handlerDm = async (value) => {
+        setLoading(true)
+        console.log("value dm", value)
+        const result = await CollectionData.postData({ url: `direct-message`, values: { "uid": value } })
+        console.log("helo result", result)
+        if (result['data']['room_id']) {
+            router.push(`/usr/chat?roomId=${result['data']['room_id']}`)
+        } else {
+            router.push(`/usr/chat`)
+        }
+
+        setLoading(false)
+    }
+
     if (members)
         return (
             <div className="py-10">
@@ -93,7 +108,7 @@ export default function Members(props) {
                             </div>
                             <div className="flex items-center gap-2 md:w-56 justify-end">
                                 {
-                                    ownerInfo.username != profileData.username && <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
+                                    ownerInfo.username != profileData.username && <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold" onClick={() => handlerDm(props.data._cb)}>
                                         <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
                                         </svg>
@@ -129,18 +144,22 @@ export default function Members(props) {
                                                 <h1 className="text-white dark:text-zinc-300">Pending</h1>
                                             </div>
                                             <div className="flex items-center gap-2 md:w-56 justify-end">
-                                                <button onClick={() => handlerResend(item)} disabled={loading} className="disabled:bg-zinc-600 bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
-                                                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 000 12h3" />
-                                                    </svg>
-                                                    Resend
-                                                </button>
-                                                <button onClick={() => handlerCancel(item)} disabled={loading} className="disabled:bg-zinc-600 bg-red-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
-                                                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                                    </svg>
-                                                    Remove
-                                                </button>
+                                                {
+                                                    isOwner && (
+                                                        <> <button onClick={() => handlerResend(item)} disabled={loading} className="disabled:bg-zinc-600 bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
+                                                            <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 15l6-6m0 0l-6-6m6 6H9a6 6 0 000 12h3" />
+                                                            </svg>
+                                                            Resend
+                                                        </button>
+                                                            <button onClick={() => handlerCancel(item)} disabled={loading} className="disabled:bg-zinc-600 bg-red-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
+                                                                <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                                </svg>
+                                                                Remove
+                                                            </button></>
+                                                    )}
+
                                             </div>
                                         </li>
                                     )
@@ -159,7 +178,7 @@ export default function Members(props) {
                                             </div>
                                             <div className="flex items-center gap-2 md:w-56 justify-end">
                                                 {
-                                                    item.uid != profileData.id && <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
+                                                    item.uid != profileData.id && <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold" onClick={() => handlerDm(item.uid)} >
                                                         <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
                                                         </svg>
