@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { HiLockClosed, HiOutlineOfficeBuilding, HiUserGroup } from "react-icons/hi"
 import Swal from "sweetalert2";
 import { MyContext } from "../../../../context/MyProvider";
+import NotFound from "@components/NotFound/NotFound";
 
 function Project(props) {
   const router = useRouter()
@@ -22,6 +23,8 @@ function Project(props) {
   const dataProject = useDetailProject(JSON.parse(localStorage.getItem("XA")), query.id)
   const [member, setMember] = useState(null)
   const context = useContext(MyContext)
+
+  console.log("profileData di project", profileData)
 
   useEffect(() => {
     async function getMemberProject() {
@@ -112,6 +115,11 @@ function Project(props) {
 
   let projectOwner = dataProject?.data?.data?.is_owner !== 0;
 
+  // check permission view project
+  if ((profileData['_bitws']['view'] & profileData['_feature']['project']) == 0) {
+    return <NotFound />
+  }
+
   return (
     <Layout2 title={`${dataDataProject?.name ?? "Project Detail"}`} profileData={profileData}>
       <section className="min-h-screen contain px-2 md:px-20 pt-32">
@@ -197,12 +205,12 @@ function Project(props) {
                   Forum
                 </button> */}
                 {
-                  projectOwner && (
+                   projectOwner && (profileData['_bitws']['delete'] & profileData['_feature']['project']) ? (
                     <button onClick={() => handleTab(7)} className={`${active == 7 ? "bg-zinc-200 dark:bg-darkSecondary" : "dark:hover:bg-darkSecondary hover:bg-zinc-100"} rounded-md w-full py-2 px-6 text-center font-semibold flex items-center gap-4 transition-all`}>
                       <FaTrash className="w-5 h-5 text-red-500" />
                       Delete
                     </button>
-                  )
+                  ): null
                 }
               </div>
 
@@ -215,7 +223,7 @@ function Project(props) {
                 }
                 {
                   active == 3 ?
-                    <General setActive={() => context.setDataDocumentation(context.dataDocumentation)} data={dataDataProject} />
+                    <General setActive={() => context.setDataDocumentation(context.dataDocumentation)} data={dataDataProject} profileData={profileData} />
                     : ""
                 }
                 {
@@ -232,7 +240,8 @@ function Project(props) {
                   active == 7 &&
                   <>
                     {
-                      projectOwner ?
+                      // check permission delete project
+                      projectOwner && (profileData['_bitws']['delete'] & profileData['_feature']['project']) ?
                         <button onClick={() => handlerDelete()} className="border-2 border-red-500 text-sm text-red-500 p-2 rounded-md uppercase font-bold">
                           Hapus Project
                         </button>

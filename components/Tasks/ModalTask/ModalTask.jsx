@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { MyContext, urlData } from "../../../context/MyProvider"
 import { FaAlignJustify, FaAngleDoubleRight, FaBars, FaCheck, FaChevronLeft, FaChevronRight, FaRegClock, FaUserCheck, FaUserPlus } from "react-icons/fa"
 import LabelTask from "./LabelTask"
@@ -15,6 +15,9 @@ import {convertDate} from "@utils/function"
 export default function ModalTask() {
     const context = useContext(MyContext)
     const item = context.activeTask
+
+    console.log("disini modal task", item);
+    
 
     const handlerPrevious = () => {
         const getIndex = findIndex(item.status.tasks, { id: item.task.id })

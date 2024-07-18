@@ -1,5 +1,6 @@
 import { findIndex } from "lodash";
 import { useContext, useEffect, useRef, useState } from "react"
+import { useRouter } from 'next/router'
 import { FaEllipsisH } from "react-icons/fa";
 import { HiOutlineChat, HiOutlineClock } from "react-icons/hi"
 import Swal from "sweetalert2";
@@ -11,6 +12,8 @@ export default function CardTask({ item, project, hide, status }) {
   const context = useContext(MyContext)
   const [open, setOpen] = useState(false)
   const dropRef = useRef(null)
+  const router = useRouter();
+  const { boardId } = router.query;
 
   useEffect(() => {
     document.addEventListener('mousedown', handleOutsideClick);
@@ -19,6 +22,26 @@ export default function CardTask({ item, project, hide, status }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (boardId && boardId == item.id) {
+      let obj = JSON.parse(JSON.stringify(item))
+      let data = {
+        task: obj,
+        status: status
+      }
+
+      setTimeout(() => {
+        context.setData({ ...context, activeTask: data });
+         // Remove boardId from URL
+         const { pathname, query } = router;
+         let updatedQuery = { ...query };
+         delete updatedQuery.boardId;  
+         router.replace({ pathname, query: updatedQuery }, undefined, { shallow: true });
+      }, 1000);
+    }
+  }, [boardId]);
+
+
   const handleOutsideClick = (event) => {
     if (dropRef.current && !dropRef.current.contains(event.target)) {
       setOpen(false);
@@ -26,15 +49,12 @@ export default function CardTask({ item, project, hide, status }) {
   };
 
   const handlerActiveTask = () => {
-    console.log("sini kah active??")
-    // let obj = JSON.parse(JSON.stringify(item))
-
-    // let data = {
-    //   task: obj,
-    //   status: status
-    // }
-
-    // context.setData({ ...context, activeTask: data })
+    let obj = JSON.parse(JSON.stringify(item))
+    let data = {
+      task: obj,
+      status: status
+    }
+    context.setData({ ...context, activeTask: data })
   }
 
   const handlerResolveTask = async (e) => {

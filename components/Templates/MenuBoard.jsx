@@ -17,7 +17,6 @@ export default function MenuBoard(props) {
     const context = useContext(MyContext)
     const [language, setLanguage] = useState(defaultLocale)
     const dataBoard = context.dataDocumentation;
-    console.log("dataBoard menuboard", dataBoard)
     const dataProject = useProjects(1, JSON.parse(localStorage.getItem("XA")), dataBoard.project.workspace_id)
     const dataShareProjects = useProjects(2, JSON.parse(localStorage.getItem("XA")), dataBoard.project.workspace_id)
     // console.log("share", dataShareProjects)

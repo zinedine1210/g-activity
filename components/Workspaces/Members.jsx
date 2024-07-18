@@ -16,9 +16,6 @@ export default function Members(props) {
     const ownerInfo = props.data?.owner_info
     const isOwner = props.data?.is_owner !== 0;
 
-    console.log("sini kah broo??", profileData)
-
-
     const handlerResend = async (value) => {
         setLoading(true)
         const result = await WorkspacesRepository.resendInvitation({ workspaceID: router.query.id, id: value.id, xa: JSON.parse(localStorage.getItem("XA")) })
@@ -95,8 +92,6 @@ export default function Members(props) {
                                 <h1 className="text-white dark:text-zinc-300">Owner</h1>
                             </div>
                             <div className="flex items-center gap-2 md:w-56 justify-end">
-                                {console.log("owner info", ownerInfo)}
-                                {console.log("profile user", profileData)}
                                 {
                                     ownerInfo.username != profileData.username && <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
                                         <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -159,7 +154,6 @@ export default function Members(props) {
                                                     <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-sm">{item.uid_docs.username}</p>
                                                 </div>
                                             </div>
-                                            {console.log("user user name", item)}
                                             <div className="md:min-w-24 bg-gray-500 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">
                                                 <h1 className="text-white dark:text-zinc-300">Member</h1>
                                             </div>
@@ -252,7 +246,6 @@ function ModalMembers(props) {
             })
         }
 
-        console.log(result.data.data);
         setData([])
         const newData = JSON.parse(JSON.stringify(props.members))
         result.data.data.forEach(val => {

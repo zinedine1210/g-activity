@@ -35,7 +35,18 @@ export default function Login({mounted}) {
             }
 
             const result = await AuthRepository.postLogin({"uspw":JSON.stringify(payload)})
-            // console.log(result)
+
+            console.log("result adalah", result)
+            if(!('status' in result)){
+                console.log("masa kesini")
+                setLoading(false)
+                return Swal.fire({
+                    icon:"warning",
+                    title:"The service is currently undergoing maintenance. Please try again later",
+                    timer:1500
+                })
+            }
+
             if(result.status == -1 || result.message == "Account not found"){
                 Swal.fire({
                     icon:"warning",

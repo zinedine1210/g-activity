@@ -14,6 +14,7 @@ class AuthRepository {
         )
         .then((response) => {
             const data = cbor.decode(response.data)
+            console.log("response dari server adalah", data)
             return data;
         })
         .catch((error) => {

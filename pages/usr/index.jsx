@@ -11,15 +11,11 @@ function User(props) {
   const { profileData } = props
   const [dataDashboard, setDataDashboard] = useState(null);
 
-  console.log(profileData);
-  console.log("ini apa??")
-
-
   const loadData = () => {
-    console.log("ini")
     CollectionData.getData({ "url": `dashboard` }).then(res => {
-      console.log("res dash bang", res)
-      setDataDashboard(res)
+      if(res){
+        setDataDashboard(res.data)
+      }
     })
   }
 
@@ -29,8 +25,6 @@ function User(props) {
 
   return (
     <Layout2 title={"HALAMAN DOCUMENTATION"} profileData={profileData}>
-      {console.log("dataDashboard dinin", dataDashboard)}
-      {console.log(dataDashboard?._documentation.id)}
       <section className="min-h-screen contain px-2 md:px-56 pt-32">
         <h1 className="text-3xl font-bold">Welcome to <span className="font-extrabold text-green-500">G</span>Activity</h1>
         <h1 className="mt-5 mb-10">Build an Application</h1>
@@ -110,7 +104,7 @@ function User(props) {
               </div>
             </div>
           </Link> */}
-          <Link href={dataDashboard?._task ? `/usr/board?id=${dataDashboard?._task.project_id}&boarId=${dataDashboard?._task.id}` : '/usr/workspaces'}>
+          <Link href={dataDashboard?._task ? `/usr/board?id=${dataDashboard?._task.project_id}&boardId=${dataDashboard?._task.id}` : '/usr/workspaces'}>
             <div className="w-full relative h-44 from-purple-500 via-indigo-600 to-purple-800 transition-all duration-300 ease-in-out hover:from-purple-400 hover:via-indigo-500 hover:to-purple-700 rounded-md bg-gradient-to-br p-3">
               <div>
                 <h1 className="font-extrabold text-lg text-white">Task</h1>

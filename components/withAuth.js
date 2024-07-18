@@ -9,67 +9,84 @@ const withAuth = (WrappedComponent) => {
     const [profileData, setProfileData] = useState(null);
 
     useEffect(() => {
-      const getXA = localStorage.getItem("XA") == undefined ? "" : JSON.parse(localStorage.getItem("XA"))
+      let getXA = localStorage.getItem("XA")
+
+      try {
+        getXA = JSON.parse(getXA)
+      } catch (e) {
+        console.error("JSON parse error:", e)
+        localStorage.removeItem("XA")
+        Swal.fire({
+          icon: "info",
+          title: "Logout",
+          text: "Your session has expired",
+          timer: 1200
+        })
+        localStorage.setItem("profileData", "logout")
+        setProfileData("logout")
+        return router.push("/")
+      }
+
       const localProfile = localStorage.getItem("profileData") == undefined ? JSON.parse(localStorage.getItem("profileData")) : undefined
 
-      if(localProfile){
+      if (localProfile) {
         setProfileData(localProfile)
-      }else{
-        if(getXA){
+      } else {
+        if (getXA) {
           const fetchProfileData = async () => {
-              // Fetch profile data here
-              const data = await AuthRepository.getStatus({ param:"user", XA:getXA })
+            // Fetch profile data here
+            const data = await AuthRepository.getStatus({ param: "user", XA: getXA })
+            // console.log(data)
+            if (data.status == -1 && data.message == "Token Expired") {
+              localStorage.removeItem("XA")
+              Swal.fire({
+                icon: "info",
+                title: "Logout",
+                text: "Your session has expired",
+                timer: 1200
+              })
+              localStorage.setItem("profileData", "logout")
+              router.push("/")
+              setProfileData("logout")
+            } else if (data.type == "failed") {
+              Swal.fire({
+                icon: "warning",
+                title: "Maintenance"
+              })
+              router.push("/")
+              localStorage.setItem("profileData", "failed")
+              setProfileData("failed")
+            } else {
               // console.log(data)
-              if(data.status == -1 && data.message == "Token Expired"){
-                localStorage.removeItem("XA")
-                Swal.fire({
-                  icon:"info",
-                  title:"Logout",
-                  text:"Your session has expired",
-                  timer:1200
-                })
-                localStorage.setItem("profileData", "logout")
-                router.push("/")
-                setProfileData("logout")
-              }else if(data.type == "failed"){
-                Swal.fire({
-                  icon:"warning",
-                  title:"Maintenance"
-                })
-                router.push("/")
-                localStorage.setItem("profileData", "failed")
-                setProfileData("failed")
-              }else{
-                // console.log(data)
-                localStorage.setItem("profileData", JSON.stringify(data))
-                setProfileData(data)
-              }
+              localStorage.setItem("profileData", JSON.stringify(data))
+              setProfileData(data)
+            }
           }
-          
-          if(!profileData){
+
+          if (!profileData) {
             fetchProfileData();
           }
-        }else{
+        } else {
           setProfileData("logout")
           localStorage.setItem("profileData", "logout")
           router.push("/")
         }
       }
-      
+
     }, []);
 
-    if(profileData){
+    if (profileData) {
       return (
         <WrappedComponent profileData={profileData} {...props} />
       );
-    }else{
+    } else {
       return <Loading />
     }
   };
 };
 
-function Loading(){
-  return(
+function Loading() {
+  return (
     <div className='dark:bg-dark w-full h-screen flex items-center justify-center'>
       <div className='flex items-center gap-5'>
         <div className="loader"></div>
@@ -82,7 +99,7 @@ function Loading(){
   )
 }
 
-function FailedLoading(){
+function FailedLoading() {
   return (
     <section className='bg-white flex items-center justify-center w-screen h-screen'>
       asjkajsk

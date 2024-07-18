@@ -88,7 +88,7 @@ export default function AssignedTask(props) {
         })
     }
 
-    if (context.dataDocumentation.project.hasOwnProperty("members"))
+    if (context.dataDocumentation?.project?.hasOwnProperty("members"))
         return (
             <div className="flex items-center">
                 <div className="flex -space-x-3">

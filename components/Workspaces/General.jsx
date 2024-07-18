@@ -11,6 +11,7 @@ export default function General(props) {
     const dataEnumWorkspaceType = useEnum("workspaceType", JSON.parse(localStorage.getItem("XA")))
     const [loading, setLoading] = useState(false)
     const isOwner = props.data?.is_owner !== 0;
+    const { profileData } = props
 
     const handlerChange = (value, target) => {
         if (isOwner) {
@@ -121,14 +122,14 @@ export default function General(props) {
                             <span className="sr-only">Loading...</span>
                         </div>
                         :
-                        <>
+                        <>{/* check permission edit workspace */}
                             {
-                                isOwner && (
+                                isOwner && (profileData['_bitws']['edit'] & profileData['_feature']['workspace']) ? (
                                     <button disabled={loading} className="disabled:bg-zinc-500 bg-blue-400 py-2 px-5 transition-all duration-300 ease-in-out hover:bg-blue-500 rounded-md text-white font-bold flex items-center justify-center gap-2 dark:bg-darkSecondary dark:hover:bg-darkPrimary">
                                         <FaSave />
                                         Save Changes
                                     </button>
-                                )
+                                ) : null
                             }
                         </>
                 }
