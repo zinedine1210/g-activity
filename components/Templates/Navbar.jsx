@@ -186,7 +186,7 @@ export default function Navbar(props) {
                                 </div>
                             </div>
                             <a onClick={(e) => handlerClose(e)} href={context.dataDocumentation ? `/usr/workspaces/project/Untitled?id=${context.dataDocumentation.project_id}` : ""} className="my-2 text-sm leading-5 text-zinc-700 transition-colors duration-300 transform dark:text-zinc-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:my-0">Project</a>
-                            <a onClick={(e) => handlerClose(e)} className="my-2 text-sm leading-5 text-zinc-700 transition-colors duration-300 transform dark:text-zinc-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:my-0" href="/usr/documentation/preview">{lang("preview")}</a>
+                            {/* <a onClick={(e) => handlerClose(e)} className="my-2 text-sm leading-5 text-zinc-700 transition-colors duration-300 transform dark:text-zinc-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:my-0" href="/usr/documentation/preview">{lang("preview")}</a> */}
                             <button disabled={context.dataDocumentation ? false : true} onClick={() => handlerSave()} className="disabled:bg-zinc-500 hover:bg-blue-400 transition-all bg-primary rounded-md text-white px-3 py-2 font-semibold text-sm flex items-center gap-2">
                                 {lang("save")}
                                 <FaSave />
