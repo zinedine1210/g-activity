@@ -42,7 +42,7 @@ function User(props) {
                 }
               </div>
               <div className="text-xs absolute bottom-1 right-3 text-white flex gap-1">
-                <span className="font-semibold text-6xl">{dataDashboard?._documentation?.count && dataDashboard._documentation.count}</span>
+                <span className="font-semibold text-6xl">{dataDashboard?._documentation?.count ? dataDashboard._documentation.count:0}</span>
                 <div className="self-end mb-1">
                   <h1>Project</h1>
                   <h1>Created</h1>
@@ -60,7 +60,7 @@ function User(props) {
                 Last Edit {dataDashboard?._mom?.d && moment(convertDate(dataDashboard._mom.d)).local().format("YYYY-MM-DD")}
               </div>
               <div className="text-xs absolute bottom-1 right-3 text-white flex gap-1">
-                <span className="font-semibold text-6xl">{dataDashboard?._mom?.count && dataDashboard._mom.count}</span>
+                <span className="font-semibold text-6xl">{dataDashboard?._mom?.count ? dataDashboard._mom.count:0}</span>
                 <div className="self-end mb-1">
                   <h1>Project</h1>
                   <h1>Created</h1>
@@ -78,7 +78,7 @@ function User(props) {
                 Last Edit {dataDashboard?._note?.d && moment(convertDate(dataDashboard._note.d)).local().format("YYYY-MM-DD")}
               </div>
               <div className="text-xs absolute bottom-1 right-3 text-white flex gap-1">
-                <span className="font-semibold text-6xl">{dataDashboard?._note?.count && dataDashboard._note.count}</span>
+                <span className="font-semibold text-6xl">{dataDashboard?._note?.count ? dataDashboard._note.count:0}</span>
                 <div className="self-end mb-1">
                   <h1>Project</h1>
                   <h1>Created</h1>
@@ -114,7 +114,7 @@ function User(props) {
               Last Edit {dataDashboard?._task?.d && moment(convertDate(dataDashboard._task.d)).local().format("YYYY-MM-DD")}
               </div>
               <div className="text-xs absolute bottom-1 right-3 text-white flex gap-1">
-                <span className="font-semibold text-6xl">{dataDashboard?._task?.count && dataDashboard._task.count}</span>
+                <span className="font-semibold text-6xl">{dataDashboard?._task?.count ? dataDashboard._task.count:0}</span>
                 <div className="self-end mb-1">
                   <h1>Project</h1>
                   <h1>Created</h1>
