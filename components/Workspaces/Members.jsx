@@ -252,6 +252,8 @@ function ModalMembers(props) {
             }
         })
 
+        console.log(dataFinal)
+
         const getXA = JSON.parse(localStorage.getItem("XA"))
         const result = await WorkspacesRepository.postTeamWorkspace({ data: dataFinal, xa: getXA, workspaceID: router.query.id })
         console.log(result);

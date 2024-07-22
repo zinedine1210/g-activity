@@ -1,53 +1,66 @@
-import SelectReusable from '@components/Admin/Partials/SelectReusable'
 import BlurToggle from '@components/Input/BlurToggle'
 import MeetingRepository from '@repositories/MeetingRepository'
 import { getTimeDate, timeUntil } from '@utils/function'
 import { Notify } from '@utils/scriptApp'
 import { MyContext } from 'context/MyProvider'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import { BsEye, BsPencil, BsTrash } from 'react-icons/bs'
 import { FaEllipsisH } from 'react-icons/fa'
 
 export default function RecordMeeting({
-    data
+    data,
+    tab,
+    terakhir
 }) {
     const context = useContext(MyContext)
     const router = useRouter()
     const [audience, setAudience] = useState(null)
+    const recordMeeting = tab == 1 ? data : data?.meet
+
     const getAllAudience = async () => {
         const result = await MeetingRepository.getAudience({
             xa: JSON.parse(localStorage.getItem("XA")),
-            id: data.id,
+            id: recordMeeting.id,
             flag: 1
         })
         console.log(result)
     }
+
 
     // useEffect(() => {
     //     if(!audience) getAllAudience()
     // }, [audience])
 
     let statusIcon = {
-        0: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-violet-500 gap-x-2 bg-violet-200 dark:bg-gray-800">
-                Inviting
-            </div>,
-        1: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-zinc-500 gap-x-2 bg-zinc-200 dark:bg-gray-800">
-                Draft
-            </div>,
-        2: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-blue-500 gap-x-2 bg-blue-100 dark:bg-gray-800">
-                Active
-            </div>,
-        3: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-green-500 gap-x-2 bg-green-200 dark:bg-gray-800">
-                Done
-            </div>,
-        4: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-red-500 gap-x-2 bg-red-200 dark:bg-gray-800">
-                Cancel
-            </div>,
-        5: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-red-500 gap-x-2 bg-red-200 dark:bg-gray-800">
-                Hadir
-            </div>,
+        1: {
+            1: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-zinc-500 gap-x-2 bg-zinc-200 dark:bg-gray-800">
+                    Draft
+                </div>,
+            2: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-blue-500 gap-x-2 bg-blue-100 dark:bg-gray-800">
+                    Ongoing
+                </div>,
+            3: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-green-500 gap-x-2 bg-green-200 dark:bg-gray-800">
+                    Done
+                </div>,
+            4: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-red-500 gap-x-2 bg-red-200 dark:bg-gray-800">
+                    Cancel
+                </div>
+        },
+        2: {
+            1: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-zinc-500 gap-x-2 bg-zinc-200 dark:bg-gray-800">
+                    Not Started
+                </div>,
+            2: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-blue-500 gap-x-2 bg-blue-100 dark:bg-gray-800">
+                    Ongoing
+                </div>,
+            3: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-green-500 gap-x-2 bg-green-200 dark:bg-gray-800">
+                    Done
+                </div>,
+            4: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-red-500 gap-x-2 bg-red-200 dark:bg-gray-800">
+                    Cancel
+                </div>
+        }
     }
 
     const bulkOptions = [
@@ -74,79 +87,93 @@ export default function RecordMeeting({
         },
     ]
 
-    const dataStatus = data?.status ?? 0
+    const dataStatus = recordMeeting?.status ?? 0
 
     const handleStartMeeting = async () => {
-        actionMeeting[dataStatus]()
+        actionMeeting[tab][dataStatus]()
     }
 
     let actionMeeting = {
-        0: async () => {
-            const result = await MeetingRepository.setStatusAudience({
-                xa: JSON.parse(localStorage.getItem("XA")),
-                id: data.meet_id,
-                data: {
-                    status: 1
-                }
-            })
-            if(result.status == 0){
-                const findIndex = context.dataMeeting.findIndex(res => res.id == data.id)
-                context.dataMeeting[findIndex] = result.data
-                context.setData({ ...context, dataMeeting: context.dataMeeting })
-            }else Notify("Something went wrong", "error")
-
-            router.push(`/usr/videoCall/${data.meet_id}`)
+        1: {
+            1: async () => {
+                const result = await MeetingRepository.setStatusMeeting({
+                    xa: JSON.parse(localStorage.getItem("XA")),
+                    id: recordMeeting.id,
+                    data: {
+                        status: 2
+                    }
+                })
+                if(result.status == 0){
+                    const findIndex = context.dataMeeting[tab].findIndex(res => res.id == recordMeeting.id)
+                    context.dataMeeting[tab][findIndex] = result.data
+                    context.setData({ ...context, dataMeeting: context.dataMeeting })
+                }else Notify("Something went wrong", "error")
+                router.push(`/usr/videoCall/${recordMeeting.id}`)
+            },
+            2: async () => {
+                router.push(`/usr/videoCall/${recordMeeting.id}`)
+            },
+            3: async () => {
+                Notify("Meeting done", "info")
+            }
         },
-        1: async () => {
-            console.log(data)
-            const result = await MeetingRepository.setStatusMeeting({
-                xa: JSON.parse(localStorage.getItem("XA")),
-                id: data.id,
-                data: {
-                    status: 2
-                }
-            })
-            if(result.status == 0){
-                const findIndex = context.dataMeeting.findIndex(res => res.id == data.id)
-                context.dataMeeting[findIndex] = result.data
-                context.setData({ ...context, dataMeeting: context.dataMeeting })
-            }else Notify("Something went wrong", "error")
-            router.push(`/usr/videoCall/${data.id}`)
-        },
-        2: async () => {
-            router.push(`/usr/videoCall/${data.id}`)
-        },
-        3: async () => {
-            Notify("Meeting done", "info")
-        },
-        5: () => {
-
+        2: {
+            2: async () => {
+                // const result = await MeetingRepository.setStatusAudience({
+                //     xa: JSON.parse(localStorage.getItem("XA")),
+                //     id: recordMeeting.id,
+                //     data: {
+                //         status: 1
+                //     }
+                // })
+                // console.log(result)
+                // if(result.status == 0){
+                //     const findIndex = context.dataMeeting[tab].findIndex(res => res.id == recordMeeting.id)
+                //     context.dataMeeting[tab][findIndex] = result.data
+                //     context.setData({ ...context, dataMeeting: context.dataMeeting })
+                // }else Notify("Something went wrong", "error")
+    
+                router.push(`/usr/videoCall/${recordMeeting.id}`)
+            },
         }
     }
 
     const statusButton = {
-        0: {
-            disabled: false,
-            label: "Join"
-        },
         1: {
-            disabled: false,
-            hidden: false,
-            label: "Start Meeting"
+            1: {
+                disabled: false,
+                hidden: false,
+                label: "Start Meeting"
+            },
+            2: {
+                disabled: false,
+                hidden: false,
+                label: "Join Meeting"
+            },
+            3: {
+                hidden: true
+            },
+            4: {
+                hidden: true
+            },
+            5: {
+                hidden: true
+            }
         },
         2: {
-            disabled: false,
-            hidden: false,
-            label: "Join Meeting"
-        },
-        3: {
-            hidden: true
-        },
-        4: {
-            hidden: true
-        },
-        5: {
-            hidden: true
+            1: {
+                hidden: true
+            },
+            2: {
+                disabled: false,
+                label: "Join"
+            },
+            3: {
+                hidden: true
+            },
+            4: {
+                hidden: true
+            }
         }
     }
 
@@ -154,18 +181,18 @@ export default function RecordMeeting({
   return (
     <tr>
         <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-            <h2 className="font-medium text-gray-800 dark:text-white ">{data?.title}</h2>
+            <h2 className="font-medium text-gray-800 dark:text-white ">{recordMeeting?.title}</h2>
         </td>
         <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-            {statusIcon[dataStatus]}
+            {statusIcon[tab][dataStatus]}
         </td>
         <td className="px-4 py-4 text-sm whitespace-nowrap">
             <div>
-                <p className="text-gray-500 dark:text-gray-400">{data?.about}</p>
+                <p className="text-gray-500 dark:text-gray-400">{recordMeeting?.about}</p>
             </div>
         </td>
         <td className="px-4 py-4 text-sm whitespace-nowrap">
-            {data?.passcode ? <BlurToggle data={data.passcode}/> : ""}
+            {recordMeeting?.passcode ? <BlurToggle data={recordMeeting.passcode}/> : ""}
         </td>
         <td className="px-4 py-4 text-sm whitespace-nowrap">
             <div className="flex items-center">
@@ -178,19 +205,59 @@ export default function RecordMeeting({
         </td>
 
         <td className="px-4 py-4 text-sm whitespace-nowrap">
-            {timeUntil((data?.date?.epoch_time * 1000) - (7 * 60 * 60 * 1000))}
+            {timeUntil((recordMeeting?.date?.epoch_time * 1000))}
         </td>
 
-        <td className="px-4 py-4 text-sm whitespace-nowrap flex items-center gap-2">
-            <SelectReusable data={data} options={bulkOptions} label={<FaEllipsisH className='text-zinc-500 dark:text-white' />} customCss='w-8 h-8' position="right-0" />
+        <td className={`px-4 py-4 text-sm whitespace-nowrap flex items-center gap-2`}> 
+            <SelectReusable terakhir={terakhir} data={data} options={bulkOptions} label={<FaEllipsisH className='text-zinc-500 dark:text-white' />} customCss='w-8 h-8' position="right-0" />
             {
-                !statusButton[dataStatus].hidden && (
-                    <button className='btn-primary' disabled={statusButton[dataStatus].disabled} onClick={() => handleStartMeeting()}>
-                        {statusButton[dataStatus].label}
+                !statusButton[tab][dataStatus].hidden && (
+                    <button className='btn-primary' disabled={statusButton[tab][dataStatus].disabled} onClick={() => handleStartMeeting()}>
+                        {statusButton[tab][dataStatus].label}
                     </button>
                 )
             }
         </td>
     </tr>
+  )
+}
+
+function SelectReusable({ terakhir=false, data, customCss="btn-primary inline-block", options, customAction=undefined, label="Label", position="left-0" }) {
+    const dropRef = useRef(null)
+    const [open, setOpen] = useState(false)
+
+    const handleOutsideClick = (event) => {
+        if (dropRef.current && !dropRef.current.contains(event.target)) {
+            setOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, []);
+
+    const classOpen = () => terakhir ? open ? "not-sr-only opacity-100" : "sr-only opacity-0" : open ? "absolute visible translate-y-0 opacity-100" : "absolute opacity-0 invisible translate-y-5"
+
+
+  return (
+    <div ref={dropRef} className="relative">
+        <button onClick={() => setOpen(!open)} className={customCss}>
+            {label}
+        </button>
+        <div role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" className={`${classOpen()} max-h-52 overflow-y-auto w-full min-w-min transition-all duration-300 backdrop-blur-md top-full bg-white shadow-2xl border rounded-xl z-50 ${position} mt-1`}>
+            {
+                options && options.map((opt, index) => {
+                    return (
+                        <button id={index} onClick={() => customAction != undefined ? customAction(data) : opt.onClick(data)} className="py-2 px-4 w-full flex items-center gap-2 text-start text-sm transition-colors duration-300 hover:bg-blue-100 dark:hover:bg-blue-500 ">
+                            {opt.iconLabel} {opt.label}
+                        </button>
+                    )
+                })
+            }
+        </div>
+    </div>
   )
 }

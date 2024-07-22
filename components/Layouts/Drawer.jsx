@@ -3,8 +3,7 @@ import { useContext } from "react";
 import { MyContext } from "../../context/MyProvider";
 import MenuWorkspaces from "./MenuWorkspaces";
 import { useTheme } from "next-themes";
-import { FaGreaterThan, FaRocketchat, FaVideo } from "react-icons/fa";
-import LibraryGPTMenu from "./LibraryGPTMenu";
+import { FaGreaterThan, FaVideo } from "react-icons/fa";
 import { HiChevronLeft } from "react-icons/hi";
 import Link from "next/link";
 import { BsChat } from "react-icons/bs";
@@ -42,7 +41,7 @@ export default function Drawer(props) {
                         <span className="ml-3">Dashboard</span>
                     </li>
                     {
-                        (profileData['_bitws']['view'] & profileData['_feature']['workspace']) ? <MenuWorkspaces profileData={props.profileData} /> : null
+                        (profileData?.['_bitws']?.['view'] & profileData?.['_feature']?.['workspace']) ? <MenuWorkspaces profileData={props.profileData} /> : null
                     }
                     <li onClick={() => handlerRouter("/usr/videoCall")} className={`${"/usr/videoCall" == router.asPath ? "bg-gradient-to-r dark:from-zinc-500 dark:to-zinc-600 from-blue-400 to-blue-500 dark:bg-darkSecondary" : ""} flex items-center px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 dark:hover:bg-dark cursor-pointer`}>
                         <FaVideo className="w-5 h-5 text-white transition duration-75 group-hover:text-white dark:group-hover:text-white" />
@@ -80,7 +79,6 @@ export default function Drawer(props) {
                     </button>
                 </div>
                 <div className="hidden md:block py-2">
-                    {console.log("profileData", profileData._feature)}
                     {
                         profileData._feature?._role ? (
                             <Link href={`/admin`}>

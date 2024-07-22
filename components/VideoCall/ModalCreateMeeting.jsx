@@ -18,7 +18,7 @@ export default function ModalCreateMeeting(props) {
     const [loading, setLoading] = useState(false)
 
     function formatEpochTime(epochTime) {
-        const date = new Date(epochTime - (7 * 60 * 60 * 1000));
+        const date = new Date(epochTime);
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
         const day = String(date.getDate()).padStart(2, '0');
@@ -170,10 +170,11 @@ export default function ModalCreateMeeting(props) {
                     }
                 });
                 obj.audience = arr
-                const splitdate = obj.date.split("T")
-                splitdate[1] = splitdate[1] + ":00"
-                const joinDate = splitdate.join(" ")
-                obj.date = joinDate
+                const date = new Date(obj.date + ":00")
+                const isostring = date.toISOString()
+                obj.date = isostring
+
+                console.log(obj)
                 const result = await MeetingRepository.postMeeting({
                     xa: JSON.parse(localStorage.getItem("XA")),
                     data: obj
@@ -222,29 +223,8 @@ export default function ModalCreateMeeting(props) {
                                                 <>
                                                     <div className="w-full relative">
                                                         <h1 className="font-semibold">Invite your team to join meeting</h1>
-                                                        <form className="mt-10 space-y-3 " onSubmit={(e) => handlerSubmitEmail(e)}>
-                                                            {
-                                                                value.audience.length > 0 ? value.audience.map((item, key) => {
-                                                                    return (
-                                                                        <div key={key} className="block relative border-2 dark:border-zinc-500 dark:bg-darkPrimary border-blue-500 p-2 rounded-md bg-blue-100">
-                                                                            <h1>{item.username}</h1>
-                                                                            <div className="absolute top-1/2 right-0 -translate-y-1/2 px-2">
-                                                                                <button type="button" onClick={() => handleDeleteAudience(item)} className="bg-red-500 rounded-full flex items-center justify-center text-white">
-                                                                                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                                                                    </svg>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    )
-                                                                })
-                                                                :
-                                                                <h1 className="w-full text-center text-red-500 font-bold py-5">
-                                                                    Please Select Member 
-                                                                    <p className="text-zinc-600">The members you choose will appear here</p>
-                                                                </h1>
-                                                            }
-                                                            <div className={`shadow-md p-5 bg-white dark:bg-dark rounded-xl z-20 w-full`}>
+                                                        <form className="mt-2 space-y-3 " onSubmit={(e) => handlerSubmitEmail(e)}>
+                                                            <div className={`shadow-md p-5 border bg-white dark:bg-dark rounded-xl z-20 w-full`}>
                                                                 <input type="text" onKeyDown={e => handlerKey(e)} onChange={(e) => handleSearch(e.target.value)} className={`outline-none p-2 border-2 dark:border-zinc-800 border-blue-300 w-full`} placeholder="Search Member from username" />
                                                                 {/* {console.log(dataMemberKeyword)} */}
                                                                 <div className="h-full max-h-72 overflow-y-scroll">
@@ -282,6 +262,29 @@ export default function ModalCreateMeeting(props) {
 
                                                                 </div>
                                                             </div>
+
+                                                            {
+                                                                value.audience.length > 0 ? value.audience.map((item, key) => {
+                                                                    return (
+                                                                        <div key={key} className="block relative border-2 dark:border-zinc-500 dark:bg-darkPrimary border-blue-500 p-2 rounded-md bg-blue-100">
+                                                                            <h1>{item.username}</h1>
+                                                                            <div className="absolute top-1/2 right-0 -translate-y-1/2 px-2">
+                                                                                <button type="button" onClick={() => handleDeleteAudience(item)} className="bg-red-500 rounded-full flex items-center justify-center text-white">
+                                                                                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                                                    </svg>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                })
+                                                                :
+                                                                <h1 className="w-full text-center text-red-500 font-bold py-5">
+                                                                    Please Select Member 
+                                                                    <p className="text-zinc-600">The members you choose will appear here</p>
+                                                                </h1>
+                                                            }
+                                                            
                                                         </form>
                                                     </div>
                                                 </>

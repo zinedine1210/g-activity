@@ -17,7 +17,7 @@ export function timeUntil(epochTime) {
     const difference = futureDate - now;
   
     if (difference <= 0) {
-      return "Waktu sudah berlalu";
+      return "Time has passed";
     }
   
     const days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -35,15 +35,15 @@ export function timeUntil(epochTime) {
           });
       return tgl
     } else if (days > 0) {
-      return `${days} hari lagi`;
+      return `${days} day(s) later`;
     } else if (hours > 0) {
-      return `${hours} jam lagi`;
+      return `${hours} hour(s) later`;
     } else if (minutes > 0) {
-      return `${minutes} menit lagi`;
+      return `${minutes} minute(s) later`;
     } else if (seconds > 0) {
-      return `${seconds} detik lagi`;
+      return `In a few seconds`;
     } else {
-      return "Kurang dari 1 detik lagi";
+      return "Soon";
     }
 }
 

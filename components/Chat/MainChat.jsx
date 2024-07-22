@@ -213,7 +213,6 @@ export default function MainChat({
       <div className="w-full xl:w-full h-screen overflow-y-hidden bg-zinc-300 image bg-cover bg-center" >
           <div className="flex-col flex h-full">
               <HeaderMainChat roomInfo={roomInfo}/>
-              
               <div className="w-full flex-1 overflow-y-auto space-y-4 px-10 py-5">
                 {
                   mapAllChat()

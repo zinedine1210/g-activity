@@ -1,7 +1,4 @@
-import ChatCollection from '@repositories/ChatCollection'
-import { MyContext } from 'context/MyProvider'
-import { useRouter } from 'next/router'
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import { BsSearch, BsTelephoneFill } from 'react-icons/bs'
 import { FaVideo } from 'react-icons/fa'
 
@@ -24,13 +21,13 @@ export default function HeaderMainChat({
             </div>
         </div>
         <div className="flex items-center gap-3">
-            <button onClick={() => router.push({ pathname: `/usr/chat`, query: router.query }, undefined, { shallow: true })} className="w-10 h-10 hover:bg-zinc-500/20 rounded-md flex items-center justify-center">
+            <button className="w-10 h-10 hover:bg-zinc-500/20 rounded-md flex items-center justify-center">
             <BsSearch className="text-zinc-600 text-xl" />
             </button>
-            <button onClick={() => router.push({ pathname: `/usr/chat`, query: router.query }, undefined, { shallow: true })} className="w-10 h-10 hover:bg-zinc-500/20 rounded-md flex items-center justify-center">
+            <button className="w-10 h-10 hover:bg-zinc-500/20 rounded-md flex items-center justify-center">
             <BsTelephoneFill className="text-zinc-600 text-xl" />
             </button>
-            <button onClick={() => router.push({ pathname: `/usr/chat`, query: router.query }, undefined, { shallow: true })} className="w-10 h-10 hover:bg-zinc-500/20 rounded-md flex items-center justify-center">
+            <button className="w-10 h-10 hover:bg-zinc-500/20 rounded-md flex items-center justify-center">
             <FaVideo className="text-zinc-600 text-xl" />
             </button>
         </div>
