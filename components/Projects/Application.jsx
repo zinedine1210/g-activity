@@ -18,8 +18,6 @@ export default function Application({ data, t, profileData }) {
     const [active, setActive] = useState("myProject")
     const [loading, setLoading] = useState(false)
 
-    console.log("profileData", profileData)
-
     const handlerCreateNote = async () => {
         setLoading(true)
         let obj = {
@@ -155,7 +153,8 @@ export default function Application({ data, t, profileData }) {
         let obj = {
             workspace_id: data.workspace_id,
             project_id: data.id,
-            privacy: -1
+            privacy: -1,
+            name: "Untitled Documentation"
         }
 
         const getXA = JSON.parse(localStorage.getItem("XA"))

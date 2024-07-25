@@ -117,7 +117,7 @@ export default function Navbar2(props) {
 
   const dataInvite = dataInviteWorkspace?.data?.data ?? []
   return (
-    <section id="header" className={`backdrop-blur-md z-40 transition-transform sticky top-0 left-0 border-t border-b border-t-transparent border-zinc-500 w-full ease-in-out duration-500 `}>
+    <section id="header" className={`backdrop-blur-md z-40 transition-transform sticky top-0 left-0 border-t border-b border-t-transparent border-zinc-500/20 w-full ease-in-out duration-500 `}>
       <div className="my-4 px-3 md:px-5">
 
         {/* Desktop */}

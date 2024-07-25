@@ -2,12 +2,10 @@ import { useWorkspaces } from '@utils/swr'
 import Link from 'next/link'
 import React from 'react'
 import { BsGrid, BsGridFill } from 'react-icons/bs'
-import { FaMoneyBill } from 'react-icons/fa'
 
 export default function SubMenuWorkspace() {
     const dataMyWorkspace = useWorkspaces(1, JSON.parse(localStorage.getItem("XA")))
     const dataShareWorkspace = useWorkspaces(2, JSON.parse(localStorage.getItem("XA")))
-    console.log(dataShareWorkspace)
   return (
     <div className='px-5 flex-col flex h-full'>
         <div className='flex-1 overflow-y-auto space-y-5'>

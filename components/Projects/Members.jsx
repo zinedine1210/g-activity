@@ -14,8 +14,7 @@ export default function Members(props) {
     const ownerInfo = props.data?.owner_info
     const [loading, setLoading] = useState(false)
     const [active, setActive] = useState(false)
-
-    console.log("profileData", profileData)
+    console.log(member)
 
     const handlerRemoveMember = async (value) => {
         Swal.fire({
@@ -121,14 +120,14 @@ export default function Members(props) {
                     </li>
                     {
                         member ? member.length > 0 ? member.map((item, key) => {
-                            if (item.uid_docs)
+                            if (item)
                                 return (
                                     <li key={key} className="w-full flex items-center justify-between gap-2 py-3 relative border-b">
                                         <div className="flex items-center gap-2 md:w-96">
-                                            <span className="w-12 h-12 bg-black rounded-full uppercase flex items-center text-white font-bold justify-center">{item.uid_docs.username.charAt(0)}</span>
+                                            <span className="w-12 h-12 bg-black rounded-full uppercase flex items-center text-white font-bold justify-center">{item.username.charAt(0)}</span>
                                             <div>
-                                                <h1 className="font-semibold text-sm">{item.uid_docs.fullname}</h1>
-                                                <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-sm">{item.uid_docs.username}</p>
+                                                <h1 className="font-semibold text-sm">{item.fullname}</h1>
+                                                <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-sm">{item.username}</p>
                                             </div>
                                         </div>
                                         <div className="md:min-w-24 bg-gray-500 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">
@@ -286,18 +285,18 @@ function ModalMembers(props) {
 
                                                             const mantap = getOption()
 
-                                                            if (mantap && (res.uid_docs.username.toLowerCase().includes(keyword.toLowerCase()) || res.uid_docs.fullname.toLowerCase().includes(keyword.toLowerCase()))) {
+                                                            if (mantap && (res.username.toLowerCase().includes(keyword.toLowerCase()) || res.fullname.toLowerCase().includes(keyword.toLowerCase()))) {
                                                                 return res;
                                                             }
                                                         }).map((item, key) => {
                                                             return (
                                                                 <button key={key} onClick={() => handlerAddEmail(item)} className="outline-none disabled:bg-zinc-200 focus:bg-blue-100 hover:bg-blue-100 p-2 transition-all duration-300 w-full text-start flex items-center gap-2 dark:hover:bg-darkPrimary dark:focus:bg-darkSecondary">
                                                                     <span className="w-10 h-10 rounded-full bg-black text-white font-bold uppercase flex items-center justify-center text-xl">
-                                                                        {item.uid_docs.username.charAt(0)}
+                                                                        {item.username.charAt(0)}
                                                                     </span>
                                                                     <div className="text-start">
-                                                                        <h1 className="font-bold text-sm">{item.uid_docs.username}</h1>
-                                                                        <p className="text-xs text-zinc-500">{item.uid_docs.fullname}</p>
+                                                                        <h1 className="font-bold text-sm">{item.username}</h1>
+                                                                        <p className="text-xs text-zinc-500">{item.fullname}</p>
                                                                     </div>
                                                                 </button>
                                                             )
@@ -335,16 +334,16 @@ function ModalMembers(props) {
                                     <div className="my-2 max-h-56 overflow-y-scroll">
                                         {
                                             data.length > 0 ? data.map((item, key) => {
-                                                if (item.uid_docs)
+                                                if (item)
                                                     return (
                                                         <div key={key} className="flex items-center justify-between hover:bg-blue-50 dark:hover:bg-darkPrimary dark:focus:bg-darkSecondary group">
                                                             <div className="w-full flex items-center gap-3 py-2 px-2">
                                                                 <span className="w-10 h-10 rounded-full bg-black text-white font-bold uppercase flex items-center justify-center text-xl">
-                                                                    {item.uid_docs.username.charAt(0)}
+                                                                    {item.username.charAt(0)}
                                                                 </span>
                                                                 <div className="text-start">
-                                                                    <h1 className="font-bold text-sm">{item.uid_docs.username}</h1>
-                                                                    <p className="text-xs text-zinc-500">{item.uid_docs.fullname}</p>
+                                                                    <h1 className="font-bold text-sm">{item.username}</h1>
+                                                                    <p className="text-xs text-zinc-500">{item.fullname}</p>
                                                                 </div>
                                                             </div>
                                                             <button className="p-2 group-hover:visible invisible" onClick={() => handlerDeleteEmail(item)}>

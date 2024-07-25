@@ -15,19 +15,44 @@ export default function TableMeeting({
     const [keyword, setKeyword] = useState("")
     const [tab, setTab] = useState(1)
 
+    const getAllAudience = async (recordMeetingId) => {
+        const result = await MeetingRepository.getAudience({
+            xa: JSON.parse(localStorage.getItem("XA")),
+            id: recordMeetingId,
+            flag: 1
+        })
+        console.log(result)
+        if(result.status == 0){
+            return result.data
+        }else return []
+    }
+
     const getAllVideoCall = async () => {
         const getxa = JSON.parse(localStorage.getItem("XA"))
         const result = await MeetingRepository.getMeeting({
             xa: getxa
         })
+        const thisOwnData = result.data
+
+        thisOwnData.map(async (el, index) => {
+            el.audiences = await getAllAudience(el.id)
+        })
+
         const inviteResult = await MeetingRepository.getInvitationAudience({
             flag: 1,
             xa: getxa
         })
+
+        const invitedData = inviteResult.data
+        invitedData.map(async (el) => {
+            el.meet.audiences = await getAllAudience(el.meet.id)
+        })
+
         let obj = {
-            1: result.data,
-            2: inviteResult.data
+            1: thisOwnData,
+            2: invitedData
         }
+        
         if(result.status == 0 && inviteResult.status == 0){
             context.setData({ ...context, [statename]: obj })
         }else Notify("Something went wrong", 'error')

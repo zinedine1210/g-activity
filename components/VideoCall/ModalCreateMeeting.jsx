@@ -10,7 +10,8 @@ export default function ModalCreateMeeting(props) {
     const context = useContext(MyContext)
     const { name, type, data } = context.modal
     const [value, setValue] = useState({
-        audience: []
+        audience: [],
+        passcode: ""
     })
     const [dataMemberKeyword, setDataMemberKeyword] = useState([])
     const [datatimeout, setDatatimeout] = useState(null)
@@ -37,7 +38,8 @@ export default function ModalCreateMeeting(props) {
                 id: data?.id,
                 about: data?.about,
                 passcode: data?.passcode,
-                date: formatEpochTime(data?.date?.epoch_time * 1000)
+                date: formatEpochTime(data?.date?.epoch_time * 1000),
+                type: data?.type
             }
             setValue(obj)
             setTypename("Update Meeting")
@@ -145,9 +147,12 @@ export default function ModalCreateMeeting(props) {
                     id: obj.id
                 })
                 if (result.status == 0) {
-                    const findIndex = context.dataMeeting.findIndex(el => el.id == obj.id)
-                    context.dataMeeting[findIndex] = result.data
-                    context.setData({ ...context, dataMeeting: context.dataMeeting , modal: null })
+                    const findIndex = context.dataMeeting[value.type].findIndex(el => el.id == obj.id)
+                    context.dataMeeting[value.type][findIndex] = result.data
+                    context.setData({ ...context, dataMeeting: {
+                        ...context.dataMeeting,
+                        [value.type]: context.dataMeeting[value.type]
+                    } , modal: null })
                     Notify("Updated", "info")
                 }
             }
@@ -161,6 +166,7 @@ export default function ModalCreateMeeting(props) {
                 }
 
                 let obj = JSON.parse(JSON.stringify(value))
+                const valueAudiences = obj.audience
                 let arr = ""
                 obj.audience.forEach((el, index) => {
                     if(index == 0){
@@ -173,15 +179,17 @@ export default function ModalCreateMeeting(props) {
                 const date = new Date(obj.date + ":00")
                 const isostring = date.toISOString()
                 obj.date = isostring
-
-                console.log(obj)
                 const result = await MeetingRepository.postMeeting({
                     xa: JSON.parse(localStorage.getItem("XA")),
                     data: obj
                 })
-                console.log(result, obj)
                 if(result.status == 0){
-                    context.setData({ ...context, dataMeeting: [ ...context.dataMeeting, result.data ], modal: null })
+                    result.data.audiences = valueAudiences
+                    console.log(result.data)
+                    context.setData({ ...context, dataMeeting: {
+                        ...context.dataMeeting,
+                        1: [ ...context.dataMeeting[1], result.data ]
+                    }, modal: null })
                     Notify("Added", "info")
                 }else Notify("Something went wrong", "error")
             }

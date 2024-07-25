@@ -13,7 +13,6 @@ export default function MyProjectApplication({ data, profileData }) {
     const dataNote = useNote(1, JSON.parse(localStorage.getItem("XA")), data.id)
     const dataMOM = useMom(1, JSON.parse(localStorage.getItem("XA")), data.id)
     const dataErrorKnowledge = useSWR(`${urlData}/errorKnowledge?projectID=1677590624521760359869`, fetcherData)
-    console.log("Note", dataNote);
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mb-20">

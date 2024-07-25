@@ -11,7 +11,7 @@ export default function VideoCall(props) {
     
   return (
     <Layout2 title={"Video Call"} desc={"Halaman Video Call"} profileData={props.profileData}>
-        <section className="min-h-screen contain px-2 md:px-20 pt-32" >
+        <section className="min-h-screen px-10 py-5" >
             {
                 isModal && <ModalCreateMeeting />
             }

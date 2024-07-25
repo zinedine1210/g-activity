@@ -18,22 +18,6 @@ export default function RecordMeeting({
     const [audience, setAudience] = useState(null)
     const recordMeeting = tab == 1 ? data : data?.meet
 
-    const getAllAudience = async () => {
-        const result = await MeetingRepository.getAudience({
-            xa: JSON.parse(localStorage.getItem("XA")),
-            id: recordMeeting.id,
-            flag: 1
-        })
-        if(result.status == 0){
-            setAudience(result.data)
-        }else Notify("Something went wrong when get audience in " + recordMeeting.title)
-    }
-
-
-    useEffect(() => {
-        if(!audience) getAllAudience()
-    }, [audience])
-
     let statusIcon = {
         1: {
             1: <div className="inline px-5 py-2 text-sm font-bold rounded-full text-zinc-500 gap-x-2 bg-zinc-200 dark:bg-gray-800">
@@ -77,6 +61,7 @@ export default function RecordMeeting({
             label: "Update",
             iconLabel: <BsPencil className='text-blue-500' />,
             onClick: (data) => {
+                data.type = tab
                 context.setData({ ...context, modal: { name: "modalMeeting", type: "update", data: data } })
             }
         },
@@ -84,6 +69,7 @@ export default function RecordMeeting({
             label: "View",
             iconLabel: <BsEye className='text-blue-500' />,
             onClick: (data) => {
+                data.type = tab
                 context.setData({ ...context, modal: { name: "modalMeeting", type: "view", data: data } })
             }
         },
@@ -199,15 +185,16 @@ export default function RecordMeeting({
         <td className="px-4 py-4 text-sm whitespace-nowrap">
             <div className="flex items-center">
                 {
-                    audience && (
+                    recordMeeting?.audiences && (
                         <>
-                            {audience.map((aud, index) => {
+                            {recordMeeting.audiences.map((aud, index) => {
                                 return (
-                                    <img key={index} className="object-cover w-8 h-8 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt=""/>
+                                    <div key={index} className='flex items-center justify-center text-white bg-zinc-500 border-2 border-zinc-800 -mx-1.5 w-10 h-10 rounded-full'>
+                                        <h1 className='font-mono font-bold text-xl uppercase'>{aud.username.charAt(0)}</h1>
+                                    </div>
                                 )
                             })}
-                            
-                            {/* <p className="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">+4</p> */}
+                        
                         </>
                     )
                 }

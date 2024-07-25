@@ -134,10 +134,10 @@ export default function Members(props) {
                                     return (
                                         <li key={key} className="w-full flex items-center justify-between gap-2 py-3 relative border-b">
                                             <div className="flex items-center gap-2 md:w-96">
-                                                <span className="w-12 h-12 bg-black rounded-full flex items-center text-white font-bold justify-center uppercase text-xl">{item.uid_docs.username.charAt(0)}</span>
+                                                <span className="w-12 h-12 bg-black rounded-full flex items-center text-white font-bold justify-center uppercase text-xl">{item.username.charAt(0)}</span>
                                                 <div>
-                                                    <h1 className="font-semibold text-sm">{item.uid_docs.fullname}</h1>
-                                                    <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-sm">{item.uid_docs.username}</p>
+                                                    <h1 className="font-semibold text-sm">{item.fullname}</h1>
+                                                    <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-sm">{item.username}</p>
                                                 </div>
                                             </div>
                                             <div className="md:min-w-24 bg-yellow-600 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">
@@ -167,10 +167,10 @@ export default function Members(props) {
                                     return (
                                         <li key={key} className="w-full flex items-center justify-between gap-2 py-3 relative border-b">
                                             <div className="flex items-center gap-2 md:w-96">
-                                                <span className="w-12 h-12 bg-black rounded-full flex items-center text-white font-bold justify-center uppercase text-xl">{item.uid_docs.username.charAt(0)}</span>
+                                                <span className="w-12 h-12 bg-black rounded-full flex items-center text-white font-bold justify-center uppercase text-xl">{item.username.charAt(0)}</span>
                                                 <div>
-                                                    <h1 className="font-semibold text-sm">{item.uid_docs.fullname}</h1>
-                                                    <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-sm">{item.uid_docs.username}</p>
+                                                    <h1 className="font-semibold text-sm">{item.fullname}</h1>
+                                                    <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-sm">{item.username}</p>
                                                 </div>
                                             </div>
                                             <div className="md:min-w-24 bg-gray-500 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">

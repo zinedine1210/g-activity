@@ -122,7 +122,7 @@ function Project(props) {
 
   return (
     <Layout2 title={`${dataDataProject?.name ?? "Project Detail"}`} profileData={profileData}>
-      <section className="min-h-screen contain px-2 md:px-20 pt-32">
+      <section className="min-h-screen px-10 py-5">
         {/* BREADCRUMB */}
         <div className="flex items-center gap-4 mb-3 dark:text-white text-zinc-500">
           <Link href={"/usr/workspaces"}>

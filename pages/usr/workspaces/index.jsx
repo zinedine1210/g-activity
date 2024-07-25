@@ -36,7 +36,7 @@ function Workspace(props) {
 
     return (
         <Layout2 title={"All workspace"} desc={"HALAMAN PROJECT"} profileData={profileData}>
-            <section className="min-h-screen contain px-2 md:px-20 pt-32">
+            <section className="min-h-screen px-10 py-5">
                 <h1 className="text-3xl font-bold">Workspaces</h1>
                 <p className="text-zinc-500 mb-5 dark:text-zinc-200">Workspaces allow you to separate your work efficiently.</p>
                 {
