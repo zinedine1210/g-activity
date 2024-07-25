@@ -52,7 +52,7 @@ export default function RecordFeature({ data, statename, profileData }) {
     let iconFeatures = {
         1: <BsCheck className="text-3xl text-green-500"/>,
         2: <FaMinus className="text-xl text-red-500"/>,
-        0: <BsXCircle className="text-zinc-500 text-2xl"/>
+        0: ""
     }
     
     return (
