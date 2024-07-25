@@ -24,16 +24,18 @@ export default function Navbar2(props) {
 
 
   useEffect(() => {
-    window.onscroll = function () {
-      const header = document.getElementById("header")
-      const fixedNav = header?.offsetTop + 100
+    // const content = document.getElementById("contentscroll")
+    // console.log(content)
+    // content.onscroll = function () {
+    //   const header = document.getElementById("header")
+    //   const fixedNav = header?.offsetTop + 100
 
-      if (window?.pageYOffset > fixedNav) {
-        setScroll(true)
-      } else {
-        setScroll(false)
-      }
-    }
+    //   if (content?.pageYOffset > fixedNav) {
+    //     setScroll(true)
+    //   } else {
+    //     setScroll(false)
+    //   }
+    // }
   }, [])
 
   const settingsLanguage = (value) => {
@@ -108,54 +110,23 @@ export default function Navbar2(props) {
     }
   }
 
+  const handleDrawer = () => {
+    context.setData({ ...context, drawer: !context.drawer })
+    localStorage.setItem("drawer", !context.drawer)
+  }
+
   const dataInvite = dataInviteWorkspace?.data?.data ?? []
   return (
-    <section id="header" className={`${navbar ? "bg-white dark:bg-darkPrimary" : "bg-white dark:bg-darkPrimary"} w-full z-40 border-b border-zinc-500 border-opacity-30 ${scroll ? "transition-transform fixed -top-20 translate-y-20 ease-in-out duration-500 navbar-fixed" : "absolute top-0 bg-white dark:bg-darkPrimary border-b border-zinc-500 border-opacity-30"}`}>
+    <section id="header" className={`backdrop-blur-md z-40 transition-transform sticky top-0 left-0 border-t border-b border-t-transparent border-zinc-500 w-full ease-in-out duration-500 `}>
       <div className="my-4 px-3 md:px-5">
-        <div className="md:hidden flex items-center justify-between">
-          <button aria-label="menu" onClick={() => context.setData({ ...context, drawer: true })} className="bg-blue-500 w-10 h-10 rounded-md p-2">
-            <svg className="w-3 h-3 stroke-black dark:stroke-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-          </button>
-          <div className={`flex gap-1`}>
-            <span className="font-extrabold text-green-500 text-4xl block">G</span>
-            <p className="self-end text-xs font-extrabold uppercase mb-1">Activity</p>
-          </div>
-          <div className="relative group">
-            <svg className="w-6 h-6 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-            <div className="w-80 bg-white rounded-md shadow-lg dark:bg-dark p-2 invisible group-hover:visible absolute right-0 hover:visible group-hover:translate-y-0 translate-y-3 transition-all top-10 delay-300 opacity-0 group-hover:opacity-100">
-              <h1 className="font-semibold text-center mb-5 flex items-center justify-center gap-2"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg> Notification</h1>
-              <div className="flex items-center justify-center gap-2 mb-5">
-                <button className="w-1/2 text-center text-sm border-b-2 border-primary pb-2">Undangan</button>
-                <button className="w-1/2 text-center text-sm border-b-2 border-zinc-100 pb-2">Tawaran</button>
-              </div>
-              <div className="w-full border-b pb-3 flex items-center gap-3 mb-1">
-                <span className="w-8 h-8 flex items-center justify-center"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></span>
-                <p className="w-full text-xs text-zinc-600 dark:text-zinc-300">Akun anda telah teraktivasi, sekarang anda bisa mulai buat Workspace</p>
-              </div>
-              {
-                dataInvite.map((item, key) => {
-                  return (
-                    <div key={key} className="w-full border-b py-2 pb-3">
-                      <div className="flex items-center justify-between mb-1">
-                        <h1 className="text-sm font-bold">{item.name}</h1>
-                        <button className="bg-blue-500 py-1 px-1 text-xs font-bold text-white rounded-md hover:bg-blue-300 transition-all duration-300" onClick={() => handlerApprove(item)}>Approve</button>
-                      </div>
-                      <p className="w-full text-xs text-zinc-600 dark:text-zinc-300">Anda menerima undangan ke dalam workspace <span className="font-bold">{item.name}</span></p>
-                    </div>
-                  )
-                })
-              }
-              <button className="text-center text-sm tracking-wider w-full mt-2">Lihat Semua</button>
-            </div>
-          </div>
-        </div>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
-          <button onClick={() => context.setData({ ...context, drawer: true })} className="bg-blue-500 w-10 h-10 rounded-md p-2 text-white shadow-md"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7"></path></svg></button>
+          <button onClick={() => handleDrawer()} className="bg-blue-500 w-10 h-10 rounded-md p-2 text-white shadow-md"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7"></path></svg></button>
           <Link href={"/usr"}>
             <div className={`${scroll ? "hidden" : "block"} flex gap-1`}>
               <span className="font-extrabold text-green-500 text-4xl block">G</span>
+              {/* <img src="/images/logo/logo.png" className="w-10 h-auto"/> */}
               <p className="self-end text-xs font-extrabold uppercase mb-1">Activity</p>
             </div>
           </Link>
@@ -227,6 +198,48 @@ export default function Navbar2(props) {
                 </div>
 
               </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        {/* mobile */}
+        <div className="md:hidden flex items-center justify-between">
+          <button aria-label="menu" onClick={() => context.setData({ ...context, drawer: !context.drawer })} className="bg-blue-500 w-10 h-10 rounded-md p-2">
+            <svg className="w-3 h-3 stroke-black dark:stroke-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+          <div className={`flex gap-1`}>
+            <span className="font-extrabold text-green-500 text-4xl block">G</span>
+            <p className="self-end text-xs font-extrabold uppercase mb-1">Activity</p>
+          </div>
+          <div className="relative group">
+            <svg className="w-6 h-6 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+            <div className="w-80 bg-white rounded-md shadow-lg dark:bg-dark p-2 invisible group-hover:visible absolute right-0 hover:visible group-hover:translate-y-0 translate-y-3 transition-all top-10 delay-300 opacity-0 group-hover:opacity-100">
+              <h1 className="font-semibold text-center mb-5 flex items-center justify-center gap-2"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg> Notification</h1>
+              <div className="flex items-center justify-center gap-2 mb-5">
+                <button className="w-1/2 text-center text-sm border-b-2 border-primary pb-2">Undangan</button>
+                <button className="w-1/2 text-center text-sm border-b-2 border-zinc-100 pb-2">Tawaran</button>
+              </div>
+              <div className="w-full border-b pb-3 flex items-center gap-3 mb-1">
+                <span className="w-8 h-8 flex items-center justify-center"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></span>
+                <p className="w-full text-xs text-zinc-600 dark:text-zinc-300">Akun anda telah teraktivasi, sekarang anda bisa mulai buat Workspace</p>
+              </div>
+              {
+                dataInvite.map((item, key) => {
+                  return (
+                    <div key={key} className="w-full border-b py-2 pb-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <h1 className="text-sm font-bold">{item.name}</h1>
+                        <button className="bg-blue-500 py-1 px-1 text-xs font-bold text-white rounded-md hover:bg-blue-300 transition-all duration-300" onClick={() => handlerApprove(item)}>Approve</button>
+                      </div>
+                      <p className="w-full text-xs text-zinc-600 dark:text-zinc-300">Anda menerima undangan ke dalam workspace <span className="font-bold">{item.name}</span></p>
+                    </div>
+                  )
+                })
+              }
+              <button className="text-center text-sm tracking-wider w-full mt-2">Lihat Semua</button>
             </div>
           </div>
         </div>
