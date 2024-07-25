@@ -132,7 +132,7 @@ export default function TableMeeting({
                 </div>
             </div>
 
-            <div className="mt-6 sm:flex sm:items-center sm:justify-between ">
+            {/* <div className="mt-6 sm:flex sm:items-center sm:justify-between ">
                 <div className="text-sm text-gray-500 dark:text-gray-400">
                     Page <span className="font-medium text-gray-700 dark:text-gray-100">1 of 10</span> 
                 </div>
@@ -158,7 +158,7 @@ export default function TableMeeting({
                         </svg>
                     </a>
                 </div>
-            </div>
+            </div> */}
         </div>
     </>
   )

@@ -11,7 +11,7 @@ export function MyProvider({children}) {
     const [data, setData] = useState({
         "dataDocumentation":null,
         "realDocumentation":null,
-        "drawer":false,
+        "drawer": null,
         "active":null,
         "breadcrumb":null,
         "activeWorkspace":false,
