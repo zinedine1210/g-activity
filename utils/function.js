@@ -293,3 +293,29 @@ async function saveData() {
 export function convertDate(item){
     return new Date(item.epoch_time * 1000)
 }
+
+export function getTimeAgoFromIsoString(isoDate) {
+    const date = new Date(isoDate).getTime(); // Mengonversi ISO 8601 ke timestamp
+    const now = new Date().getTime();
+
+    const seconds = Math.floor((now - date) / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(months / 12);
+
+    if (seconds < 60) {
+        return 'Baru saja';
+    } else if (minutes < 60) {
+        return `${minutes} menit yang lalu`;
+    } else if (hours < 24) {
+        return `${hours} jam yang lalu`;
+    } else if (days < 30) {
+        return `${days} hari yang lalu`;
+    } else if (months < 12) {
+        return `${months} bulan yang lalu`;
+    } else {
+        return `${years} tahun yang lalu`;
+    }
+}
