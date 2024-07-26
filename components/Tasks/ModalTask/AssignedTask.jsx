@@ -36,12 +36,10 @@ export default function AssignedTask(props) {
             const result = await ProjectRepository.getTeam({ id: context.dataDocumentation.project.id, type: 1, xa: getXA })
             const ownerMember = {
                 'uid': context.dataDocumentation.project._cb,
-                'uid_docs': {
-                    'fullname': context.dataDocumentation.project.owner_info.fullname,
-                    'username': context.dataDocumentation.project.owner_info.username,
-                    'email': context.dataDocumentation.project.owner_info.username,
-                    'project_id': context.dataDocumentation.project.id
-                }
+                'fullname': context.dataDocumentation.project.owner_info.fullname,
+                'username': context.dataDocumentation.project.owner_info.username,
+                'email': context.dataDocumentation.project.owner_info.username,
+                'project_id': context.dataDocumentation.project.id
             }
             result.data.unshift(ownerMember)
             context.dataDocumentation.project.members = result.data
@@ -56,8 +54,8 @@ export default function AssignedTask(props) {
     const handlerAddAssign = (value) => {
         let obj = {
             uid: value.uid,
-            username: value.uid_docs?.username ?? value.uid_docs?.email,
-            fullname: value.uid_docs?.fullname ?? value.uid_docs?.fullname
+            username: value?.username ?? value?.email,
+            fullname: value?.fullname ?? value?.fullname
         }
         item.assign.push(obj)
         setMenu(false)
@@ -114,7 +112,7 @@ export default function AssignedTask(props) {
                             {
                                 item.hasOwnProperty("assign") ? context.dataDocumentation.project.members.filter(res => {
                                     const find = item.assign.find(opt => {
-                                        return res.uid_docs.username == opt.username
+                                        return res.username == opt.username
                                     })
 
                                     if (!find)
@@ -122,10 +120,10 @@ export default function AssignedTask(props) {
                                 }).map((member, key) => {
                                     return (
                                         <button onClick={() => handlerAddAssign(member)} key={key} className={`disabled:bg-zinc-100 hover:bg-zinc-100 px-3 py-2 flex items-center gap-3 cursor-pointer w-full`}>
-                                            <span className="w-8 h-8 border rounded-full relative bg-zinc-500 border-zinc-300 flex items-center justify-center font-semibold text-sm text-white uppercase group">{member.uid_docs?.username.charAt(0)}</span>
+                                            <span className="w-8 h-8 border rounded-full relative bg-zinc-500 border-zinc-300 flex items-center justify-center font-semibold text-sm text-white uppercase group">{member?.username.charAt(0)}</span>
                                             <div className="text-start">
-                                                <h1 className="text-sm font-bold">{member.uid_docs?.username}</h1>
-                                                <p className="text-xs">{member.uid_docs?.fullname}</p>
+                                                <h1 className="text-sm font-bold">{member?.username}</h1>
+                                                <p className="text-xs">{member?.fullname}</p>
                                             </div>
                                         </button>
                                     )

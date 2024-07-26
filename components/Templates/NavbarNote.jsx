@@ -227,7 +227,7 @@ function ModalAssign(props) {
                 newData = member
             } else {
                 newData = member.filter(res => {
-                    const filter = res.uid_docs.username.includes(value)
+                    const filter = res.username.includes(value)
                     if (filter)
                         return res
                 })
@@ -264,10 +264,10 @@ function ModalAssign(props) {
                             data.map((item, key) => {
                                 return (
                                     <div key={key} className={`relative group hover:bg-blue-100 px-3 py-2 flex items-center gap-3 cursor-pointer w-full`}>
-                                        <span className="w-8 h-8 border rounded-full relative bg-blue-500 border-blue-300 flex items-center justify-center font-semibold text-sm text-white uppercase group">{item.uid_docs.username.charAt(0)}</span>
+                                        <span className="w-8 h-8 border rounded-full relative bg-blue-500 border-blue-300 flex items-center justify-center font-semibold text-sm text-white uppercase group">{item.username.charAt(0)}</span>
                                         <div className="text-start">
-                                            <h1 className="text-sm font-bold">{item.uid_docs.username}</h1>
-                                            <p className="text-xs">{item.uid_docs.fullname}</p>
+                                            <h1 className="text-sm font-bold">{item.username}</h1>
+                                            <p className="text-xs">{item.fullname}</p>
                                         </div>
                                         <button onClick={() => handlerDeleteEmail(item)} className="invisible group-hover:visible absolute top-1/2 right-2 -translate-y-1/2 p-2 hover:bg-blue-200 rounded-md">
                                             <FaTrash className="text-red-500" />
@@ -308,10 +308,10 @@ function ModalAssign(props) {
                                 }).map((item, key) => {
                                     return (
                                         <button onClick={() => handlerAddEmail(item)} key={key} className={`disabled:bg-zinc-100 hover:bg-zinc-100 px-3 py-2 flex items-center gap-3 cursor-pointer w-full`}>
-                                            <span className="w-8 h-8 border rounded-full relative bg-zinc-500 border-zinc-300 flex items-center justify-center font-semibold text-sm text-white uppercase group">{item.uid_docs.username.charAt(0)}</span>
+                                            <span className="w-8 h-8 border rounded-full relative bg-zinc-500 border-zinc-300 flex items-center justify-center font-semibold text-sm text-white uppercase group">{item.username.charAt(0)}</span>
                                             <div className="text-start">
-                                                <h1 className="text-sm font-bold">{item.uid_docs.username}</h1>
-                                                <p className="text-xs">{item.uid_docs.fullname}</p>
+                                                <h1 className="text-sm font-bold">{item.username}</h1>
+                                                <p className="text-xs">{item.fullname}</p>
                                             </div>
                                         </button>
                                     )

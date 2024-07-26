@@ -149,8 +149,8 @@ function CardParticipant({ item, urutan, member, data }) {
     const handlerChooseEmail = async (value, index) => {
         let newArr = {
             mom_id: context.dataDocumentation.id,
-            email: value.uid_docs.email,
-            name: value.uid_docs.fullname,
+            email: value.email,
+            name: value.fullname,
             position: null,
             company: null,
             uid: value.uid
@@ -217,8 +217,8 @@ function CardParticipant({ item, urutan, member, data }) {
                     }).map((user, key) => {
                         return (
                             <button key={key} onClick={() => handlerChooseEmail(user, urutan)} className="hover:bg-zinc-100 w-full text-start flex items-center p-2 gap-2">
-                                <span className="w-8 h-8 flex items-center justify-center bg-black font-semibold rounded-full text-white uppercase">{user.uid_docs.email.charAt(0)}</span>
-                                <h1 className="text-sm font-semibold">{user.uid_docs.email}</h1>
+                                <span className="w-8 h-8 flex items-center justify-center bg-black font-semibold rounded-full text-white uppercase">{user.email.charAt(0)}</span>
+                                <h1 className="text-sm font-semibold">{user.email}</h1>
                             </button>
                         )
                     })

@@ -22,7 +22,7 @@ export default function ModalProject(props) {
             if (props.members) {
                 props.members.forEach((val) => {
                     if (profileData.id !== val?.uid && val.status != -1) {
-                        option.push({ label: val.uid_docs?.username ?? val?.email, value: val })
+                        option.push({ label: val?.username ?? val?.email, value: val })
                     }
                 });
             }
