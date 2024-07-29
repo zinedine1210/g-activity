@@ -70,7 +70,7 @@ export default function Members(props) {
         return (
             <div className="py-10">
                 <ModalMembers active={active} members={props.members} setMember={(val) => props.setMember(val)} setActive={(val) => setActive(val)} />
-                <h1 className="text-xl font-bold">Workspace Members ({members.length + 1})</h1>
+                <h1 className="text-xl font-bold">Workspace Members ({members.length})</h1>
                 <p className="text-sm text-zinc-600 dark:text-zinc-300">Workspace members can view and join all Workspace visible boards and create new boards in the Workspace.</p>
 
                 <div className="mt-10">
@@ -95,7 +95,7 @@ export default function Members(props) {
                         </div>
                     </div>
                     <ul className="mt-5 py-5">
-                        <li className="w-full flex items-center justify-between gap-2 py-3 relative border-b">
+                        {/* <li className="w-full flex items-center justify-between gap-2 py-3 relative border-b">
                             <div className="flex items-center gap-2 md:w-96">
                                 <span className="w-12 h-12 bg-black rounded-full flex items-center text-white font-bold justify-center uppercase">{ownerInfo.username.charAt(0)}</span>
                                 <div>
@@ -127,9 +127,11 @@ export default function Members(props) {
                                     )
                                 }
                             </div>
-                        </li>
+                        </li> */}
                         {
                             members.length > 0 ? members.map((item, key) => {
+
+                                { console.log("item apaa bang", item) }
                                 if (item.status == -1)
                                     return (
                                         <li key={key} className="w-full flex items-center justify-between gap-2 py-3 relative border-b">
@@ -173,9 +175,13 @@ export default function Members(props) {
                                                     <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-sm">{item.username}</p>
                                                 </div>
                                             </div>
-                                            <div className="md:min-w-24 bg-gray-500 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">
-                                                <h1 className="text-white dark:text-zinc-300">Member</h1>
-                                            </div>
+                                            {
+                                                item.is_owner == 1 ? <div className="md:min-w-24 bg-blue-600 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">
+                                                    <h1 className="text-white dark:text-zinc-300">Owner</h1>
+                                                </div> : <div className="md:min-w-24 bg-gray-500 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">
+                                                    <h1 className="text-white dark:text-zinc-300">Member</h1>
+                                                </div>
+                                            }
                                             <div className="flex items-center gap-2 md:w-56 justify-end">
                                                 {
                                                     item.uid != profileData.id && <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold" onClick={() => handlerDm(item.uid)} >
@@ -187,14 +193,14 @@ export default function Members(props) {
                                                 }
 
                                                 {
-                                                    isOwner && (
+                                                    isOwner && item.is_owner != 1 ? (
                                                         <button onClick={() => handlerCancel(item)} className="bg-red-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
                                                             <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                                                             </svg>
                                                             Kick
                                                         </button>
-                                                    )
+                                                    ): null
                                                 }
                                             </div>
                                         </li>
@@ -240,6 +246,8 @@ function ModalMembers(props) {
     const [datatimeout, setDatatimeout] = useState(null)
     const context = useContext(MyContext)
     const [loading, setLoading] = useState(false)
+
+    console.log("dataMemberKeyword adalah", dataMemberKeyword)
 
     const handlerSubmitEmail = async (e) => {
         e.preventDefault()

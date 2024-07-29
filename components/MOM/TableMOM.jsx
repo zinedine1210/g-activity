@@ -14,14 +14,14 @@ export default function TableMOM() {
     useEffect(() => {
         async function getRecord() {
             const result = await MomRepository.getPoint({ xa: JSON.parse(localStorage.getItem("XA")), momID: data.id })
-            console.log(result);
             result.data.sort(function (a, b) {
                 return a.pos - b.pos
             })
             context.dataDocumentation.record = result.data
             context.setDataDocumentation(context.dataDocumentation)
         }
-        if (!context.dataDocumentation.hasOwnProperty('record')) {
+        console.log("context.dataDocumentation", context.dataDocumentation)
+        if (!context.dataDocumentation.hasOwnProperty('record') || context.dataDocumentation.record.length == 0) {
             getRecord()
         }
     }, [])

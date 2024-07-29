@@ -6,6 +6,7 @@ import { FaUserPlus, FaPrint, FaPalette, FaSave, FaTrash } from "react-icons/fa"
 import { handlerPutMOM, handlerPutRecord } from "../../utils/repositories"
 import ProjectRepository from "../../repositories/ProjectRepository";
 import MomRepository from "../../repositories/MomRepository";
+import CollectionData from "@repositories/CollectionData"
 import CardAssign from "./CardAssign";
 import Swal from "sweetalert2";
 
@@ -192,7 +193,7 @@ function ModalAssign(props) {
             })
 
             if (!findData) {
-                dataFinal.delete.push(val.uid)
+                dataFinal.delete.push(val.id)
             }
         });
 
@@ -205,7 +206,7 @@ function ModalAssign(props) {
                 dataFinal.add.push(val.uid)
             }
         })
-        console.log(dataFinal);
+        console.log("ini data final??", dataFinal);
 
         const getXA = JSON.parse(localStorage.getItem("XA"))
         if (dataFinal.add.length > 0) {
@@ -214,6 +215,7 @@ function ModalAssign(props) {
         }
 
         if (dataFinal.delete.length > 0) {
+            console.log("bawah bro delete", dataFinal)
             const deleteData = await MomRepository.deleteTeam({ xa: JSON.parse(localStorage.getItem("XA")), id: context.dataDocumentation.id, data: dataFinal.delete })
             console.log(deleteData);
         }
@@ -232,7 +234,9 @@ function ModalAssign(props) {
 
     const handlerDeleteEmail = (value) => {
         const filter = data.filter(res => {
-            return res.uid != value.uid
+            console.log("value val", value)
+            console.log("res rses", res)
+            return res.id != value.id
         })
         setData(filter)
         context.setDataDocumentation(context.dataDocumentation)
@@ -260,8 +264,8 @@ function ModalAssign(props) {
 
     useEffect(() => {
         async function getMember() {
-            const result = await ProjectRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), type: 1, id: context.dataDocumentation.project_id })
-            console.log(result);
+            // const result = await ProjectRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), type: 1, id: context.dataDocumentation.project_id })
+            const result = await CollectionData.getData({ url: `project/${context.dataDocumentation.project_id}/team/1?shared=Y`})
             setMember(result.data)
             setKeyword(result.data)
         }

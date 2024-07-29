@@ -36,7 +36,7 @@ export default function ParticipantsMOM2() {
     return (
         <div className="pb-10">
             <div className="flex items-center gap-3 mb-2 group">
-                <h2 className="font-semibold text-zinc-800 dark:text-white">Participants</h2>
+                <h2 className="font-semibold text-zinc-800 dark:text-white">Participants (type and enter to add participant)</h2>
                 <button onClick={() => handlerCreate()}>
                     <FaPlus className="text-zinc-500 text-sm group-hover:visible invisible transition-all duration-300 opacity-0 group-hover:opacity-100" />
                 </button>

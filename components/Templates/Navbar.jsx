@@ -8,6 +8,7 @@ import DocumentationRepository from "../../repositories/DocumentationRepository"
 import { mutate } from "swr";
 import { findIndex } from "lodash";
 import ProjectRepository from "../../repositories/ProjectRepository";
+import CollectionData from "@repositories/CollectionData"
 import CardAssign from "./CardAssign";
 
 export default function Navbar(props) {
@@ -306,8 +307,8 @@ function ModalAssign(props) {
 
     useEffect(() => {
         async function getMember() {
-            const result = await ProjectRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), type: 1, id: context.dataDocumentation.project_id })
-            console.log("sini bang??", result)
+            // const result = await ProjectRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), type: 1, id: context.dataDocumentation.project_id })
+            const result = await CollectionData.getData({ url: `project/${context.dataDocumentation.project_id}/team/1?shared=Y`})            
             setMember(result.data)
             setKeyword(result.data)
         }

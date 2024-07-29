@@ -32,7 +32,7 @@ function DetailWorkspaces(props) {
   useEffect(() => {
     async function getWorkspaceTeam() {
       const result = await WorkspacesRepository.getTeam({ type: 1, id: query.id, xa: JSON.parse(localStorage.getItem("XA")) })
-      console.log("result teeam", result)
+      console.log("result teeam sss", result)
       setMember(result?.data)
     }
 

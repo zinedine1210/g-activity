@@ -144,15 +144,16 @@ class MomRepository {
 
     async deleteTeam(params) {
         const data = cbor.encode(params.data)
+        console.log("params apa bang", params)
         const reponse = await Repository.delete(
             `${baseUrl}/mom_team/rm/${params.id}`,
-            data,
             {
                 headers: {
                     xa: params.xa
                 },
                 contentType: "application/cbor",
-                responseType: "arraybuffer"
+                responseType: "arraybuffer",
+                data: data
             }
         )
             .then((response) => {

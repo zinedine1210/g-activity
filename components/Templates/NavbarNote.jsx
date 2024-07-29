@@ -8,6 +8,7 @@ import NoteRepository from "../../repositories/NoteRepository";
 import Swal from "sweetalert2";
 import { useFindMembers } from "../../utils/swr";
 import ProjectRepository from "../../repositories/ProjectRepository";
+import CollectionData from "@repositories/CollectionData"
 import CardAssign from "./CardAssign";
 
 export default function NavbarNote(props) {
@@ -240,7 +241,8 @@ function ModalAssign(props) {
 
     useEffect(() => {
         async function getMember() {
-            const result = await ProjectRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), type: 1, id: context.dataDocumentation.project_id })
+            // const result = await ProjectRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), type: 1, id: context.dataDocumentation.project_id })
+            const result = await CollectionData.getData({ url: `project/${context.dataDocumentation.project_id}/team/1?shared=Y`})
             setMember(result.data)
             setKeyword(result.data)
         }

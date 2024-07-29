@@ -63,7 +63,7 @@ export default function Members(props) {
                 active && <ModalMembers active={active} members={member} data={props.data} setMember={(val) => props.setMember(val)} setActive={(val) => setActive(val)} />
             }
 
-            <h1 className="text-xl font-bold">Projects Members ({member?.length + 1})</h1>
+            <h1 className="text-xl font-bold">Projects Members ({member?.length})</h1>
             <p className="text-sm text-zinc-600 dark:text-zinc-300">Projects members can view and join all Projects visible boards and create new boards in the Projects.</p>
 
             <div className="mt-10">
@@ -83,7 +83,7 @@ export default function Members(props) {
                     }
                 </div>
                 <ul className="mt-5 py-5">
-                    <li className="w-full flex items-center justify-between gap-2 py-3 relative border-b">
+                    {/* <li className="w-full flex items-center justify-between gap-2 py-3 relative border-b">
                         <div className="flex items-center gap-2 md:w-96">
                             <span className="w-12 h-12 bg-black rounded-full flex items-center text-white font-bold justify-center uppercase">{ownerInfo.username.charAt(0)}</span>
                             <div>
@@ -117,7 +117,7 @@ export default function Members(props) {
                                 )
                             }
                         </div>
-                    </li>
+                    </li> */}
                     {
                         member ? member.length > 0 ? member.map((item, key) => {
                             if (item)
@@ -130,26 +130,33 @@ export default function Members(props) {
                                                 <p className="text-zinc-600 dark:text-zinc-300 font-semibold text-sm">{item.username}</p>
                                             </div>
                                         </div>
-                                        <div className="md:min-w-24 bg-gray-500 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">
-                                            <h1 className="text-white dark:text-zinc-300">Member</h1>
-                                        </div>
+                                        {
+                                            item.is_owner == 1 ? <div className="md:min-w-24 bg-blue-600 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">
+                                                <h1 className="text-white dark:text-zinc-300">Owner</h1>
+                                            </div> : <div className="md:min-w-24 bg-gray-500 py-1 text-sm rounded-md flex items-center justify-center gap-1 px-3 font-semibold">
+                                                <h1 className="text-white dark:text-zinc-300">Member</h1>
+                                            </div>
+                                        }
+
                                         <div className="flex items-center gap-2 md:w-56 justify-end">
-                                            <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold" onClick={() => handlerDm(item.uid)}>
-                                                <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-                                                </svg>
-                                                Hubungi
-                                            </button>
                                             {
-                                                props.data?.is_owner !== 0 && (
+                                                item.uid != profileData.id &&
+                                                <button className="bg-green-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold" onClick={() => handlerDm(item.uid)}>
+                                                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                                                    </svg>
+                                                    Hubungi
+                                                </button>
+                                            }
+                                            {
+                                                isOwner && item.is_owner != 1 ? (
                                                     <button onClick={() => handlerRemoveMember(item)} className="bg-red-600 py-1 text-sm rounded-md flex items-center gap-1 px-3 text-white font-semibold">
                                                         <svg fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                                                         </svg>
                                                         Kick
                                                     </button>
-
-                                                )
+                                                ) : null
                                             }
                                         </div>
                                     </li>

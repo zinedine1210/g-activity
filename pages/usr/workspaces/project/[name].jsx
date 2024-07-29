@@ -160,7 +160,7 @@ function Project(props) {
             </span>
             <span className="flex items-center text-sm md:text-base gap-2">
               <HiUserGroup className="text-xl text-blue-500" />
-              {member ? member?.length + 1 : "--"} Member
+              {member ? member?.length: "--"} Member
             </span>
           </div>
         </div>
