@@ -1,4 +1,5 @@
 import { socket } from '../config/config-socket.js'
+import { showToast } from "@utils/functionToast"
 
 // EMIT FUNCTION 
 export function emit(event, data) {
@@ -17,6 +18,19 @@ export function connect() {
         console.log("connect callback", callback)
         return callback
     });
+}
+
+// CHECK ERROR MSG
+export function checkErrorMsg(callback) {
+    // console.log("ini check error")
+    // console.log(callback)
+    if (callback['status'] == -1) {
+        showToast({
+            type: "error",
+            text: "Terjadi Kesalahan Sistem"
+        })
+    }
+    return
 }
 
 export function setupSocketListeners(onConnect, onError) {

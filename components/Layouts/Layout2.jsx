@@ -5,28 +5,34 @@ import ModalWorkspace from "../Workspaces/ModalWorkspace"
 import { MyContext } from "../../context/MyProvider"
 import SidebarMenu from "./SidebarMenu"
 
-export default function Layout2({children, title, desc, image, profileData}) {
+export default function Layout2({ children, title, desc, image, profileData }) {
   const context = useContext(MyContext)
+
+  // check profile data
+  if (!profileData) {
+    return <NotFound />
+  }
+
   return (
     <>
-      <Seo 
+      <Seo
         title={title}
         description={desc}
-        image={image ? image:null}
+        image={image ? image : null}
       />
 
       <section>
         <div className="flex h-screen overflow-hidden">
-          <SidebarMenu profileData={profileData}/>
+          <SidebarMenu profileData={profileData} />
           <div className="overflow-y-auto w-full relative">
-            <Navbar2 profileData={profileData}/>
+            <Navbar2 profileData={profileData} />
             {children}
           </div>
         </div>
         {
-          context.activeWorkspace ? 
-            <ModalWorkspace profileData={profileData}/>
-          :""
+          context.activeWorkspace ?
+            <ModalWorkspace profileData={profileData} />
+            : ""
         }
       </section>
     </>

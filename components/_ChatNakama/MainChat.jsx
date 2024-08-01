@@ -160,19 +160,19 @@ export default function MainChat({
     console.log("allMsgChannel", allMsgChannel)
     setDataChat(allMsgChannel['messages'])
 
-    // on receive new message
-    socket.onchannelmessage = (message) => {
-      console.log("Received message:", message);
-      setDataChat(prevDataChat => {
-        const updatedDataChat = [...prevDataChat, message];
-        console.log("Updated dataChat:", updatedDataChat);
-        return updatedDataChat;
-      });
+    // // on receive new message
+    // socket.onchannelmessage = (message) => {
+    //   console.log("Received message:", message);
+    //   setDataChat(prevDataChat => {
+    //     const updatedDataChat = [...prevDataChat, message];
+    //     console.log("Updated dataChat:", updatedDataChat);
+    //     return updatedDataChat;
+    //   });
 
-      context.setData({ ...context, dataReply: null })
-      containerRef.current?.scrollIntoView({ behavior: "auto" }); // scroll kebawah
-      setText("") // kosongkan lagi input editor
-    };
+    //   context.setData({ ...context, dataReply: null })
+    //   containerRef.current?.scrollIntoView({ behavior: "auto" }); // scroll kebawah
+    //   setText("") // kosongkan lagi input editor
+    // };
   }
 
   async function runSetRoom() {

@@ -9,39 +9,44 @@ export default function LayoutChat({ children, profileData, title, desc, image, 
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    if(roomId){
+    if (roomId) {
       setMounted(false)
       setTimeout(() => {
         setMounted(true)
       }, 200);
     }
   }, [roomId])
-  
+
   const mountingMainChat = () => {
-    if(mounted)
-    return <MainChat roomId={roomId} profileData={profileData}/>
+    if (mounted)
+      return <MainChat roomId={roomId} profileData={profileData} />
+  }
+
+  // check profile data
+  if (!profileData) {
+    return <NotFound />
   }
 
   return (
     <>
-      <Seo 
+      <Seo
         title={title}
         description={desc}
-        image={image ? image:null}
+        image={image ? image : null}
       />
       <section className="w-full h-screen overflow-hidden flex">
-          <SidebarMenu profileData={profileData}/>
-          <PanelSide profileData={profileData}/>
-          <div className="flex w-full">
-            <div className='w-1/3 border-r-2'>
-              {children}
-            </div>
-            <div className='w-full'>
-              {
-                mountingMainChat()
-              }
-            </div>
+        <SidebarMenu profileData={profileData} />
+        <PanelSide profileData={profileData} />
+        <div className="flex w-full">
+          <div className='w-1/3 border-r-2'>
+            {children}
           </div>
+          <div className='w-full'>
+            {
+              mountingMainChat()
+            }
+          </div>
+        </div>
       </section>
     </>
   )

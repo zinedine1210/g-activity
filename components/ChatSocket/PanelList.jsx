@@ -7,7 +7,9 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { MyContext } from "context/MyProvider";
 import ChatCollection from "@repositories/ChatCollection";
 import { HiRefresh } from "react-icons/hi";
-import { emit, setupSocketListeners, connect, checkErrorMsg } from "@utils/socketfunction"
+import { setupSocketListeners, connect, emit, checkErrorMsg } from "@utils/socketfunction"
+import { socket } from '../../config/config-socket'
+import notifyChat from '@components/ChatSocket/NotifChat';
 
 export default function PanelList({
     profileData,
@@ -82,6 +84,56 @@ export default function PanelList({
         } else Notify("Something went wrong when get room")
     }
 
+    // join room
+    const joinRoom = (newRoomId) => {
+        emit('join', { 'room_id': newRoomId }).then(callback => {
+            console.log("join room", callback)
+            // checkErrorMsg(callback)
+        })
+    }
+
+    const receiveNotif = (data) => {
+        console.log("ini receive notif", data)
+        console.log(context[statename])
+        
+        if (profileData['id'] != data['last_msg_uid']) {
+            let objNotif = {
+                'label': data['label'],
+                'msg': data['last_msg']
+            }
+            notifyChat(objNotif);
+        }
+
+        context.setData(prevContext => {
+            const prevDataChat = prevContext[statename] || [];
+            console.log("prevDataChat", prevContext[statename])
+            const existingMessageIndex = prevDataChat.findIndex(res => res.id === data.id);
+            if (existingMessageIndex !== -1) { // kalau roomnya udah ada berarti cuma update msg
+                const updatedMessages = [...prevDataChat];
+                updatedMessages[existingMessageIndex] = data;
+                console.log("updatedMessagesupdatedMessages", updatedMessages)
+                return { ...prevContext, [statename]: updatedMessages };
+            } else {
+                return { ...prevContext, [statename]: [data, ...prevDataChat] };
+            }
+        });
+
+        // const find = JSON.parse(JSON.stringify(context[statename])).find(res => res.id == data.room_id)
+        // console.log("find find", find)
+        // if (find) { // kalau roomnya udah ada berarti cuma update msg
+        //     const filter = JSON.parse(JSON.stringify(context[statename])).filter(res => res.id != el.id)
+        //     let obj = {
+        //         last_msg: el.last_msg,
+        //         last_msg_uid: el.last_msg_uid,
+        //         last_msg_username: el.last_msg_username
+        //     }
+        //     const mergeObj = { ...find, ...obj }
+        //     context.setData({ ...context, [statename]: [mergeObj, ...filter] })
+        // } else {
+        //     context.setData({ ...context, [statename]: [...context[statename], el] })
+        // }
+    }
+
     useEffect(() => {
         // CONNECT SOCKET IO
         connect()
@@ -90,6 +142,7 @@ export default function PanelList({
             (id) => {
                 console.log("disini connect id", id)
                 setConnectionStatus({ status: 'connected', id });
+                joinRoom(profileData['id']);
             },
             (err) => {
                 console.log("disini error connect", err)
@@ -97,23 +150,26 @@ export default function PanelList({
             }
         );
 
+        // receive new private message
+        socket.on('receiveNotif', (data) => {
+            receiveNotif(data)
+        });
+
         // Fungsi cleanup untuk menonaktifkan listener ketika komponen dilepas
         return () => {
             cleanup();
         };
-
-
     }, [])
 
     useEffect(() => {
         if (!context[statename]) getAllRoom()
 
-        intervalRef.current = setInterval(() => {
-            if (context[statename]) fetchNewMessageRoom();
-        }, 2000); // Interval set to 5 seconds
+        // intervalRef.current = setInterval(() => {
+        //     if (context[statename]) fetchNewMessageRoom();
+        // }, 2000); // Interval set to 5 seconds
 
-        // Cleanup interval on component unmount
-        return () => clearInterval(intervalRef.current);
+        // // Cleanup interval on component unmount
+        // return () => clearInterval(intervalRef.current);
     }, [context[statename], roomId])
 
     let optionsChat = [
@@ -122,7 +178,7 @@ export default function PanelList({
             icon: <FaAddressBook className="text-zinc-600 text-lg" />,
             action: (value) => {
                 router.push({
-                    pathname: "/usr/chat/contact",
+                    pathname: "/usr/chat-socket/contact",
                     query: router.query
                 }, undefined, { shallow: true })
             }
@@ -144,18 +200,23 @@ export default function PanelList({
     ]
 
     const handleStartChat = async item => {
-        const getxa = JSON.parse(localStorage.getItem("XA"))
-        await ChatCollection.putIsRead({
-            xa: getxa,
-            data: {
-                room_id: item.id
-            }
-        })
-        // context.setData({ ...context, dataChat: null, dataDetailRoom: null, dataReply: null }) // hapus semua data
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-        }
-        router.push(`/usr/chat?roomId=${item.id}`)
+        console.log("tess1234")
+        // emit('join', { 'room_id': item.id }).then(callback => {
+        //     console.log("adakah callback join ??", callback)
+        //     // checkErrorMsg(callback)
+        // })
+        // const getxa = JSON.parse(localStorage.getItem("XA"))
+        // await ChatCollection.putIsRead({
+        //     xa: getxa,
+        //     data: {
+        //         room_id: item.id
+        //     }
+        // })
+        // // context.setData({ ...context, dataChat: null, dataDetailRoom: null, dataReply: null }) // hapus semua data
+        // if (intervalRef.current) {
+        //     clearInterval(intervalRef.current);
+        // }
+        router.push(`/usr/chat-socket?roomId=${item.id}`)
     }
 
     const mapDataRoom = () => {
@@ -170,6 +231,7 @@ export default function PanelList({
                     <div className="space-y-1 mt-2 px-2">
                         {
                             filterbykeyword.length > 0 ? filterbykeyword.map((item, index) => {
+                                console.log("item sidebar list", item)
                                 return (
                                     <button onClick={() => handleStartChat(item)} className={`${item.id == roomId ? "bg-blue-50 border-blue-500" : "hover:bg-blue-500/10"} relative w-full text-start flex items-center gap-2 py-3 px-4 border-b p-2 transition-colors duration-300 rounded-md`} key={index}>
                                         <span className="w-10 h-10 uppercase rounded-full flex items-center justify-center text-white bg-gradient-to-tr from-teal-600 to-teal-200">{item?.label.charAt(0)}</span>
@@ -177,7 +239,7 @@ export default function PanelList({
                                             <h1 className="font-semibold">{item?.label}</h1>
                                             <p className="text-sm text-zinc-500">{item?.last_msg.length > 20 ? item.last_msg.substring(0, 20) + "..." : item.last_msg ?? ""}</p>
                                         </div>
-                                        <span className="absolute bottom-3 right-3 w-6 text-sm h-6 rounded-full bg-teal-100 text-teal-500 font-bold flex items-center justify-center">{item?.unread ?? 0}</span>
+                                        <span className="absolute bottom-3 right-3 w-6 text-sm h-6 rounded-full bg-teal-100 text-teal-500 font-bold flex items-center justify-center">{item?.unread ? item.unread : 0}</span>
                                     </button>
                                 )
                             })
@@ -211,13 +273,13 @@ export default function PanelList({
                     <div className="w-full flex items-center justify-between mb-5">
                         <div className="flex items-center gap-2">
                             <span className='w-10 h-10 shadow-md rounded-full flex items-center justify-center text-white font-bold text-xl uppercase bg-gradient-to-br from-blue-600 to-blue-200'>
-                                {profileData?.username.charAt(0)}
+                                {profileData?.username?.charAt(0)}
                             </span>
                             <h1 className="font-bold">{profileData?.username}</h1>
                         </div>
                         <div className="flex items-center gap-1">
                             <button onClick={() => router.push({
-                                pathname: "/usr/chat/contact",
+                                pathname: "/usr/chat-socket/contact",
                                 query: router.query
                             }, undefined, { shallow: true })} className="w-10 h-10 hover:bg-zinc-500/20 rounded-md flex items-center justify-center">
                                 <FaAddressBook className="text-blue-500 text-xl" />
