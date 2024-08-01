@@ -6,9 +6,9 @@ import "../styles/loadingchat.css"
 import '@utils/noconsole';
 
 // import "../build.css"
-import {appWithTranslation} from "next-i18next"
+import { appWithTranslation } from "next-i18next"
 import { useEffect, useState } from 'react'
-import {MyProvider} from '../context/MyProvider'
+import { MyProvider } from '../context/MyProvider'
 import withAuth from '../components/withAuth'
 import NProgress from 'nprogress'
 import "nprogress/nprogress.css"
@@ -20,6 +20,9 @@ import "../utils/scriptApp"
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// scoket provider
+import { SocketProvider } from 'context/SocketProvider'
+
 
 function MyApp({ Component, pageProps, profileData }) {
   const [mounted, setMounted] = useState(false)
@@ -27,14 +30,14 @@ function MyApp({ Component, pageProps, profileData }) {
 
   useEffect(() => {
     const handleStart = (url) => {
-      NProgress.configure({ easing: 'ease', speed:500, showSpinner:true });
+      NProgress.configure({ easing: 'ease', speed: 500, showSpinner: true });
       NProgress.start()
     }
 
     const handleStop = () => {
       NProgress.done()
     }
-    
+
     router.events.on('routeChangeStart', handleStart)
     router.events.on('routeChangeComplete', handleStop)
     router.events.on('routeChangeError', handleStop)
@@ -47,12 +50,14 @@ function MyApp({ Component, pageProps, profileData }) {
     }
   }, [router, mounted])
 
-  if(!mounted) return null
+  if (!mounted) return null
   return (
     <ThemeProvider enableSystem={true} attribute="class" defaultTheme='light'>
       <MyProvider>
-        <ToastContainer />
-        <Component {...pageProps} profileData={profileData} />
+        <SocketProvider profileData={profileData}>
+          <ToastContainer />
+          <Component {...pageProps} profileData={profileData} />
+        </SocketProvider>
       </MyProvider>
     </ThemeProvider>
   )

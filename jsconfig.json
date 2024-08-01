@@ -7,7 +7,8 @@
         "@global/*": ["global/*"],
         "@repositories/*": ["repositories/*"],
         "@utils/*": ["utils/*"],
-        "@store/*": ["store/*"]
+        "@store/*": ["store/*"],
+        "@config/*": ["config/*"]
       }
     },
     "exclude": ["node_modules", ".next"]

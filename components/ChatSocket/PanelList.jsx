@@ -134,32 +134,32 @@ export default function PanelList({
         // }
     }
 
-    useEffect(() => {
-        // CONNECT SOCKET IO
-        connect()
+    // useEffect(() => {
+    //     // CONNECT SOCKET IO
+    //     connect()
 
-        const cleanup = setupSocketListeners(
-            (id) => {
-                console.log("disini connect id", id)
-                setConnectionStatus({ status: 'connected', id });
-                joinRoom(profileData['id']);
-            },
-            (err) => {
-                console.log("disini error connect", err)
-                setError(err);
-            }
-        );
+    //     const cleanup = setupSocketListeners(
+    //         (id) => {
+    //             console.log("disini connect id", id)
+    //             setConnectionStatus({ status: 'connected', id });
+    //             joinRoom(profileData['id']);
+    //         },
+    //         (err) => {
+    //             console.log("disini error connect", err)
+    //             setError(err);
+    //         }
+    //     );
 
-        // receive new private message
-        socket.on('receiveNotif', (data) => {
-            receiveNotif(data)
-        });
+    //     // receive new private message
+    //     socket.on('receiveNotif', (data) => {
+    //         receiveNotif(data)
+    //     });
 
-        // Fungsi cleanup untuk menonaktifkan listener ketika komponen dilepas
-        return () => {
-            cleanup();
-        };
-    }, [])
+    //     // Fungsi cleanup untuk menonaktifkan listener ketika komponen dilepas
+    //     return () => {
+    //         cleanup();
+    //     };
+    // }, [])
 
     useEffect(() => {
         if (!context[statename]) getAllRoom()
