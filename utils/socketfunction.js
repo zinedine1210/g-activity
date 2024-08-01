@@ -3,8 +3,13 @@ import { showToast } from "@utils/functionToast"
 
 // EMIT FUNCTION 
 export function emit(event, data) {
+    const getxa = JSON.parse(localStorage.getItem("XA"))
+    let emitData = {
+        'xa': getxa,
+        'data': data
+      }
     return new Promise(resolve => {
-        socket.emit(event, data,
+        socket.emit(event, emitData,
             function (callback) {
                 resolve(callback)
             });

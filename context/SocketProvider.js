@@ -17,8 +17,10 @@ export const SocketProvider = ({ children, profileData }) => {
 
     // join room
     const joinRoom = (newRoomId) => {
+        console.log("adakah join room", newRoomId)
         emit('join', { 'room_id': newRoomId }).then(callback => {
-            console.log("join room", callback)
+            console.log("apa callback")
+            console.log("callback", callback)
             // checkErrorMsg(callback)
         })
     }

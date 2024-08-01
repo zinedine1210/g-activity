@@ -84,85 +84,9 @@ export default function PanelList({
         } else Notify("Something went wrong when get room")
     }
 
-    // join room
-    const joinRoom = (newRoomId) => {
-        emit('join', { 'room_id': newRoomId }).then(callback => {
-            console.log("join room", callback)
-            // checkErrorMsg(callback)
-        })
-    }
-
-    const receiveNotif = (data) => {
-        console.log("ini receive notif", data)
-        console.log(context[statename])
-        
-        if (profileData['id'] != data['last_msg_uid']) {
-            let objNotif = {
-                'label': data['label'],
-                'msg': data['last_msg']
-            }
-            notifyChat(objNotif);
-        }
-
-        context.setData(prevContext => {
-            const prevDataChat = prevContext[statename] || [];
-            console.log("prevDataChat", prevContext[statename])
-            const existingMessageIndex = prevDataChat.findIndex(res => res.id === data.id);
-            if (existingMessageIndex !== -1) { // kalau roomnya udah ada berarti cuma update msg
-                const updatedMessages = [...prevDataChat];
-                updatedMessages[existingMessageIndex] = data;
-                console.log("updatedMessagesupdatedMessages", updatedMessages)
-                return { ...prevContext, [statename]: updatedMessages };
-            } else {
-                return { ...prevContext, [statename]: [data, ...prevDataChat] };
-            }
-        });
-
-        // const find = JSON.parse(JSON.stringify(context[statename])).find(res => res.id == data.room_id)
-        // console.log("find find", find)
-        // if (find) { // kalau roomnya udah ada berarti cuma update msg
-        //     const filter = JSON.parse(JSON.stringify(context[statename])).filter(res => res.id != el.id)
-        //     let obj = {
-        //         last_msg: el.last_msg,
-        //         last_msg_uid: el.last_msg_uid,
-        //         last_msg_username: el.last_msg_username
-        //     }
-        //     const mergeObj = { ...find, ...obj }
-        //     context.setData({ ...context, [statename]: [mergeObj, ...filter] })
-        // } else {
-        //     context.setData({ ...context, [statename]: [...context[statename], el] })
-        // }
-    }
-
-    // useEffect(() => {
-    //     // CONNECT SOCKET IO
-    //     connect()
-
-    //     const cleanup = setupSocketListeners(
-    //         (id) => {
-    //             console.log("disini connect id", id)
-    //             setConnectionStatus({ status: 'connected', id });
-    //             joinRoom(profileData['id']);
-    //         },
-    //         (err) => {
-    //             console.log("disini error connect", err)
-    //             setError(err);
-    //         }
-    //     );
-
-    //     // receive new private message
-    //     socket.on('receiveNotif', (data) => {
-    //         receiveNotif(data)
-    //     });
-
-    //     // Fungsi cleanup untuk menonaktifkan listener ketika komponen dilepas
-    //     return () => {
-    //         cleanup();
-    //     };
-    // }, [])
-
     useEffect(() => {
         if (!context[statename]) getAllRoom()
+            console.log("ini ada lagi??")
 
         // intervalRef.current = setInterval(() => {
         //     if (context[statename]) fetchNewMessageRoom();
@@ -170,7 +94,7 @@ export default function PanelList({
 
         // // Cleanup interval on component unmount
         // return () => clearInterval(intervalRef.current);
-    }, [context[statename], roomId])
+    }, [context[statename]])
 
     let optionsChat = [
         {
@@ -231,7 +155,6 @@ export default function PanelList({
                     <div className="space-y-1 mt-2 px-2">
                         {
                             filterbykeyword.length > 0 ? filterbykeyword.map((item, index) => {
-                                console.log("item sidebar list", item)
                                 return (
                                     <button onClick={() => handleStartChat(item)} className={`${item.id == roomId ? "bg-blue-50 border-blue-500" : "hover:bg-blue-500/10"} relative w-full text-start flex items-center gap-2 py-3 px-4 border-b p-2 transition-colors duration-300 rounded-md`} key={index}>
                                         <span className="w-10 h-10 uppercase rounded-full flex items-center justify-center text-white bg-gradient-to-tr from-teal-600 to-teal-200">{item?.label.charAt(0)}</span>

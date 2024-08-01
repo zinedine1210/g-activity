@@ -35,15 +35,42 @@ export default function MainChat({
 
   const getThisRoom = async () => {
     const getxa = JSON.parse(localStorage.getItem("XA"))
+    // await ChatCollection.putIsRead({
+    //     xa: getxa,
+    //     data: {
+    //         room_id: roomId
+    //     }
+    // })
+
     let find = null
     if (context?.dataRoom) {
       find = context.dataRoom.find(res => res.id == roomId)
+      if (find) {
+        // Update context data dengan dataRoom yang telah diperbarui
+        find.unread = 0
+        const updatedDataRoom = context.dataRoom.map(room =>
+          room.id == roomId ? { ...room, unread: find.unread } : room
+        )
+        context.setData({
+          ...context,
+          dataRoom: updatedDataRoom
+        })
+      }
     } else {
       const result = await ChatCollection.getRoom({
         xa: getxa
       })
       if (result.status == 0) {
         find = result.data.find(res => res.id == roomId)
+        if (find) {
+          // Update context data dengan dataRoom yang telah diperbarui
+          find.unread = 0
+          const updatedDataRoom = [find]
+          context.setData({
+            ...context,
+            dataRoom: updatedDataRoom
+          })
+        }
       }
     }
     setRoomInfo(find)
@@ -71,13 +98,8 @@ export default function MainChat({
     }
 
     // SEND MESSAGE
-    const getXA = JSON.parse(localStorage.getItem("XA"))
-    let newMsg = {
-      'xa': getXA,
-      'data': obj
-    }
     setText("") // kosongkan lagi input editor
-    emit("sendPrivateMsg", newMsg)
+    emit("sendPrivateMsg", obj)
       .then(callback => {
         checkErrorMsg(callback)
       })
@@ -153,8 +175,9 @@ export default function MainChat({
 
   // join room
   const joinRoom = (newRoomId) => {
+    console.log("join room sendiri", newRoomId)
     emit('join', { 'room_id': newRoomId }).then(callback => {
-      console.log("join room", callback)
+      console.log("join room id success", callback)
       // checkErrorMsg(callback)
     })
   }
@@ -165,34 +188,38 @@ export default function MainChat({
   };
 
   useEffect(() => {
-    getThisRoom()
-    getAllChat()
+    if (!roomInfo) {
+      getThisRoom()
+      getAllChat()
 
-    // Leave room sebelumnya jika ada dan join room baru
-    if (roomId) {
-      leaveRoom(roomId);
-    }
-    joinRoom(roomId);
+      // const getxa = JSON.parse(localStorage.getItem("XA"))
+      // await ChatCollection.putIsRead({
+      //     xa: getxa,
+      //     data: {
+      //         room_id: item.id
+      //     }
+      // })
+      // // context.setData({ ...context, dataChat: null, dataDetailRoom: null, dataReply: null }) // hapus semua data
 
-    // receive new private message
-    socket.on('receivePrivateMsg', (data) => {
-      receivePrivateMsg(data)
-    });
-
-    // Cleanup saat komponen di-unmount atau roomId berubah
-    return () => {
+      // Leave room sebelumnya jika ada dan join room baru
       if (roomId) {
         leaveRoom(roomId);
       }
-      socket.off('receivePrivateMsg');
-    };
+      joinRoom(roomId);
 
-    // const intervalId = setInterval(() => {
-    //   if (dataChat) fetchNewMessage();
-    // }, 2000);
+      // receive new private message
+      socket.on('receivePrivateMsg', (data) => {
+        receivePrivateMsg(data)
+      });
 
-    // Cleanup interval on component unmount
-    // return () => clearInterval(intervalId);
+      // Cleanup saat komponen di-unmount atau roomId berubah
+      return () => {
+        if (roomId) {
+          leaveRoom(roomId);
+        }
+        socket.off('receivePrivateMsg');
+      };
+    }
   }, [roomId])
 
 
@@ -261,7 +288,7 @@ export default function MainChat({
     containerRef.current?.scrollIntoView({ behavior: viewType });
   }
 
-  if (roomId) {
+  if (roomId && roomInfo) {
     return (
       <div className="w-full xl:w-full h-screen overflow-y-hidden bg-zinc-300 image bg-cover bg-center" >
         <div className="flex-col flex h-full">

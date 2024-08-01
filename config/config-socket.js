@@ -10,13 +10,7 @@ export const socket = io(`${URL_SERVER}`,{
      reconnection: false,
      transports: ['websocket'],
     //  path:"/socket.io",
-    //  query : {
-        // "auth": "--SOME AUTH STRING---",
-        // "tokenpercakapan" : `${TOKEN_PERCAKAPAN}`,
-        // "tokenRuangPercakapan" : `${TOKEN_LOGIN}`,
-        // "tokenRuangPercakapan" : `${TOKEN_PARTISIPAN}`,
-        // "tokenPartisipan" : `${TOKEN_PARTISIPAN}`,
-        // "info": "new connection from website",
-        // "timestamp": ''
-      // }
+     query : {
+      "api-key": "asfasa"
+      }
 });
