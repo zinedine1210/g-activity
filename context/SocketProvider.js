@@ -66,7 +66,7 @@ export const SocketProvider = ({ children, profileData }) => {
             },
             (err) => {
                 console.log("disini error connect", err)
-                setError(err);
+                // setError(err);
             }
         );
 

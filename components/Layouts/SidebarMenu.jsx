@@ -183,7 +183,7 @@ export default function SidebarMenu({
         let isdeny = false
         const find = menus.client.find(res => pathname.includes(res.url)) ?? menus.admin.find(res => pathname.includes(res.url))
 
-        isdeny = Number(featureaccess[find.featurename] & bitws["view"]) == 0 ? true:false
+        isdeny = Number(featureaccess?.[find.featurename] & bitws?.["view"]) == 0 ? true:false
 
         if(isdeny){ // cek apakah dia memiliki akses ke menu ini pada view
             Swal.fire({

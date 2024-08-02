@@ -63,7 +63,7 @@ export default function Navbar2(props) {
           timer: 1500,
           showConfirmButton: false
         })
-        window.location.reload()
+        window.location.pathname = '/'
       }
       console.log(result);
     } else {

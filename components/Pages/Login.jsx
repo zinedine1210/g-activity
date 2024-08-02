@@ -36,9 +36,7 @@ export default function Login({mounted}) {
 
             const result = await AuthRepository.postLogin({"uspw":JSON.stringify(payload)})
 
-            console.log("result adalah", result)
             if(!('status' in result)){
-                console.log("masa kesini")
                 setLoading(false)
                 return Swal.fire({
                     icon:"warning",
@@ -55,13 +53,14 @@ export default function Login({mounted}) {
                 })
             }else{
                 localStorage.setItem("XA", JSON.stringify(result.token))
-                Router.push("/usr")
+                // Router.push("/usr")
                 Swal.fire({
                     icon:"info",
                     title:"Login",
                     text:`Welcome ${username}`,
                     timer:1200
                 })
+                window.location.pathname = '/usr'
             }
             setStep(1)
             setLoading(false)

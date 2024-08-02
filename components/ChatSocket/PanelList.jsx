@@ -10,6 +10,7 @@ import { HiRefresh } from "react-icons/hi";
 import { setupSocketListeners, connect, emit, checkErrorMsg } from "@utils/socketfunction"
 import { socket } from '../../config/config-socket'
 import notifyChat from '@components/ChatSocket/NotifChat';
+import ModalGroup from "./ModalGroup";
 
 export default function PanelList({
     profileData,
@@ -86,7 +87,7 @@ export default function PanelList({
 
     useEffect(() => {
         if (!context[statename]) getAllRoom()
-            console.log("ini ada lagi??")
+        console.log("ini ada lagi??")
 
         // intervalRef.current = setInterval(() => {
         //     if (context[statename]) fetchNewMessageRoom();
@@ -118,7 +119,8 @@ export default function PanelList({
             label: "Create Group",
             icon: <FaUsers className="text-zinc-600 text-lg" />,
             action: (value) => {
-                Notify("Action not found", "info")
+                // Notify("Action not found", "info")
+                handleAddNewGroup()
             }
         },
     ]
@@ -141,6 +143,12 @@ export default function PanelList({
         //     clearInterval(intervalRef.current);
         // }
         router.push(`/usr/chat-socket?roomId=${item.id}`)
+    }
+
+    const handleAddNewGroup = async cont => {
+        console.log("add new group")
+        console.log("cont", cont)
+        context.setData({ ...context, modal: { name: "newgroup", type: "create", data: cont } })
     }
 
     const mapDataRoom = () => {
@@ -189,6 +197,7 @@ export default function PanelList({
         }
     }
 
+    const isActiveModal = context?.modal?.name == "newgroup"
     return (
         <div className="w-full xl:w-full h-screen overflow-y-hidden">
             <div className="flex-col flex h-full">
@@ -226,6 +235,7 @@ export default function PanelList({
                         mapDataRoom()
                     }
                 </div>
+                {isActiveModal && <ModalGroup statename={statename} />}
 
                 <footer className="">
                     {/* <button className="px-5 hover:bg-blue-200 py-3 text-sm w-full duration-300 ease-in-out font-semibold border-t-2 flex items-center gap-2 justify-center">
