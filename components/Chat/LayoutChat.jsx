@@ -32,8 +32,8 @@ export default function LayoutChat({ children, profileData, title, desc, image, 
       <section className="w-full h-screen overflow-hidden flex">
           <SidebarMenu profileData={profileData}/>
           <PanelSide profileData={profileData}/>
-          <div className="flex w-full">
-            <div className='w-1/3 border-r-2'>
+          <div className="xl:flex w-full">
+            <div className='w-full xl:w-1/3 border-r-2'>
               {children}
             </div>
             <div className='w-full'>

@@ -1,3 +1,4 @@
+import Seo from '@components/seo';
 import MeetingRepository from '@repositories/MeetingRepository';
 import { Notify } from '@utils/scriptApp';
 import { MyContext } from 'context/MyProvider';
@@ -59,9 +60,13 @@ export default function MeetingJitsi({ profileData, meetingId }) {
         })
         if(result.status == 0){
             if(context.dataMeeting){
-                const findIndex = context.dataMeeting.findIndex(res => res.id == meetingId)
-                context.dataMeeting[findIndex] = result.data
-                context.setData({ ...context, dataMeeting: context.dataMeeting })
+                let typemeet = 1
+                if(dataMeet?.meet){
+                    typemeet = 2
+                }
+                const findIndex = context.dataMeeting[typemeet].findIndex(res => res.id == meetingId)
+                context.dataMeeting[typemeet][findIndex] = result.data
+                context.setData({ ...context, dataMeeting: { ...context.dataMeeting, [typemeet]: context.dataMeeting[typemeet] } })
             }
             Notify("You leave the meeting", "info")
         }
@@ -70,6 +75,10 @@ export default function MeetingJitsi({ profileData, meetingId }) {
 
   return (
     <section className='w-full h-screen flex items-center justify-center'>
+        <Seo 
+            title={dataMeet?.title}
+            description="Meet"
+            />
         <div className='w-full h-full flex relative'>
             {/* <PanelSide profileData={profileData}/> */}
             {

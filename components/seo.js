@@ -2,8 +2,8 @@ import Head from "next/head";
 import { useRouter, withRouter } from 'next/router'
 
 const SEO = ({ title, description, image}) => {
-  const defaultTitle = "DOCUBUILDER",
-    defaultDescription = "DOCUBUILDER",
+  const defaultTitle = "Gactivity",
+    defaultDescription = "Gactivity",
     siteUrl = "https://doku-builder.gnusa.id",
     defaultImage = `${siteUrl}/icons/android-chrome-192x192.png`,
     twitterUsername = "0121FZZ"

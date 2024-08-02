@@ -1,4 +1,5 @@
 import SubmenuComponent from "@components/Templates/SubmenuComponent"
+import { Notify } from "@utils/scriptApp"
 import { MyContext } from "context/MyProvider"
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
@@ -117,24 +118,28 @@ export default function SidebarMenu({
         client: [
             {
                 url: "/usr",
+                featurename: "_dashboard",
                 label: "Dashboard",
                 icon: <HiOutlineChartPie className={`${isThisPage("/usr") ? open ? "text-white scale-150" : "text-white scale-100" : open ? "text-zinc-500 scale-150" : "text-zinc-500 hover:text-blue-500 scale-125"} w-8 h-8 transition-all duration-200`} />,
                 active: "/usr"
             },
             {
                 url: "/usr/workspaces",
+                featurename: "workspace",
                 label: "Workspaces",
                 icon: <BsGrid className={`${isThisPage("/workspaces") ? open ? "text-white scale-150" : "text-white scale-125" : open ? "text-zinc-500 scale-150" : "text-zinc-500 hover:text-blue-500 scale-125"} w-8 h-8 transition-all duration-200`} />,
                 active: "/workspaces"
             },
             {
                 url: "/usr/videoCall",
+                featurename: "meet",
                 label: "Video Call",
                 icon: <HiOutlineVideoCamera className={`${isThisPage("/videoCall") ? open ? "text-white scale-150" : "text-white scale-125" : open ? "text-zinc-500 scale-150" : "text-zinc-500 hover:text-blue-500 scale-125"} w-8 h-8 transition-all duration-200`} />,
                 active: "/videoCall"
             },
             {
                 url: "/usr/chat",
+                featurename: "chat_room",
                 label: "Chat",
                 icon: <HiOutlineChat className={`${isThisPage("/chat") ? open ? "text-white scale-150" : "text-white scale-125" : open ? "text-zinc-500 scale-150" : "text-zinc-500 hover:text-blue-500 scale-125"} w-8 h-8 transition-all duration-200`} />,
                 active: "/chat"
@@ -171,6 +176,34 @@ export default function SidebarMenu({
             }
         ]
     }
+
+    const authorValidation = () => {
+        const bitws = profileData._bitws
+        const featureaccess = profileData._feature
+        let isdeny = false
+        const find = menus.client.find(res => pathname.includes(res.url)) ?? menus.admin.find(res => pathname.includes(res.url))
+
+        isdeny = Number(featureaccess[find.featurename] & bitws["view"]) == 0 ? true:false
+
+        if(isdeny){ // cek apakah dia memiliki akses ke menu ini pada view
+            Swal.fire({
+                title: "Unauthorize!!",
+                text: "You don't have permission to access this page",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 2000,
+                position: "top-right"
+            })
+            router.push("/usr")
+        }
+    }
+
+    useEffect(() => {
+        if(!active){
+            authorValidation()
+            setActive(true)
+        }
+    }, [active])
 
     const bitws = profileData?._bitws?.view
     const featureaccess = profileData?._feature

@@ -25,7 +25,7 @@ function User(props) {
 
   return (
     <Layout2 title={"HALAMAN DOCUMENTATION"} profileData={profileData}>
-      <section className="min-h-screen contain px-2 md:px-56 pt-32">
+      <section className="min-h-screen contain px-2 md:px-56 py-10">
         <h1 className="text-3xl font-bold">Welcome to <span className="font-extrabold text-green-500">G</span>Activity</h1>
         <h1 className="mt-5 mb-10">Build an Application</h1>
 

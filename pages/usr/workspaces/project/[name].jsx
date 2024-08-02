@@ -24,8 +24,6 @@ function Project(props) {
   const [member, setMember] = useState(null)
   const context = useContext(MyContext)
 
-  console.log("profileData di project", profileData)
-
   useEffect(() => {
     async function getMemberProject() {
       const getXA = JSON.parse(localStorage.getItem("XA"))
@@ -148,7 +146,7 @@ function Project(props) {
               {dataDataProject?.name.charAt(0) ?? "-"}
             </div>
             <div>
-              <h1 className="uppercase tracking-wider font-semibold text-zinc-500 dark:text-zinc-300">{t("project")}</h1>
+              <h1 className="uppercase tracking-wider font-semibold text-zinc-500 dark:text-zinc-300">Project</h1>
               <p className="text-xl md:text-3xl font-bold capitalize">{dataDataProject?.name ?? "----"}</p>
               <p className="text-zinc-600 dark:text-zinc-300 text-sm">{dataDataProject?.description ? dataDataProject.description : <span className="text-red-500">This workspace doesn't have any description</span>}</p>
             </div>

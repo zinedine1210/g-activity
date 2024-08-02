@@ -172,7 +172,7 @@ export default function MainChat({
         Object.keys(grouped).map((day, index) => {
           return (
               <div className="w-full py-5">
-                <div className="p-4 mb-4 text-sm text-teal-500 rounded-lg bg-teal-50 bg-opacity-50 backdrop-blur-sm dark:bg-gray-800 dark:text-blue-400 text-center" role="alert">
+                <div className="p-4 mb-4 text-sm text-teal-500 rounded-lg bg-teal-100 bg-opacity-50 backdrop-blur-sm dark:bg-gray-800 dark:text-blue-400 text-center" role="alert">
                   <h1 className="font-semibold">
                     {new Date(day).toLocaleDateString('id-ID', {
                       weekday: 'long',
@@ -210,10 +210,10 @@ export default function MainChat({
 
   if(roomId){
     return (
-      <div className="w-full xl:w-full h-screen overflow-y-hidden bg-zinc-300 image bg-cover bg-center" >
+      <div className="w-full xl:w-full h-screen overflow-y-hidden bg-zinc-100 bg-cover bg-center" >
           <div className="flex-col flex h-full">
               <HeaderMainChat roomInfo={roomInfo}/>
-              <div className="w-full flex-1 overflow-y-auto space-y-4 px-10 py-5">
+              <div className="w-full flex-1 overflow-y-auto space-y-4 px-2 xl:px-10 py-5">
                 {
                   mapAllChat()
                 }

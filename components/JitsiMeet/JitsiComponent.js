@@ -5,8 +5,6 @@ const JitsiComponent = ({ width, height, dataUser, dataMeet, audioOnly, onConfer
   const jitsiContainerRef = useRef(null);
   const apiRef = useRef(null);
 
-  console.log("audioOnly adalah", audioOnly)
-
   useEffect(() => {
     let interfaceOverwrite = {
       TOOLBAR_BUTTONS: [

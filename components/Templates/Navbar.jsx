@@ -21,8 +21,6 @@ export default function Navbar(props) {
     const [language, setLanguage] = useState(defaultLocale)
     const [open, setOpen] = useState(false)
 
-    console.log("context navbar doc", context)
-
     const settingsLanguage = (value) => {
         if (value == "id") {
             router.push(router.asPath, router.asPath, { locale: "id" })
@@ -111,18 +109,22 @@ export default function Navbar(props) {
         })
     }
 
+    const handleDrawer = () => {
+        context.setData({ ...context, drawer: !context.drawer })
+        localStorage.setItem("drawer", !context.drawer)
+    }
 
     return (
-        <nav className="fixed w-full bg-white shadow dark:bg-dark z-50">
+        <nav className="sticky border-t w-full bg-white shadow dark:bg-dark z-50">
             <div className="px-6 py-3">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center">
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-
-                            <a href={context.dataDocumentation ? `/usr/workspaces/project/U?id=${context.dataDocumentation.project_id}` : "/"} onClick={(e) => handlerClose(e)} className={`flex gap-1`}>
+                        <div className="flex items-center gap-5">
+                            {/* <button onClick={() => handleDrawer()} className="bg-blue-500 w-10 h-10 rounded-md p-2 text-white shadow-md"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7"></path></svg></button> */}
+                            <div className={`flex gap-1`}>
                                 <span className="font-extrabold text-green-500 text-4xl block">G</span>
-                                <p className="self-end text-xs font-extrabold uppercase mb-1">Documentation</p>
-                            </a>
+                                <p className="self-end text-sm font-extrabold text-zinc-600 uppercase mb-1">Documentation</p>
+                            </div>
 
                             <div className="hidden mx-10 md:flex items-center">
                                 <div className="flex items-center">
@@ -186,8 +188,7 @@ export default function Navbar(props) {
                                     <button className="hover:bg-basic w-full rounded-md py-1 dark:hover:bg-darkPrimary text-start px-2 cursor-pointer" onClick={() => settingsLanguage("en")}>Inggris</button>
                                 </div>
                             </div>
-                            <a onClick={(e) => handlerClose(e)} href={context.dataDocumentation ? `/usr/workspaces/project/Untitled?id=${context.dataDocumentation.project_id}` : ""} className="my-2 text-sm leading-5 text-zinc-700 transition-colors duration-300 transform dark:text-zinc-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:my-0">Project</a>
-                            {/* <a onClick={(e) => handlerClose(e)} className="my-2 text-sm leading-5 text-zinc-700 transition-colors duration-300 transform dark:text-zinc-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:my-0" href="/usr/documentation/preview">{lang("preview")}</a> */}
+                            <a onClick={(e) => handlerClose(e)} href={context.dataDocumentation ? `/usr/workspaces/project/Untitled?id=${context.dataDocumentation.project_id}` : ""} className="btn-secondary">Project</a>
                             <button disabled={context.dataDocumentation ? false : true} onClick={() => handlerSave()} className="disabled:bg-zinc-500 hover:bg-blue-400 transition-all bg-primary rounded-md text-white px-3 py-2 font-semibold text-sm flex items-center gap-2">
                                 {lang("save")}
                                 <FaSave />

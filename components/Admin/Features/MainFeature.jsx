@@ -15,7 +15,7 @@ export default function MainFeature({
         role: ""
     })
 
-    const roleOptions = context?.options?.roleOptions
+    const roleOptions = context?.options?.roleOptions ?? []
 
     const getRoleComboBox = async () => {
         if(!roleOptions){
@@ -51,13 +51,12 @@ export default function MainFeature({
             <div className="xl:flex items-center justify-between mb-5">
                 <input type="search" value={keyword} onChange={(e) => setKeyword(e.target.value)} className="input-search w-full xl:w-auto" placeholder="Search" />
                 <div className="xl:flex items-center gap-2 mt-2 xl:mt-0 space-y-2 xl:space-y-0">
-                    { roleOptions && (
-                        <SelectInput 
-                            change={(v,t) => handleFilter(v)}
-                            value={filter.role}
-                            options={roleOptions}
-                        />
-                    )}
+                    
+                    <SelectInput 
+                        change={(v,t) => handleFilter(v)}
+                        value={filter.role}
+                        options={roleOptions}
+                    />
                     <button className="btn-primary" onClick={() => context.setData({...context, [statename]:null})}>
                         Refresh
                     </button>

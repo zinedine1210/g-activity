@@ -236,10 +236,10 @@ export default function Sidebar({ lang }) {
   if (dataDoc)
     return (
       <>
-        <button className={`peer bg-white dark:bg-darkPrimary hidden md:block fixed left-0 mt-20 p-2 ${active ? "sr-only" : "not-sr-only"}`} onClick={() => setActive(true)}>
+        <button className={`peer bg-white dark:bg-darkPrimary md:block hidden absolute left-0 p-2 ${active ? "sr-only" : "not-sr-only"}`} onClick={() => setActive(true)}>
           <svg className={`w-5 h-5 rotate-180`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path></svg>
         </button>
-        <div className={`shadow-md md:block p-3 z-30 bg-white dark:bg-darkPrimary transition-all duration-300 overflow-y-scroll ${active ? "h-screen pt-20 top-0 left-0 translate-x-0 opacity-100 relative md:w-2/12" : "fixed left-0 w-72 -translate-x-96 opacity-0 h-3/4 peer-hover:translate-x-0 peer-hover:opacity-100 peer-hover:duration-300 delay-300 hover:translate-x-0 hover:opacity-100 mt-20"}`}>
+        <div className={`shadow-md md:block p-3 z-30 bg-white dark:bg-darkPrimary transition-all duration-300 overflow-y-scroll ${active ? "h-screen top-0 left-0 translate-x-0 opacity-100 relative md:w-full md:max-w-72" : "sticky left-0 w-full max-w-72 min-w-72 -translate-x-96 opacity-0 h-3/4 peer-hover:translate-x-0 peer-hover:opacity-100 peer-hover:duration-300 delay-300 hover:translate-x-0 hover:opacity-100"}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="flex items-center justify-center font-semibold text-sm bg-red-500 w-8 uppercase text-white h-8">{dataDoc.name ? dataDoc.name.charAt(0) : "-"}</span>

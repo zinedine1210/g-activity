@@ -7,7 +7,6 @@ import Layout from "../../../components/Layouts/Layout";
 import CardAddList from "../../../components/Tasks/CardAddList";
 import CardStatus from "../../../components/Tasks/CardStatus";
 import ModalTask from "../../../components/Tasks/ModalTask/ModalTask";
-import NavbarBoard from "../../../components/Templates/NavbarBoard";
 import { MyContext } from "../../../context/MyProvider";
 import ProjectRepository from "../../../repositories/ProjectRepository";
 import TaskRepository from "../../../repositories/TaskRepository";
@@ -84,7 +83,7 @@ function BoardEditor(props) {
       <Layout title={context?.dataDocumentation?.project?.name ?? "Board"} desc="HALAMAN BOARD">
         <section className="w-full relative h-screen overflow-y-hidden">
           <div className="relative w-full h-full">
-            <div className="h-1/6 border-b p-5 w-full">
+            <div className="border-b h-fit p-5 w-full">
               <div>
                 <div className="flex items-center gap-3">
                   <Link href={`/usr/workspaces/project/${context.dataDocumentation?.project?.name}?id=${context.dataDocumentation?.project?.id}`}>
@@ -100,8 +99,7 @@ function BoardEditor(props) {
               }
             </div>
 
-            <div className="flex gap-5 p-5 h-5/6 overflow-x-auto w-screen bg-zinc-100 lg:mt-16">
-              {console.log("data document card status", context.dataDocumentation)}
+            <div className="flex gap-5 p-5 h-5/6 overflow-x-auto w-screen bg-zinc-100">
               {
                 context.dataDocumentation?.data?.map((list, idx) => {
                   return (
@@ -116,28 +114,6 @@ function BoardEditor(props) {
         <ModalTask profileData={profileData} />
       </Layout>
     )
-
-    if (context.dataDocumentation.project.typeBoard == "table")
-      return (
-        <Layout title={"TABLE MODE"} desc="HALAMAN TABLE">
-          <NavbarBoard lang={t} />
-          <section className="pt-20 w-full px-5 overflow-auto h-screen">
-            <h1 className="uppercase tracking-wider font-semibold text-zinc-500">Board</h1>
-            <p className="text-3xl font-bold capitalize">{project.name}</p>
-
-            <div className="flex gap-6 mt-10">
-              {
-                status.map((list, idx) => {
-                  return (
-                    <CardStatus item={list} project={project} key={idx} />
-                  )
-                })
-              }
-            </div>
-          </section>
-          <ModalTask />
-        </Layout>
-      )
   }
 }
 

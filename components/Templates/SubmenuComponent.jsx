@@ -28,7 +28,7 @@ export default function SubmenuComponent({
     
     if(callComponent())
   return (
-    <div className={`max-w-80 min-w-80 w-full overflow-hidden border-r-2 duration-300 ease-in-out transition-all py-6`}>
+    <div className={`hidden md:block max-w-80 min-w-80 w-full overflow-hidden border-r-2 duration-300 ease-in-out transition-all py-6`}>
         <button className='absolute top- -left-5'>X</button>
         {callComponent()}
     </div>
