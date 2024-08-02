@@ -55,7 +55,13 @@ export default function NavbarNote(props) {
     }
 
     const handlerSave = async () => {
-        const result = await NoteRepository.putNote({ data: context.dataDocumentation, id: context.dataDocumentation.id, xa: JSON.parse(localStorage.getItem("XA")) })
+        const data = context.dataDocumentation
+        let obj = {
+            title: data.title,
+            content: data.content,
+            privacy: Number(data.privacy)
+        }
+        const result = await NoteRepository.putNote({ data: obj, id: context.dataDocumentation.id, xa: JSON.parse(localStorage.getItem("XA")) })
         if (result.status == 0) {
             Swal.fire({
                 icon: "success",

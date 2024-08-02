@@ -63,6 +63,7 @@ export default function Navbar2(props) {
           timer: 1500,
           showConfirmButton: false
         })
+        window.location.reload()
       }
       console.log(result);
     } else {

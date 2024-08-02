@@ -114,7 +114,7 @@ function Project(props) {
   let projectOwner = dataProject?.data?.data?.is_owner !== 0;
 
   // check permission view project
-  if ((profileData['_bitws']['view'] & profileData['_feature']['project']) == 0) {
+  if ((profileData?.['_bitws']?.['view'] & profileData?.['_feature']?.['project']) == 0) {
     return <NotFound />
   }
 

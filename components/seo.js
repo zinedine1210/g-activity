@@ -12,7 +12,7 @@ const SEO = ({ title, description, image}) => {
   
 
   const seo = {
-    title: `${title} - ${defaultTitle}` || defaultTitle,
+    title: `${title}` || defaultTitle,
     description: `${description}` || defaultDescription,
     image: `${image || defaultImage}`,
     url: `${siteUrl}${router.asPath}`
