@@ -224,6 +224,7 @@ export default function Application({ data, t, profileData }) {
     const handlerRefresh = () => {
         mutate(['documentation', 1, data.id])
         mutate(['notes', 1, data.id])
+        mutate(['mom', 1, data.id])
     }
 
     return (

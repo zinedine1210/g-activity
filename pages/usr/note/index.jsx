@@ -16,9 +16,7 @@ function HalamanNote(props) {
     async function getData() {
       const result = await NoteRepository.getNoteByID({ xa: JSON.parse(localStorage.getItem("XA")), id: id })
       if (result.status == 0) {
-        console.log("result notes", result);
         const members = await NoteRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), id: id, type: 1 })
-        console.log("result note members", members);
         result.data.assigns = members.data
         context.setDataDocumentation(result.data)
       }

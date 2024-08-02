@@ -36,30 +36,22 @@ lowlight.registerLanguage('css', css)
 lowlight.registerLanguage('js', js)
 lowlight.registerLanguage('ts', ts)
 
-// const ydoc = new Y.Doc()
-
 export default function NotesEditor(props) {
   const ydoc = getYDocInstance();
-
   const {t} = useTranslation("common")
   const context = useContext(MyContext)
   const [provider, setProvider] = useState(null)
   
   useEffect(() => {
-    console.log("disini use effect")
     if (!provider) {
       setProvider(new WebrtcProvider(props.data.id, ydoc))
     }
     context.setDataDocumentation(props.data)
-
     return () => {
       cleanUpYDocInstance(ydoc, props.data.id);
     };
   }, [props.data.id])
 
-  const handlerEditor = (value) => {
-    props.data.content = value
-  }
   
   const editor = useEditor({
     extensions: [
@@ -97,11 +89,20 @@ export default function NotesEditor(props) {
       handlerEditor(editor.getHTML())
     },
     onUpdate:({editor}) => {
-      console.log(editor.getHTML());
     },
-    autofocus:true,
-    content: props.data.content,
+    autofocus:true
   })
+
+  useEffect(() => {
+    if (editor && props.data.content) {
+      editor.commands.setContent(props.data.content);
+    }
+  }, [editor, props.data.content])
+
+  const handlerEditor = (value) => {
+    props.data.content = value
+  }
+
 
   const handlerChange = value => {
     context.dataDocumentation.title = value
@@ -109,11 +110,8 @@ export default function NotesEditor(props) {
   }
   
   useBeforeunload( e => {
-    console.log("mantap");
-    NoteRepository.putNote({data:context.dataDocumentation, id:context.dataDocumentation.id, xa:JSON.parse(localStorage.getItem("XA"))})
-
+    // NoteRepository.putNote({ data:context.dataDocumentation, id:context.dataDocumentation.id, xa:JSON.parse(localStorage.getItem("XA")) })
     return "Really?"
-    // console.log(result);
   })
 
   if(context.dataDocumentation && editor)
@@ -124,7 +122,7 @@ export default function NotesEditor(props) {
         <div className="w-full h-screen overflow-y-scroll pt-20 pb-56 bg-zinc-100 dark:bg-darkSecondary">
           <div className="bg-white px-5 md:px-20 py-10 shadow-md rounded-lg w-full md:w-1/2 mx-auto relative">
             <h1 role={"textbox"} spellCheck="false" onBlur={(e) => handlerChange(e.target.textContent)} maxLength={10} contentEditable data-placeholder={"Judul Catatan"} className={`editable-text text-4xl font-semibold mb-10`}>{context.dataDocumentation.title}</h1>
-            <TipTap editor={editor}/>
+            <TipTap editor={editor} />
             <span className="absolute bottom-3 right-5 text-xs text-zinc-500 dark:text-zinc-200">Diedit 12.30</span>
           </div>
         </div>

@@ -21,8 +21,6 @@ function MinuteOfMeeting(props) {
   const { profileData } = props
 
 
-  console.log("emang id apa??", id)
-
   useEffect(() => {
     async function getData() {
       console.log("disini bangg load lagi")
@@ -42,18 +40,21 @@ function MinuteOfMeeting(props) {
             "name": "Meeting Result",
             "id": "1678516541022736888695",
             "align": "start",
+            "cssCustom": "w-auto min-w-96",
             "type": "freeText"
           },
           {
             "name": "Target Date",
             "id": "1678516541022488185986",
             "align": "start",
+            "cssCustom": "whitespace-nowrap w-24",
             "type": "datetime"
           },
           {
             "name": "PIC",
             "id": "1678516541022295981233",
             "align": "start",
+            "cssCustom": "whitespace-nowrap",
             "type": "mention"
           },
           {

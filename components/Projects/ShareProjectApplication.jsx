@@ -16,9 +16,13 @@ export default function ShareProjectApplication({ data, profileData }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mb-20">
             {
                 (profileData['_bitws']['view'] & profileData['_feature']['ga_documentation']) ? <>  {
-                    dataDocumentation ? dataDocumentation?.data?.data?.map((item, key) => {
+                    dataDocumentation ? !dataDocumentation.isLoading ? dataDocumentation?.data?.data?.map((item, key) => {
                         return <CardDocumentation key={key} item={item} profileData={profileData} />
                     })
+                        :
+                        new Array(4).fill("mantap").map((item, key) => {
+                            return <SkeletonCardApplication key={key} />
+                        })
                         :
                         new Array(4).fill("mantap").map((item, key) => {
                             return <SkeletonCardApplication key={key} />
@@ -29,9 +33,13 @@ export default function ShareProjectApplication({ data, profileData }) {
             {
                 (profileData['_bitws']['view'] & profileData['_feature']['ga_note']) ? <>
                     {
-                        dataNote ? dataNote?.data?.data.map((item, key) => {
+                        dataNote ? !dataNote.isLoading ? dataNote?.data?.data.map((item, key) => {
                             return <CardNote key={key} item={item} profileData={profileData} />
                         })
+                            :
+                            new Array(4).fill("mantap").map((item, key) => {
+                                return <SkeletonCardApplication key={key} />
+                            })
                             :
                             new Array(4).fill("mantap").map((item, key) => {
                                 return <SkeletonCardApplication key={key} />
@@ -41,9 +49,13 @@ export default function ShareProjectApplication({ data, profileData }) {
 
             {
                 (profileData['_bitws']['view'] & profileData['_feature']['ga_mom']) ? <>   {
-                    dataMOM ? dataMOM?.data?.data.map((item, key) => {
+                    dataMOM ? !dataMOM.isLoading ? dataMOM?.data?.data.map((item, key) => {
                         return <CardMOM key={key} item={item} profileData={profileData} />
                     })
+                        :
+                        new Array(4).fill("mantap").map((item, key) => {
+                            return <SkeletonCardApplication key={key} />
+                        })
                         :
                         new Array(4).fill("mantap").map((item, key) => {
                             return <SkeletonCardApplication key={key} />

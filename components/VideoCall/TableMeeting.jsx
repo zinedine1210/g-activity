@@ -21,7 +21,6 @@ export default function TableMeeting({
             id: recordMeetingId,
             flag: 1
         })
-        console.log(result)
         if(result.status == 0){
             return result.data
         }else return []

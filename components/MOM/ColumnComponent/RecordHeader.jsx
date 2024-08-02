@@ -104,7 +104,7 @@ export default function RecordHeader({header}) {
     }
 
   return (
-    <th ref={dropRef} className={`${open ? "border-2 border-blue-500":""} group relative font-bold p-3 text-sm border-r text-left rtl:text-right text-zinc-500 dark:text-zinc-400`}>
+    <th ref={dropRef} className={`${open ? "border-2 border-blue-500":""} ${header.cssCustom} group relative font-bold p-3 text-sm border-r text-left rtl:text-right text-zinc-500 dark:text-zinc-400`}>
         {/* <h1 className="editable-text text-zinc-500 dark:text-zinc-300" role={"textbox"} spellCheck="false" onBlur={(e) => handlerChange(e.target.innerHTML)} maxLength={10} autoFocus={true} contentEditable data-placeholder={"Type Header"}>{header.name}</h1> */}
         <h1 className="text-zinc-500 dark:text-zinc-300">{header.name}</h1>
         {/* <button className={`${open ? "rotate-180 visible":"group-hover:visible invisible"} absolute top-1 right-1 bg-blue-100`} onClick={(e) => handlerOpen(e, "row")}><FaCaretDown /></button>

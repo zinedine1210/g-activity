@@ -43,7 +43,7 @@ export default function EditorMOM() {
             </div>
 
             <AgendaMOM />
-            {/* <ParticipantsMOM /> */}
+            
             <ParticipantsMOM2 />
 
             <TableMOM />

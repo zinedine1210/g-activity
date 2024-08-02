@@ -313,7 +313,7 @@ function ModalAssign(props) {
     useEffect(() => {
         async function getMember() {
             // const result = await ProjectRepository.getTeam({ xa: JSON.parse(localStorage.getItem("XA")), type: 1, id: context.dataDocumentation.project_id })
-            const result = await CollectionData.getData({ url: `project/${context.dataDocumentation.project_id}/team/1?shared=Y`})            
+            const result = await CollectionData.getData({ url: `project/${context.dataDocumentation.project_id}/team/1`, query: "&shared=Y"})            
             setMember(result.data)
             setKeyword(result.data)
         }

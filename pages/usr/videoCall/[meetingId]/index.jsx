@@ -51,24 +51,26 @@ export default function MeetingJitsi({ profileData, meetingId }) {
         setDataUser(null)
         setAudioOnly(null)
         // ubah status ke finish
-        const result = await MeetingRepository.setStatusMeeting({
-            xa: JSON.parse(localStorage.getItem("XA")),
-            id: meetingId,
-            data: {
-                status: 3
-            }
-        })
-        if(result.status == 0){
-            if(context.dataMeeting){
-                let typemeet = 1
-                if(dataMeet?.meet){
-                    typemeet = 2
+        if(dataUser.id == profileData.id){
+            const result = await MeetingRepository.setStatusMeeting({
+                xa: JSON.parse(localStorage.getItem("XA")),
+                id: meetingId,
+                data: {
+                    status: 3
                 }
-                const findIndex = context.dataMeeting[typemeet].findIndex(res => res.id == meetingId)
-                context.dataMeeting[typemeet][findIndex] = result.data
-                context.setData({ ...context, dataMeeting: { ...context.dataMeeting, [typemeet]: context.dataMeeting[typemeet] } })
+            })
+            if(result.status == 0){
+                if(context.dataMeeting){
+                    let typemeet = 1
+                    if(dataMeet?.meet){
+                        typemeet = 2
+                    }
+                    const findIndex = context.dataMeeting[typemeet].findIndex(res => res.id == meetingId)
+                    context.dataMeeting[typemeet][findIndex] = result.data
+                    context.setData({ ...context, dataMeeting: { ...context.dataMeeting, [typemeet]: context.dataMeeting[typemeet] } })
+                }
+                Notify("You leave the meeting", "info")
             }
-            Notify("You leave the meeting", "info")
         }
         router.push("/usr/videoCall")
     }

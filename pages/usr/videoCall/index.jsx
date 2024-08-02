@@ -6,7 +6,6 @@ import ModalCreateMeeting from '@components/VideoCall/ModalCreateMeeting'
 
 export default function VideoCall(props) {
     const context = useContext(MyContext)
-
     const isModal = context?.modal?.name == "modalMeeting"
     
   return (
@@ -39,7 +38,6 @@ export default function VideoCall(props) {
             </div>
 
             <TableMeeting />
-           
         </section>
     </Layout2>
   )

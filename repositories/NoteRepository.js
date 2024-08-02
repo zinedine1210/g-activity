@@ -85,6 +85,7 @@ class NoteRepository {
         )
         .then((response) => {
             const data = cbor.decode(response.data)
+            console.log("ini dari repo", cbor.decode(response.data))
             return data
         })
         .catch((error) => {
