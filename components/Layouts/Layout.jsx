@@ -2,7 +2,6 @@ import Seo from "../seo"
 import SidebarMenu from "./SidebarMenu"
 
 export default function Layout({children, title, desc, image, lang, profileData}) {
-  console.log(profileData)
   return (
     <>
       <Seo 

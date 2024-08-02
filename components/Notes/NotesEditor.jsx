@@ -119,7 +119,7 @@ export default function NotesEditor(props) {
   if(context.dataDocumentation && editor)
   return (
     <Layout title={"NOTES EDITOR"} desc="DESKRIPSI NOTES EDITOR" lang={t}>
-      <NavbarNote lang={t} editor={editor}/>
+      <NavbarNote lang={t} editor={editor} profileData={props.profileData}/>
       <Suspense fallback={"Loading"}>
         <div className="w-full h-screen overflow-y-scroll pt-20 pb-56 bg-zinc-100 dark:bg-darkSecondary">
           <div className="bg-white px-5 md:px-20 py-10 shadow-md rounded-lg w-full md:w-1/2 mx-auto relative">

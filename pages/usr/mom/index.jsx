@@ -100,7 +100,7 @@ function MinuteOfMeeting(props) {
 
   return (
     <Layout title={"MOM EDITOR"} desc="DESKRIPSI MOM EDITOR" lang={t}>
-      <NavbarMOM lang={t} />
+      <NavbarMOM lang={t} profileData={profileData}/>
       <Suspense fallback={"Loading"}>
         {
           context.dataDocumentation ?

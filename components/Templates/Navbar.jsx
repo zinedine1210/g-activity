@@ -12,7 +12,7 @@ import CollectionData from "@repositories/CollectionData"
 import CardAssign from "./CardAssign";
 
 export default function Navbar(props) {
-    const { lang } = props
+    const { lang, profileData } = props
     const [active, setActive] = useState(false)
     const { theme, setTheme } = useTheme()
     const router = useRouter()
@@ -145,7 +145,11 @@ export default function Navbar(props) {
                                         }
 
                                         <div className="relative">
-                                            <span onClick={() => setOpen(true)} className={`flex items-center justify-center relative transition-all cursor-pointer w-10 h-10 font-semibold border-2 border-dashed ${open ? "border-primary" : "hover:border-primary border-zinc-300"} rounded-full bg-zinc-50 text-zinc-800`}><FaUserPlus /></span>
+                                            {
+                                                context?.dataDocumentation?._cb == profileData.id && (
+                                                    <span onClick={() => setOpen(true)} className={`flex items-center justify-center relative transition-all cursor-pointer w-10 h-10 font-semibold border-2 border-dashed ${open ? "border-primary" : "hover:border-primary border-zinc-300"} rounded-full bg-zinc-50 text-zinc-800`}><FaUserPlus /></span>
+                                                )
+                                            }
                                             {
                                                 open ?
                                                     <ModalAssign open={open} setOpen={e => setOpen(e)} />

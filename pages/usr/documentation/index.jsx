@@ -81,7 +81,7 @@ function Editor(props) {
 
   return (
     <Layout title="HOME" desc="HALAMAN UTAMA" lang={t} profileData={props.profileData}>
-      <Navbar lang={t} />
+      <Navbar lang={t} profileData={props.profileData}/>
       {
         context.dataDocumentation &&
           <Suspense fallback={"Loading"}>

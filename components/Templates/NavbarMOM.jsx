@@ -1,6 +1,6 @@
 import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { Profiler, useContext, useEffect, useState } from "react";
 import { MyContext, urlData } from "../../context/MyProvider";
 import { FaUserPlus, FaPrint, FaPalette, FaSave, FaTrash } from "react-icons/fa"
 import { handlerPutMOM, handlerPutRecord } from "../../utils/repositories"
@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 
 export default function NavbarMOM(props) {
     console.log("dipanggil???")
-    const { lang, editor } = props
+    const { lang, editor, profileData } = props
     const [active, setActive] = useState(false)
     const { theme, setTheme } = useTheme()
     const router = useRouter()
@@ -136,7 +136,11 @@ export default function NavbarMOM(props) {
                             }
 
                             <div className="relative">
-                                <span onClick={() => setOpen(true)} className={`flex items-center justify-center relative transition-all cursor-pointer w-10 h-10 font-semibold border-2 border-dashed ${open ? "border-primary" : "hover:border-primary border-zinc-300"} rounded-full bg-zinc-50 text-zinc-800`}><FaUserPlus /></span>
+                                {
+                                    context?.dataDocumentation?._cb == profileData.id && (
+                                        <span onClick={() => setOpen(true)} className={`flex items-center justify-center relative transition-all cursor-pointer w-10 h-10 font-semibold border-2 border-dashed ${open ? "border-primary" : "hover:border-primary border-zinc-300"} rounded-full bg-zinc-50 text-zinc-800`}><FaUserPlus /></span>
+                                    )
+                                }
                                 {
                                     open ?
                                         <ModalAssign open={open} setOpen={e => setOpen(e)} />

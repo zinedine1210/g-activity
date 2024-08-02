@@ -37,7 +37,7 @@ function HalamanNote(props) {
 
   if (context.dataDocumentation)
     return (
-      <NotesEditor data={context.dataDocumentation} />
+      <NotesEditor data={context.dataDocumentation} profileData={profileData} />
     )
 }
 
