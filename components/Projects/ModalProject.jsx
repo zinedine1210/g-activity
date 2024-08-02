@@ -110,7 +110,7 @@ export default function ModalProject(props) {
                                 <div>
                                     <h1 className="font-semibold">Teams</h1>
                                     <p className="text-zinc-600 dark:text-zinc-300 text-sm">Who is involved in this project? Including the owner</p>
-                                    <SelectMultiple name={"members"} options={option} create={true} change={(value, target) => handlerChange(value, target)} />
+                                    <SelectMultiple name={"members"} options={option} create={false} change={(value, target) => handlerChange(value, target)} />
                                 </div>
                                 {
                                     loading ?
