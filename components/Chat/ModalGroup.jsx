@@ -7,6 +7,7 @@ import { MultiSelect } from 'react-multi-select-component';
 import CollectionData from "@repositories/CollectionData"
 import { emit, on, connect, checkErrorMsg } from "@utils/socketfunction"
 import { showToast } from "@utils/functionToast"
+import { toast } from 'react-toastify';
 
 export default function ModalGroup({ statename }) {
     const context = useContext(MyContext)
@@ -82,12 +83,10 @@ export default function ModalGroup({ statename }) {
 
     const handlerSubmit = async (e) => {
         e.preventDefault()
+        console.log("val apa", value)
         console.log("ini submit")
-        if (!value || value == ""){
-            showToast({
-                type: "error",
-                text: "Group name cannot be empty"
-            })
+        if (!value || value['group'].replace(/^\s+/, '') === "") {
+            toast.error("Group name cannot be empty");
         }
 
         let newObj = {
@@ -95,12 +94,13 @@ export default function ModalGroup({ statename }) {
             'member': selected
         }
         console.log("newObj", newObj)
-        // SEND MESSAGE
-        emit("createGroup", newObj)
-            .then(callback => {
-                console.log("callback create group", callback)
-                checkErrorMsg(callback)
-            })
+        actionUser[type].action(newObj)
+        // // SEND MESSAGE
+        // emit("createGroup", newObj)
+        //     .then(callback => {
+        //         console.log("callback create group", callback)
+        //         checkErrorMsg(callback)
+        //     })
     }
 
     let actionUser = {
@@ -122,16 +122,12 @@ export default function ModalGroup({ statename }) {
         create: {
             name: "create",
             action: async (value) => {
-                const getxa = JSON.parse(localStorage.getItem("XA"))
-                const result = await ChatCollection.postGroup({
-                    xa: getxa,
-                    data: value
+                emit("createGroup", value)
+                .then(callback => {
+                    console.log("callback create group", callback)
+                    checkErrorMsg(callback)
                 })
-                console.log(result)
-                if (result.status == 0) {
-                    context.setData({ ...context, [statename]: null, modal: null })
-                    Notify("Success", "info")
-                }
+                context.setData({ ...context, [statename]: null, modal: null })
             }
         }
     }

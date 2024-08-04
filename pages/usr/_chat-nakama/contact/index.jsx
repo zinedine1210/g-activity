@@ -1,5 +1,5 @@
-import LayoutChat from '@components/Chat/LayoutChat'
-import PanelContact from '@components/Chat/PanelContact'
+import LayoutChat from '@components/_ChatV1/LayoutChat'
+import PanelContact from '@components/_ChatV1/PanelContact'
 import React from 'react'
 
 export default function HalamanContact({ profileData, roomId }) {

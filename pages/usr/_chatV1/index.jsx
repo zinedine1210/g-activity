@@ -1,5 +1,5 @@
-import LayoutChat from "@components/ChatSocket/LayoutChat";
-import PanelList from "@components/ChatSocket/PanelList";
+import LayoutChat from "@components/_ChatV1/LayoutChat";
+import PanelList from "@components/_ChatV1/PanelList";
 
 export default function HalamanChat({ profileData, roomId }) {
 

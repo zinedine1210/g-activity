@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { socket } from '@config/config-socket';
 import { setupSocketListeners, connect, emit, checkErrorMsg } from "@utils/socketfunction"
 import { MyContext } from "context/MyProvider";
-import notifyChat from '@components/ChatSocket/NotifChat';
+import notifyChat from '@components/Chat/NotifChat';
 
 const SocketContext = createContext();
 

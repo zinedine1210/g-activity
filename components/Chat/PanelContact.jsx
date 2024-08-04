@@ -53,10 +53,6 @@ export default function PanelContact({
     }
 
     const handleAddNewRoom = async cont => {
-        if(cont?.room_id){
-            router.push(`/usr/chat?roomId=${cont.room_id}`)
-            return false
-        }
         
         Swal.fire({
             title:`Do you want to start a conversation with ${cont?.first_name} ${cont?.last_name}`,
@@ -72,7 +68,7 @@ export default function PanelContact({
                     label: "",
                     type: 1,
                     type_msg: 1,
-                    msg: "Hallo " + cont?.first_name + cont?.last_name,
+                    msg: "Hallo " + cont?.username,
                     list_user: [
                         cont.user_id // contact userid
                     ]
@@ -85,11 +81,12 @@ export default function PanelContact({
                 })
                 console.log(result)
                 if(result.status == 0){
-                    context.setData({ ...context, dataRoom: null, dataChat: null, dataDetailRoom: null, dataContact: null })
+                    context.setData({ ...context, dataRoom: null, dataChat: null, dataDetailRoom: null })
                     router.push(`/usr/chat?roomId=${result.data.room.id}`)
                 } else Notify("Something went wrong", "error")
             }
           })
+        
     }
 
     const handleAddNewContact = async cont => {
