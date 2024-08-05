@@ -172,7 +172,7 @@ export default function PanelList({
                                         </span>
                                         <div>
                                             <h1 className="font-semibold">{item?.label}</h1>
-                                            <p className="text-sm text-zinc-500">{item?.last_msg.length > 20 ? item.last_msg.substring(0, 20) + "..." : item.last_msg ?? ""}</p>
+                                            <p className="text-sm text-zinc-500">{item.type == 2 ? (`${item.last_msg_uid == profileData.id ? "You": item.last_msg_username}:`) : null} {item?.last_msg.length > 20 ? item.last_msg.substring(0, 20) + "..." : item.last_msg ?? ""}</p>
                                         </div>
                                         <span className="absolute bottom-3 right-3 w-6 text-sm h-6 rounded-full bg-teal-100 text-teal-500 font-bold flex items-center justify-center">{item?.unread ? item.unread : 0}</span>
                                     </button>

@@ -97,71 +97,23 @@ export default function MainChat({
       obj.context = context
     }
 
-    // SEND MESSAGE
+    console.log("roomInfo bro", roomInfo)
+    console.log("tess")
     setText("") // kosongkan lagi input editor
-    emit("sendPrivateMsg", obj)
-      .then(callback => {
-        checkErrorMsg(callback)
-      })
-
-
-    // const result = await ChatCollection.postChat({
-    //   xa: getxa,
-    //   data: obj
-    // })
-    // if(result.status == 0){
-    //   dataChat.push(result.data)
-    //   setDataChat(dataChat)
-    //   context.setData({ ...context, dataReply: null })
-    //   containerRef.current?.scrollIntoView({ behavior: "auto" }); // scroll kebawah
-    //   setText("") // kosongkan lagi input editor
-    // }
+    if (roomInfo.type == 1) {
+      // SEND MESSAGE PRIVATE
+      emit("sendPrivateMsg", obj)
+        .then(callback => {
+          checkErrorMsg(callback)
+        })
+    } else {
+       // SEND MESSAGE GROUP
+       emit("sendGroupMsg", obj)
+       .then(callback => {
+         checkErrorMsg(callback)
+       })
+    }
   }
-
-  // const fetchNewMessage = async () => {
-  //   const getxa = JSON.parse(localStorage.getItem("XA"))
-  //   let currentTimestamp = ""
-  //   if (timestamp == "") {
-  //     const now = new Date().toISOString()
-  //     setTimestamp(now)
-  //     currentTimestamp = now
-  //   } else {
-  //     currentTimestamp = timestamp
-  //   }
-  //   // console.log(currentTimestamp)
-  //   const result = await ChatCollection.fetchNewChatMessage({
-  //     xa: getxa,
-  //     data: {
-  //       date: currentTimestamp,
-  //       room_id: roomId
-  //     }
-  //   })
-
-  //   if (result.status == 0) {
-  //     if (result.data.length > 0) {
-  //       const now = new Date();
-  //       const timeInMillis = now.getTime();
-  //       const newTimeInMillis = timeInMillis + 2000; // Tambahkan 2000 milidetik (2 detik)
-  //       const newTime = new Date(newTimeInMillis);
-  //       const isoString = newTime.toISOString();
-  //       setTimestamp(isoString)
-  //       result.data.forEach(async (el, index) => {
-  //         const find = JSON.parse(JSON.stringify(dataChat)).find(res => res.id == el.id)
-  //         if (!find) {
-  //           if (index == 0) {
-  //             await ChatCollection.putIsRead({
-  //               xa: getxa,
-  //               data: {
-  //                 room_id: roomId
-  //               }
-  //             })
-  //           }
-  //           setDataChat([...dataChat, el])
-  //         }
-  //       });
-  //     }
-  //   }
-  // }
 
   const receivePrivateMsg = (msg) => {
     setDataChat(prevDataChat => {
@@ -268,7 +220,7 @@ export default function MainChat({
                     item.isMe = isMe
                     if (item.system) return <div className="p-4 mb-4 text-sm text-teal-200 rounded-lg bg-green-700 bg-opacity-80 backdrop-blur-sm dark:bg-gray-800 dark:text-blue-400 text-center" role="alert">
                       <h1 className="font-semibold">
-                        {isMe ? "You": item.username} {item.msg}
+                        {isMe ? "You" : item.username} {item.msg}
                       </h1>
                     </div>
                     else if (isMe) return <CardFromMe data={item} key={key} roomInfo={roomInfo} />
