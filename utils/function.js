@@ -99,17 +99,17 @@ export function getTimeAgo(timestamp) {
     const years = Math.floor(months / 12);
 
     if (seconds < 60) {
-        return 'Baru saja';
+        return 'Just now';
     } else if (minutes < 60) {
-        return `${minutes} menit yang lalu`;
+        return `${minutes} minutes ago`;
     } else if (hours < 24) {
-        return `${hours} jam yang lalu`;
+        return `${hours} hours ago`;
     } else if (days < 30) {
-        return `${days} hari yang lalu`;
+        return `${days} days ago`;
     } else if (months < 12) {
-        return `${months} bulan yang lalu`;
+        return `${months} months ago`;
     } else {
-        return `${years} tahun yang lalu`;
+        return `${years} years ago`;
     }
 }
 
@@ -306,16 +306,16 @@ export function getTimeAgoFromIsoString(isoDate) {
     const years = Math.floor(months / 12);
 
     if (seconds < 60) {
-        return 'Baru saja';
+        return 'Just now';
     } else if (minutes < 60) {
-        return `${minutes} menit yang lalu`;
+        return `${minutes} minutes ago`;
     } else if (hours < 24) {
-        return `${hours} jam yang lalu`;
+        return `${hours} hours ago`;
     } else if (days < 30) {
-        return `${days} hari yang lalu`;
+        return `${days} days ago`;
     } else if (months < 12) {
-        return `${months} bulan yang lalu`;
+        return `${months} months ago`;
     } else {
-        return `${years} tahun yang lalu`;
+        return `${years} years ago`;
     }
 }

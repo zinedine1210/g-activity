@@ -30,7 +30,9 @@ export const SocketProvider = ({ children, profileData }) => {
         if (profileData['id'] != data['last_msg_uid']) {
             let objNotif = {
                 'label': data['label'],
-                'msg': data['last_msg']
+                'msg': data['last_msg'],
+                'type': data['type'],
+                'username': data['last_msg_username']
             }
             notifyChat(objNotif);
         }
@@ -70,7 +72,7 @@ export const SocketProvider = ({ children, profileData }) => {
             }
         );
 
-        // receive new private message
+        // receive new message
         socket.on('receiveNotif', (data) => {
             receiveNotif(data)
         });

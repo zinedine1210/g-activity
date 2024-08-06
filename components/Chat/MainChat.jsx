@@ -7,8 +7,10 @@ import { BsPlus, BsSend, BsX } from "react-icons/bs";
 import CardFromMe from "./CardFromMe";
 import CardFromContact from "./CardFromContact";
 import HeaderMainChat from "./HeaderMainChat";
+import { GroupInfo } from "@components/Chat/GroupInfo";
 import { emit, on, connect, checkErrorMsg } from "@utils/socketfunction"
 import { socket } from '../../config/config-socket'
+import Swal from 'sweetalert2';
 
 export default function MainChat({
   profileData,
@@ -20,6 +22,8 @@ export default function MainChat({
   const [timestamp, setTimestamp] = useState("")
   const [dataChat, setDataChat] = useState(null)
   const [roomInfo, setRoomInfo] = useState(null)
+  const [isGroupInfoOpen, setIsGroupInfoOpen] = useState(false);
+
 
   const getAllChat = async () => {
     const getxa = JSON.parse(localStorage.getItem("XA"))
@@ -97,8 +101,6 @@ export default function MainChat({
       obj.context = context
     }
 
-    console.log("roomInfo bro", roomInfo)
-    console.log("tess")
     setText("") // kosongkan lagi input editor
     if (roomInfo.type == 1) {
       // SEND MESSAGE PRIVATE
@@ -107,11 +109,11 @@ export default function MainChat({
           checkErrorMsg(callback)
         })
     } else {
-       // SEND MESSAGE GROUP
-       emit("sendGroupMsg", obj)
-       .then(callback => {
-         checkErrorMsg(callback)
-       })
+      // SEND MESSAGE GROUP
+      emit("sendGroupMsg", obj)
+        .then(callback => {
+          checkErrorMsg(callback)
+        })
     }
   }
 
@@ -243,44 +245,87 @@ export default function MainChat({
     containerRef.current?.scrollIntoView({ behavior: viewType });
   }
 
+  const closeGroupInfo = () => {
+    setIsGroupInfoOpen(false);
+  };
+
+  const openGroupInfo = () => {
+    // open info group
+    roomInfo.type == 2 ? setIsGroupInfoOpen(true) : null
+  };
+
+  const leaveGroup = () => {
+    console.log("disini leave group")
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You will not be in this group",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Leave group
+        let obj = {
+          room_id: roomId
+        }
+        emit("leaveGroup", obj)
+          .then(callback => {
+            checkErrorMsg(callback)
+          })
+      }
+    })
+  };
+
+
   if (roomId && roomInfo) {
     return (
       <div className="w-full xl:w-full h-screen overflow-y-hidden bg-zinc-200 bg-cover bg-center" >
         <div className="flex-col flex h-full">
-          <HeaderMainChat roomInfo={roomInfo} />
+          <HeaderMainChat roomInfo={roomInfo} handleOpenInfo={openGroupInfo} />
           <div className="w-full flex-1 overflow-y-auto space-y-4 px-10 py-5">
             {
               mapAllChat()
             }
             <div ref={containerRef}></div>
           </div>
-
-          <form onSubmit={(e) => handleSubmit(e)} className="pb-5 px-10">
-            <div className="bg-white shadow-xl rounded-2xl w-3/4 mx-auto px-5 pb-2 pt-3">
-              {
-                replyChat && (
-                  <div className="w-full border-s-4 border-teal-500 bg-teal-50 rounded-md py-3 px-5 relative">
-                    <h1 className="font-bold text-teal-500">{replyChat.isMe ? "You" : replyChat.label}</h1>
-                    <p className="text-sm">{replyChat?.msg}</p>
-                    <button type="button" className="absolute top-1/2 -translate-y-1/2 right-2" onClick={() => { context.setData({ ...context, dataReply: null }); ScrollOnTop("smooth") }}>
-                      <BsX className="text-red-500 text-3xl" />
+          {console.log("roomInfo adlah", roomInfo)}
+          {
+            roomInfo && roomInfo['is_leave'] && roomInfo['is_leave'] == 1 ? <div className="flex items-center justify-center bg-gray-100">
+            <div className="text-center p-4 bg-white shadow-lg rounded">
+              <p className="text-lg font-semibold text-gray-700">
+                You are no longer a member of this group.
+              </p>
+            </div>
+          </div>: <form onSubmit={(e) => handleSubmit(e)} className="pb-5 px-10">
+              <div className="bg-white shadow-xl rounded-2xl w-3/4 mx-auto px-5 pb-2 pt-3">
+                {
+                  replyChat && (
+                    <div className="w-full border-s-4 border-teal-500 bg-teal-50 rounded-md py-3 px-5 relative">
+                      <h1 className="font-bold text-teal-500">{replyChat.isMe ? "You" : replyChat.label}</h1>
+                      <p className="text-sm">{replyChat?.msg}</p>
+                      <button type="button" className="absolute top-1/2 -translate-y-1/2 right-2" onClick={() => { context.setData({ ...context, dataReply: null }); ScrollOnTop("smooth") }}>
+                        <BsX className="text-red-500 text-3xl" />
+                      </button>
+                    </div>
+                  )
+                }
+                <div className="flex items-center gap-2">
+                  <button type="button" className="w-10 h-10 rounded-full hover:bg-blue-200 hover:rotate-180 transition-all ease-in-out duration-300 flex items-center justify-center">
+                    <BsPlus className="text-3xl " />
+                  </button>
+                  <div className="w-full relative">
+                    <input value={text} type="text" onChange={(e) => setText(e.target.value)} className="peer w-full py-3 text-sm pl-2 pr-16 outline-none placeholder:text-zinc-500" placeholder="Type Here..." />
+                    <button className="absolute top-1/2 -translate-y-1/2 right-0 w-16 flex items-center justify-center duration-300 ease-out peer-focus:visible peer-focus:opacity-100 opacity-0 peer-focus:rotate-45 invisible transition-all" type="submit">
+                      <BsSend className="text-blue-500 text-2xl duration-300 hover:text-teal-500" />
                     </button>
                   </div>
-                )
-              }
-              <div className="flex items-center gap-2">
-                <button type="button" className="w-10 h-10 rounded-full hover:bg-blue-200 hover:rotate-180 transition-all ease-in-out duration-300 flex items-center justify-center">
-                  <BsPlus className="text-3xl " />
-                </button>
-                <div className="w-full relative">
-                  <input value={text} type="text" onChange={(e) => setText(e.target.value)} className="peer w-full py-3 text-sm pl-2 pr-16 outline-none placeholder:text-zinc-500" placeholder="Type Here..." />
-                  <button className="absolute top-1/2 -translate-y-1/2 right-0 w-16 flex items-center justify-center duration-300 ease-out peer-focus:visible peer-focus:opacity-100 opacity-0 peer-focus:rotate-45 invisible transition-all" type="submit">
-                    <BsSend className="text-blue-500 text-2xl duration-300 hover:text-teal-500" />
-                  </button>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>}
+
+          {isGroupInfoOpen && <GroupInfo closePanel={closeGroupInfo} roomInfo={roomInfo} profileData={profileData} handleLeaveGroup={leaveGroup} />}
         </div>
       </div>
     )
