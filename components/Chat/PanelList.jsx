@@ -10,7 +10,7 @@ import { HiRefresh } from "react-icons/hi";
 import { setupSocketListeners, connect, emit, checkErrorMsg } from "@utils/socketfunction"
 import { socket } from '../../config/config-socket'
 import notifyChat from '@components/Chat/NotifChat';
-import ModalGroup from "./ModalGroup";
+import ModalGroup from "@components/Chat/ModalGroup";
 
 export default function PanelList({
     profileData,
@@ -26,8 +26,6 @@ export default function PanelList({
     // socket state
     const [connectionStatus, setConnectionStatus] = useState(null);
     const [error, setError] = useState(null);
-
-
 
     const fetchNewMessageRoom = async () => {
         const getxa = JSON.parse(localStorage.getItem("XA"))
@@ -53,7 +51,7 @@ export default function PanelList({
                 const newTimeInMillis = timeInMillis + 2000; // Tambahkan 2000 milidetik (2 detik)
                 const newTime = new Date(newTimeInMillis);
                 const isoString = newTime.toISOString();
-                setTimestamp(isoString)
+                // setTimestamp(isoString)
                 result.data.forEach((el, index) => {
                     const find = JSON.parse(JSON.stringify(context[statename])).find(res => res.id == el.id)
                     if (find) { // kalau roomnya udah ada berarti cuma update msg
@@ -81,7 +79,7 @@ export default function PanelList({
         // console.log(result)
         if (result.status == 0) {
             context.setData({ ...context, [statename]: result.data })
-            setTimestamp(new Date().toISOString())
+            // setTimestamp(new Date().toISOString())
         } else Notify("Something went wrong when get room")
     }
 

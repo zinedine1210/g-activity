@@ -117,7 +117,17 @@ export default function MainChat({
     }
   }
 
-  const receivePrivateMsg = (msg) => {
+  const receiveMsg = (msg) => {
+    console.log("receiveMsg ini", msg)
+    setDataChat(prevDataChat => {
+      return [...prevDataChat, msg];
+    });
+    context.setData({ ...context, dataReply: null })
+    containerRef.current?.scrollIntoView({ behavior: "auto" }); // scroll kebawah
+  }
+
+  const receiveRoomSystem = (msg) => {
+    console.log("receiveRoomSystem ini", msg)
     setDataChat(prevDataChat => {
       return [...prevDataChat, msg];
     });
@@ -161,8 +171,13 @@ export default function MainChat({
       joinRoom(roomId);
 
       // receive new private message
-      socket.on('receivePrivateMsg', (data) => {
-        receivePrivateMsg(data)
+      socket.on('receiveMsg', (data) => {
+        receiveMsg(data)
+      });
+
+      // receive new private message
+      socket.on('receiveRoomSystem', (data) => {
+        receiveRoomSystem(data)
       });
 
       // Cleanup saat komponen di-unmount atau roomId berubah
@@ -170,7 +185,7 @@ export default function MainChat({
         if (roomId) {
           leaveRoom(roomId);
         }
-        socket.off('receivePrivateMsg');
+        socket.off('receiveMsg');
       };
     }
   }, [roomId])
@@ -272,7 +287,13 @@ export default function MainChat({
         }
         emit("leaveGroup", obj)
           .then(callback => {
-            checkErrorMsg(callback)
+            setRoomInfo(prevRoomInfo => {
+              prevRoomInfo['is_leave'] = 1
+              return {...prevRoomInfo};
+            });
+            setIsGroupInfoOpen(false);
+            console.log("adakah room id", roomId)
+            leaveRoom(roomId)
           })
       }
     })
@@ -290,15 +311,14 @@ export default function MainChat({
             }
             <div ref={containerRef}></div>
           </div>
-          {console.log("roomInfo adlah", roomInfo)}
           {
             roomInfo && roomInfo['is_leave'] && roomInfo['is_leave'] == 1 ? <div className="flex items-center justify-center bg-gray-100">
-            <div className="text-center p-4 bg-white shadow-lg rounded">
-              <p className="text-lg font-semibold text-gray-700">
-                You are no longer a member of this group.
-              </p>
-            </div>
-          </div>: <form onSubmit={(e) => handleSubmit(e)} className="pb-5 px-10">
+              <div className="text-center p-4 bg-white shadow-lg rounded">
+                <p className="text-lg font-semibold text-gray-700">
+                  You are no longer a member of this group.
+                </p>
+              </div>
+            </div> : <form onSubmit={(e) => handleSubmit(e)} className="pb-5 px-10">
               <div className="bg-white shadow-xl rounded-2xl w-3/4 mx-auto px-5 pb-2 pt-3">
                 {
                   replyChat && (

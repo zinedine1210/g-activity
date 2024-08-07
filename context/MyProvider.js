@@ -22,6 +22,7 @@ export function MyProvider({children}) {
         "activeTask":null,
         "activeDrag":null,
         "workspaceData":null,
+        "dataRoom": null,
         "dataTask":[],
         "dataComponents":[
             {

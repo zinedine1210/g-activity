@@ -23,9 +23,15 @@ export default function ModalGroup({ statename }) {
     const [debounceTimeout, setDebounceTimeout] = useState(null);
 
     // Fungsi untuk fetch data dari server
-    const fetchOptions = async (query) => {
+    const fetchOptions = async (query, inputType) => {
         setIsLoading(true);
-        const result = await CollectionData.postData({ url: `chat-contact/findmycontact`, values: { "username": query } })
+        let valuesPost = {
+            "username": query
+        }
+        if(inputType == "addgroupmember"){
+            valuesPost['room_id'] = data.id
+        }
+        const result = await CollectionData.postData({ url: `chat-room/findmember`, values: valuesPost })
         if (result.data.length > 0) {
             const fetchedOptions = result.data.map(item => ({
                 label: `${item.first_name} ${item.last_name}`,
@@ -42,7 +48,7 @@ export default function ModalGroup({ statename }) {
     }
 
     // Handler untuk input pencarian dengan debounce
-    const handleInputChange = useCallback((event) => {
+    const handleInputChange = useCallback((event, inputType) => {
         const { value } = event.target;
         setSearchTerm(value);
 
@@ -52,7 +58,8 @@ export default function ModalGroup({ statename }) {
 
         const newTimeout = setTimeout(() => {
             if (value) {
-                fetchOptions(value);
+                setOptions([])
+                fetchOptions(value, inputType);
             } else {
                 setOptions([]);
             }
@@ -65,16 +72,24 @@ export default function ModalGroup({ statename }) {
         if (type == "create") {
             setTypename("Create Group")
             setValue({
-                group: data?.group ?? ""
+                group: data?.label ?? ""
             })
         } else if (type == "update") {
             let obj = {
-                group: data?.group ?? "",
+                group: data?.label ?? "",
 
                 id: data?.id
             }
             setValue(obj)
             setTypename("Update Group")
+        } else if (type == "addgroupmember") {
+            let obj = {
+                group: data?.label ?? "",
+
+                id: data?.id
+            }
+            setValue(obj)
+            setTypename(`Add Member (${obj.group})`)
         } else {
             setTypename("Group Detail")
             setValue(data)
@@ -83,8 +98,6 @@ export default function ModalGroup({ statename }) {
 
     const handlerSubmit = async (e) => {
         e.preventDefault()
-        console.log("val apa", value)
-        console.log("ini submit")
         if (!value || value['group'].replace(/^\s+/, '') === "") {
             toast.error("Group name cannot be empty");
         }
@@ -93,7 +106,6 @@ export default function ModalGroup({ statename }) {
             'group': value['group'],
             'member': selected
         }
-        console.log("newObj", newObj)
         actionUser[type].action(newObj)
         // // SEND MESSAGE
         // emit("createGroup", newObj)
@@ -123,10 +135,20 @@ export default function ModalGroup({ statename }) {
             name: "create",
             action: async (value) => {
                 emit("createGroup", value)
-                .then(callback => {
-                    console.log("callback create group", callback)
-                    checkErrorMsg(callback)
-                })
+                    .then(callback => {
+                        checkErrorMsg(callback)
+                    })
+                context.setData({ ...context, [statename]: null, modal: null })
+            }
+        },
+        addgroupmember: {
+            name: "addgroupmember",
+            action: async (value) => {
+                value['room_id'] = data.id
+                emit("addGroupMember", value)
+                    .then(callback => {
+                        checkErrorMsg(callback)
+                    })
                 context.setData({ ...context, [statename]: null, modal: null })
             }
         }
@@ -140,49 +162,92 @@ export default function ModalGroup({ statename }) {
             <div className="relative w-full h-full max-w-2xl md:h-auto">
                 <div className="relative bg-white rounded-lg shadow dark:bg-darkSecondary flex items-center">
                     <div className="p-6 w-full relative">
-                        <form onSubmit={e => handlerSubmit(e)} className="flex-col flex h-full">
-                            <header>
-                                <h1 className="font-bold text-lg">{typename}</h1>
-                            </header>
-                            {
-                                value && (
-                                    <div className="w-full mt-10 space-y-5 overflow-y-auto flex-1">
-                                        <div>
-                                            <h1 className="font-semibold">Group name</h1>
-                                            <input type="text" required value={value.group}  onInput={e => handlerChange(e.target.value, e.target.name)}  name="group" className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white" autoComplete="off" />
-                                        </div>
-                                        <div>
-                                            <h1 className="font-semibold">Search and select user</h1>
-                                            <input
-                                                type="text"
-                                                value={searchTerm}
-                                                onChange={handleInputChange}
-                                                placeholder="Type contact name..."
-                                                className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white"
-                                            />
-                                            {isLoading ? (
-                                                <p>Loading...</p>
-                                            ) : (
-                                                <MultiSelect
-                                                    options={options}
-                                                    value={selected}
-                                                    onChange={setSelected}
-                                                    disableSearch={true}
-                                                    labelledBy="Select"
+                        {
+                            type && type == "create" ? <form onSubmit={e => handlerSubmit(e)} className="flex-col flex h-full">
+                                <header>
+                                    <h1 className="font-bold text-lg">{typename}</h1>
+                                </header>
+                                {
+                                    value && (
+                                        <div className="w-full mt-10 space-y-5 overflow-y-auto flex-1">
+                                            <div>
+                                                <h1 className="font-semibold">Group name</h1>
+                                                <input type="text" required value={value.group} onInput={e => handlerChange(e.target.value, e.target.name)} name="group" className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white" autoComplete="off" />
+                                            </div>
+                                            <div>
+                                                <h1 className="font-semibold">Search and select user</h1>
+                                                <input
+                                                    type="text"
+                                                    value={searchTerm}
+                                                    onChange={e => handleInputChange(e, 'newgroup')}
+                                                    placeholder="Type contact name..."
+                                                    className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white"
                                                 />
-                                            )}
+                                                {isLoading ? (
+                                                    <p>Loading...</p>
+                                                ) : (
+                                                    <MultiSelect
+                                                        options={options}
+                                                        value={selected}
+                                                        onChange={setSelected}
+                                                        disableSearch={true}
+                                                        labelledBy="Select"
+                                                    />
+                                                )}
+                                            </div>
                                         </div>
+                                    )
+                                }
+                                <footer className="pt-5 border-t mt-5 w-full">
+                                    <div className="flex items-center justify-end gap-2">
+                                        {type !== "view" && <button className="btn-primary" type="submit">Save</button>}
+                                        <button className="btn-secondary" type="button" onClick={() => { context.setData({ ...context, modal: null }); }}>Cancel</button>
                                     </div>
-                                )
-                            }
+                                </footer>
+                            </form> : null
+                        }
 
-                            <footer className="pt-5 border-t mt-5 w-full">
-                                <div className="flex items-center justify-end gap-2">
-                                    {type !== "view" && <button className="btn-primary" type="submit">Save</button>}
-                                    <button className="btn-secondary" type="button" onClick={() => { context.setData({ ...context, modal: null }); }}>Cancel</button>
-                                </div>
-                            </footer>
-                        </form>
+                        {
+                            type && type == "addgroupmember" ? <form onSubmit={e => handlerSubmit(e)} className="flex-col flex h-full">
+                                <header>
+                                    <h1 className="font-bold text-lg">{typename}</h1>
+                                </header>
+                                {
+                                    value && (
+                                        <div className="w-full mt-2 space-y-5 overflow-y-auto flex-1">
+                                            <div>
+                                                <h1 className="font-semibold">Search and select user</h1>
+                                                <input
+                                                    type="text"
+                                                    value={searchTerm}
+                                                    onChange={e => handleInputChange(e, 'addgroupmember')}
+                                                    placeholder="Type contact name..."
+                                                    className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white"
+                                                />
+                                                {isLoading ? (
+                                                    <p>Loading...</p>
+                                                ) : (
+                                                    <MultiSelect
+                                                        options={options}
+                                                        value={selected}
+                                                        onChange={setSelected}
+                                                        disableSearch={true}
+                                                        labelledBy="Select"
+                                                    />
+                                                )}
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                                <footer className="pt-5 border-t mt-5 w-full">
+                                    <div className="flex items-center justify-end gap-2">
+                                        {type !== "view" && <button className="btn-primary" type="submit">Save</button>}
+                                        <button className="btn-secondary" type="button" onClick={() => { context.setData({ ...context, modal: null }); }}>Cancel</button>
+                                    </div>
+                                </footer>
+                            </form> : null
+                        }
+
 
                     </div>
                 </div>

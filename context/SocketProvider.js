@@ -27,6 +27,26 @@ export const SocketProvider = ({ children, profileData }) => {
 
     const receiveNotif = (data) => {
         console.log("ini receive notif", data)
+        // console.log("profileData profileData", profileData)
+        // console.log("apakah ada context", context.setData)
+        context.setData(prevContext => {
+            // console.log("masuk sini kah??")
+            const prevDataChat = prevContext[statename] || [];
+            // console.log("prevContext saat ini", prevContext)
+            // console.log("prevDataChat saat ini", prevContext[statename])
+            const existingMessageIndex = prevDataChat.findIndex(res => res.id === data.id);
+            // console.log("existingMessageIndex", existingMessageIndex)
+            if (existingMessageIndex !== -1) { // kalau roomnya udah ada berarti cuma update msg
+                const updatedMessages = [...prevDataChat];
+                updatedMessages[existingMessageIndex] = data;
+                // console.log("updatedMessagesupdatedMessages", updatedMessages)
+                return { ...prevContext, [statename]: updatedMessages };
+            } else {
+                // console.log("ini existingMessageIndex bukan -1")
+                return { ...prevContext, [statename]: [data, ...prevDataChat] };
+            }
+        });
+
         if (profileData['id'] != data['last_msg_uid']) {
             let objNotif = {
                 'label': data['label'],
@@ -36,20 +56,6 @@ export const SocketProvider = ({ children, profileData }) => {
             }
             notifyChat(objNotif);
         }
-
-        context.setData(prevContext => {
-            const prevDataChat = prevContext[statename] || [];
-            console.log("prevDataChat", prevContext[statename])
-            const existingMessageIndex = prevDataChat.findIndex(res => res.id === data.id);
-            if (existingMessageIndex !== -1) { // kalau roomnya udah ada berarti cuma update msg
-                const updatedMessages = [...prevDataChat];
-                updatedMessages[existingMessageIndex] = data;
-                console.log("updatedMessagesupdatedMessages", updatedMessages)
-                return { ...prevContext, [statename]: updatedMessages };
-            } else {
-                return { ...prevContext, [statename]: [data, ...prevDataChat] };
-            }
-        });
     }
 
     useEffect(() => {
