@@ -54,12 +54,12 @@ export default function Login({mounted}) {
             }else{
                 localStorage.setItem("XA", JSON.stringify(result.token))
                 // Router.push("/usr")
-                Swal.fire({
-                    icon:"info",
-                    title:"Login",
-                    text:`Welcome ${username}`,
-                    timer:1200
-                })
+                // Swal.fire({
+                //     icon:"info",
+                //     title:"Login",
+                //     text:`Welcome ${username}`,
+                //     timer:1200
+                // })
                 window.location.pathname = '/usr'
             }
             setStep(1)

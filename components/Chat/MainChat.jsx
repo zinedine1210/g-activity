@@ -6,6 +6,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { BsPlus, BsSend, BsX } from "react-icons/bs";
 import CardFromMe from "./CardFromMe";
 import CardFromContact from "./CardFromContact";
+import CardSystem from "@components/Chat/CardSystem";
 import HeaderMainChat from "./HeaderMainChat";
 import { GroupInfo } from "@components/Chat/GroupInfo";
 import { emit, on, connect, checkErrorMsg } from "@utils/socketfunction"
@@ -119,20 +120,24 @@ export default function MainChat({
 
   const receiveMsg = (msg) => {
     console.log("receiveMsg ini", msg)
-    setDataChat(prevDataChat => {
-      return [...prevDataChat, msg];
-    });
-    context.setData({ ...context, dataReply: null })
-    containerRef.current?.scrollIntoView({ behavior: "auto" }); // scroll kebawah
+    if (msg['room_id'] == roomId) {
+      setDataChat(prevDataChat => {
+        return [...prevDataChat, msg];
+      });
+      context.setData({ ...context, dataReply: null })
+      containerRef.current?.scrollIntoView({ behavior: "auto" }); // scroll kebawah
+    }
   }
 
   const receiveRoomSystem = (msg) => {
     console.log("receiveRoomSystem ini", msg)
-    setDataChat(prevDataChat => {
-      return [...prevDataChat, msg];
-    });
-    context.setData({ ...context, dataReply: null })
-    containerRef.current?.scrollIntoView({ behavior: "auto" }); // scroll kebawah
+    if (msg['room_id'] == roomId) {
+      setDataChat(prevDataChat => {
+        return [...prevDataChat, msg];
+      });
+      context.setData({ ...context, dataReply: null })
+      containerRef.current?.scrollIntoView({ behavior: "auto" }); // scroll kebawah 
+    }
   }
 
 
@@ -235,11 +240,7 @@ export default function MainChat({
                   grouped[day].map((item, key) => {
                     const isMe = item.user_id == profileData.id
                     item.isMe = isMe
-                    if (item.system) return <div className="p-4 mb-4 text-sm text-teal-200 rounded-lg bg-green-700 bg-opacity-80 backdrop-blur-sm dark:bg-gray-800 dark:text-blue-400 text-center" role="alert">
-                      <h1 className="font-semibold">
-                        {isMe ? "You" : item.username} {item.msg}
-                      </h1>
-                    </div>
+                    if (item.system) return <CardSystem data={item} key={key} roomInfo={roomInfo} isMe={isMe} />
                     else if (isMe) return <CardFromMe data={item} key={key} roomInfo={roomInfo} />
                     else {
                       item.label = roomInfo?.label ?? ""
@@ -266,7 +267,7 @@ export default function MainChat({
 
   const openGroupInfo = () => {
     // open info group
-    roomInfo.type == 2 ? setIsGroupInfoOpen(true) : null
+    roomInfo.type == 2 && roomInfo['is_leave'] != 1 ? setIsGroupInfoOpen(true) : null
   };
 
   const leaveGroup = () => {
@@ -287,9 +288,10 @@ export default function MainChat({
         }
         emit("leaveGroup", obj)
           .then(callback => {
+            console.log("callback leave group", callback)
             setRoomInfo(prevRoomInfo => {
               prevRoomInfo['is_leave'] = 1
-              return {...prevRoomInfo};
+              return { ...prevRoomInfo };
             });
             setIsGroupInfoOpen(false);
             console.log("adakah room id", roomId)

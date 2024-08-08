@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { MyContext } from "context/MyProvider";
 import { FaTimes, FaUsers, FaSignOutAlt, FaUserPlus } from 'react-icons/fa'
 import CollectionData from "@repositories/CollectionData"
-import ModalGroup from "@components/Chat/ModalGroup";
 
 export const GroupInfo = ({ profileData, roomInfo, closePanel, handleLeaveGroup }) => {
     const [listMembers, setListMembers] = useState([])

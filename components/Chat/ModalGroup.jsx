@@ -7,6 +7,7 @@ import { MultiSelect } from 'react-multi-select-component';
 import CollectionData from "@repositories/CollectionData"
 import { emit, on, connect, checkErrorMsg } from "@utils/socketfunction"
 import { showToast } from "@utils/functionToast"
+import { useRouter } from "next/router";
 import { toast } from 'react-toastify';
 
 export default function ModalGroup({ statename }) {
@@ -15,6 +16,7 @@ export default function ModalGroup({ statename }) {
     const [option, setOption] = useState([])
     const [value, setValue] = useState({})
     const [typename, setTypename] = useState("")
+    const router = useRouter()
 
     const [options, setOptions] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -136,7 +138,9 @@ export default function ModalGroup({ statename }) {
             action: async (value) => {
                 emit("createGroup", value)
                     .then(callback => {
+                        console.log("apa callback creategroup", callback)
                         checkErrorMsg(callback)
+                        router.push(`/usr/chat?roomId=${callback['data']['id']}`)
                     })
                 context.setData({ ...context, [statename]: null, modal: null })
             }
@@ -144,6 +148,7 @@ export default function ModalGroup({ statename }) {
         addgroupmember: {
             name: "addgroupmember",
             action: async (value) => {
+                console.log('disini add member group', value)
                 value['room_id'] = data.id
                 emit("addGroupMember", value)
                     .then(callback => {
