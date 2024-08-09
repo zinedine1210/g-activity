@@ -7,7 +7,6 @@ import { MyContext } from "../../context/MyProvider";
 import DocumentationRepository from "../../repositories/DocumentationRepository"
 import { mutate } from "swr";
 import { findIndex } from "lodash";
-import ProjectRepository from "../../repositories/ProjectRepository";
 import CollectionData from "@repositories/CollectionData"
 import CardAssign from "./CardAssign";
 import Link from "next/link";
@@ -21,6 +20,20 @@ export default function Navbar(props) {
     const context = useContext(MyContext)
     const [language, setLanguage] = useState(defaultLocale)
     const [open, setOpen] = useState(false)
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        if(context?.dataDocumentation) handlerSave(false)
+    }, [mounted])
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setMounted(prev => !prev)
+        }, 5000); // Interval 1000ms (1 detik)
+    
+        // Fungsi cleanup untuk menghapus interval saat komponen dibongkar
+        return () => clearInterval(interval);
+    }, [])
 
     const settingsLanguage = (value) => {
         if (value == "id") {
@@ -32,25 +45,27 @@ export default function Navbar(props) {
         }
     }
 
-    const handlerSave = async () => {
+    const handlerSave = async (alert=true) => {
+        // cek apakah ada update
+        const stringify = JSON.stringify(context.dataDocumentation)
+        const localStringify = localStorage.getItem("draftapp")
+        if(localStringify && stringify == localStringify) return false
         const pages = JSON.parse(JSON.stringify(context.dataDocumentation.pages))
-        console.log(context.dataDocumentation);
         let obj = []
-        pages.forEach((val) => {
-            if (val.hasOwnProperty("child")) {
-                const child = val.child
-                delete val.child
-                child.forEach(val2 => {
-                    obj.push(val2)
-                })
-            }
-            obj.push(val)
-        });
+        function gettree(arr){
+            arr.forEach((val) => {
+                if (val.hasOwnProperty("child")) {
+                    const child = val.child
+                    delete val.child
+                    gettree(child)
+                }
+                obj.push(val)
+            });
+        } 
+        gettree(pages)
 
-        console.log(obj);
         obj.forEach(async val => {
             const result = await DocumentationRepository.putPageDocumentation({ xa: JSON.parse(localStorage.getItem("XA")), id: val.id, data: val })
-            console.log(result);
         })
 
         const newDocumentation = JSON.parse(JSON.stringify(context.dataDocumentation))
@@ -58,13 +73,15 @@ export default function Navbar(props) {
 
         const returnRes = await DocumentationRepository.putDocumentation({ xa: JSON.parse(localStorage.getItem("XA")), id: newDocumentation.id, data: newDocumentation })
         if (returnRes.status == 0) {
-            Swal.fire({ 
-                icon: "success",
-                position: "top-end",
-                title: "Changes saved successfully",
-                timer: 1000,
-                showConfirmButton: false
-            })
+            if(alert){
+                Swal.fire({ 
+                    icon: "success",
+                    position: "top-end",
+                    title: "Changes saved successfully",
+                    timer: 1000,
+                    showConfirmButton: false
+                })
+            }
 
             mutate(['documentation', 1, context.dataDocumentation.project_id], cache => {
                 if (!cache) {
@@ -84,7 +101,7 @@ export default function Navbar(props) {
             }
         }
 
-        context.setDataDocumentation(context.dataDocumentation)
+        localStorage.setItem("draftapp", JSON.stringify(context.dataDocumentation))
     }
 
     const handlerClose = (e) => {
