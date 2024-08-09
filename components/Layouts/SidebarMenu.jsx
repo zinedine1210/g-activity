@@ -4,7 +4,7 @@ import { MyContext } from "context/MyProvider"
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
 import { BsGrid, BsList, BsStar } from "react-icons/bs"
-import { HiOutlineChartPie, HiOutlineChat, HiOutlineVideoCamera, HiUser, HiUsers } from "react-icons/hi"
+import { HiOutlineChartPie, HiOutlineChat, HiOutlineVideoCamera, HiUser, HiUsers, HiMail } from "react-icons/hi"
 import Swal from "sweetalert2"
 
 export default function SidebarMenu({
@@ -143,7 +143,14 @@ export default function SidebarMenu({
                 label: "Chat",
                 icon: <HiOutlineChat className={`${isThisPage("/chat") ? open ? "text-white scale-150" : "text-white scale-125" : open ? "text-zinc-500 scale-150" : "text-zinc-500 hover:text-blue-500 scale-125"} w-8 h-8 transition-all duration-200`} />,
                 active: "/chat"
-            }
+            },
+            // {
+            //     url: "/usr/mail",
+            //     featurename: "mail",
+            //     label: "Mail",
+            //     icon: <HiMail className={`${isThisPage("/mail") ? open ? "text-white scale-150" : "text-white scale-125" : open ? "text-zinc-500 scale-150" : "text-zinc-500 hover:text-blue-500 scale-125"} w-8 h-8 transition-all duration-200`} />,
+            //     active: "/mail"
+            // }
         ],
         admin: [
             {
