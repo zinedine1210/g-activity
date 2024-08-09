@@ -20,6 +20,7 @@ export default function NavbarNote(props) {
     const context = useContext(MyContext)
     const [open, setOpen] = useState(false)
     const [language, setLanguage] = useState(defaultLocale)
+    const [mounted, setMounted] = useState(false)
 
     const settingsLanguage = (value) => {
         if (value == "id") {
@@ -30,6 +31,19 @@ export default function NavbarNote(props) {
             setLanguage("en")
         }
     }
+
+    useEffect(() => {
+        if(context?.dataDocumentation) handlerSave(false)
+    }, [mounted])
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setMounted(prev => !prev)
+        }, 5000); // Interval 1000ms (1 detik)
+    
+        // Fungsi cleanup untuk menghapus interval saat komponen dibongkar
+        return () => clearInterval(interval);
+    }, [])
 
     const handlerClose = (e) => {
         e.preventDefault()
@@ -54,7 +68,10 @@ export default function NavbarNote(props) {
         })
     }
 
-    const handlerSave = async () => {
+    const handlerSave = async (alert=true) => {
+        const stringify = JSON.stringify(context.dataDocumentation)
+        const localStringify = localStorage.getItem("draftapp")
+        if(localStringify && stringify == localStringify) return false
         const data = context.dataDocumentation
         let obj = {
             title: data.title,
@@ -63,13 +80,15 @@ export default function NavbarNote(props) {
         }
         const result = await NoteRepository.putNote({ data: obj, id: context.dataDocumentation.id, xa: JSON.parse(localStorage.getItem("XA")) })
         if (result.status == 0) {
-            Swal.fire({
-                icon: "success",
-                position: "top-end",
-                title: "Changes saved successfully",
-                timer: 1000,
-                showConfirmButton: false
-            })
+            if(alert){
+                Swal.fire({
+                    icon: "success",
+                    position: "top-end",
+                    title: "Changes saved successfully",
+                    timer: 1000,
+                    showConfirmButton: false
+                })
+            }
         } else {
             Swal.fire({
                 icon: 'error',
@@ -78,7 +97,7 @@ export default function NavbarNote(props) {
             })
         }
 
-        context.setDataDocumentation(context.dataDocumentation)
+        localStorage.setItem("draftapp", JSON.stringify(context.dataDocumentation))
     }
 
     const handlerPinned = () => {
