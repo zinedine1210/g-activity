@@ -13,10 +13,18 @@ export default function CardSystem({
             <h1 className="font-semibold">{isMe ? "You" : data.username} {data.msg}</h1>
         ),
         3: () => {
-            const addedUsers = data.user_added.map(user => user.username).join(", ");
+            const addedUsers = data.user_list.map(user => user.username).join(", ");
             return (
                 <div>
                     <h1 className="font-semibold">{isMe ? "You" : data.username} added {addedUsers} to the group</h1>
+                </div>
+            );
+        },
+        4: () => {
+            const removedUsers = data.user_list.map(user => user.username).join(", ");
+            return (
+                <div>
+                    <h1 className="font-semibold">{isMe ? "You" : data.username} has removed {removedUsers} from the group</h1>
                 </div>
             );
         },

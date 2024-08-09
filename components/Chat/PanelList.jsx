@@ -22,54 +22,55 @@ export default function PanelList({
     const [keyword, setKeyword] = useState("")
     const [timestamp, setTimestamp] = useState("")
     const intervalRef = useRef(null)
+    const [listRoom, setListRoom] = useState([])
 
     // socket state
     const [connectionStatus, setConnectionStatus] = useState(null);
     const [error, setError] = useState(null);
 
-    const fetchNewMessageRoom = async () => {
-        const getxa = JSON.parse(localStorage.getItem("XA"))
-        let currentTimestamp = ""
-        if (timestamp == "") {
-            const now = new Date().toISOString()
-            setTimestamp(now)
-            currentTimestamp = now
-        } else {
-            currentTimestamp = timestamp
-        }
-        const result = await ChatCollection.dataNewRoom({
-            xa: getxa,
-            data: {
-                date: currentTimestamp
-            }
-        })
-        if (result.status == 0) {
-            // console.log(result, timestamp)
-            if (result.data.length > 0) {
-                const now = new Date();
-                const timeInMillis = now.getTime();
-                const newTimeInMillis = timeInMillis + 2000; // Tambahkan 2000 milidetik (2 detik)
-                const newTime = new Date(newTimeInMillis);
-                const isoString = newTime.toISOString();
-                // setTimestamp(isoString)
-                result.data.forEach((el, index) => {
-                    const find = JSON.parse(JSON.stringify(context[statename])).find(res => res.id == el.id)
-                    if (find) { // kalau roomnya udah ada berarti cuma update msg
-                        const filter = JSON.parse(JSON.stringify(context[statename])).filter(res => res.id != el.id)
-                        let obj = {
-                            last_msg: el.last_msg,
-                            last_msg_uid: el.last_msg_uid,
-                            last_msg_username: el.last_msg_username
-                        }
-                        const mergeObj = { ...find, ...obj }
-                        context.setData({ ...context, [statename]: [mergeObj, ...filter] })
-                    } else {
-                        context.setData({ ...context, [statename]: [...context[statename], el] })
-                    }
-                });
-            }
-        }
-    }
+    // const fetchNewMessageRoom = async () => {
+    //     const getxa = JSON.parse(localStorage.getItem("XA"))
+    //     let currentTimestamp = ""
+    //     if (timestamp == "") {
+    //         const now = new Date().toISOString()
+    //         setTimestamp(now)
+    //         currentTimestamp = now
+    //     } else {
+    //         currentTimestamp = timestamp
+    //     }
+    //     const result = await ChatCollection.dataNewRoom({
+    //         xa: getxa,
+    //         data: {
+    //             date: currentTimestamp
+    //         }
+    //     })
+    //     if (result.status == 0) {
+    //         // console.log(result, timestamp)
+    //         if (result.data.length > 0) {
+    //             const now = new Date();
+    //             const timeInMillis = now.getTime();
+    //             const newTimeInMillis = timeInMillis + 2000; // Tambahkan 2000 milidetik (2 detik)
+    //             const newTime = new Date(newTimeInMillis);
+    //             const isoString = newTime.toISOString();
+    //             // setTimestamp(isoString)
+    //             result.data.forEach((el, index) => {
+    //                 const find = JSON.parse(JSON.stringify(context[statename])).find(res => res.id == el.id)
+    //                 if (find) { // kalau roomnya udah ada berarti cuma update msg
+    //                     const filter = JSON.parse(JSON.stringify(context[statename])).filter(res => res.id != el.id)
+    //                     let obj = {
+    //                         last_msg: el.last_msg,
+    //                         last_msg_uid: el.last_msg_uid,
+    //                         last_msg_username: el.last_msg_username
+    //                     }
+    //                     const mergeObj = { ...find, ...obj }
+    //                     context.setData({ ...context, [statename]: [mergeObj, ...filter] })
+    //                 } else {
+    //                     context.setData({ ...context, [statename]: [...context[statename], el] })
+    //                 }
+    //             });
+    //         }
+    //     }
+    // }
 
     const getAllRoom = async () => {
         const getxa = JSON.parse(localStorage.getItem("XA"))
@@ -78,13 +79,49 @@ export default function PanelList({
         })
         // console.log(result)
         if (result.status == 0) {
-            context.setData({ ...context, [statename]: result.data })
+            // context.setData({ ...context, [statename]: result.data })
+            context.setData(prevData => ({
+                ...prevData,
+                [statename]: result.data
+            }));
             // setTimestamp(new Date().toISOString())
         } else Notify("Something went wrong when get room")
     }
 
+    const receiveNotif = (data) => {
+        context.setData(prevData => {
+            const existingArray = prevData[statename] || [];
+            const objectExists = existingArray.some(item => item.id === data.id);
+            const updatedArray = objectExists
+                ? existingArray.map(item =>
+                    item.id === data.id ? { ...item, ...data } : item
+                )
+                : [data, ...existingArray];
+
+            return {
+                ...prevData,
+                [statename]: updatedArray 
+            };
+        });
+
+
+    }
+
+
     useEffect(() => {
-        if (!context[statename]) getAllRoom()
+        // receive new message
+        socket.on('receiveNotif', (data) => {
+            receiveNotif(data)
+        });
+    }, [])
+
+
+    useEffect(() => {
+        if (!context[statename]) {
+            getAllRoom()
+        } else {
+            setListRoom([...context[statename]]);
+        }
         // intervalRef.current = setInterval(() => {
         //     if (context[statename]) fetchNewMessageRoom();
         // }, 2000); // Interval set to 5 seconds
@@ -122,7 +159,6 @@ export default function PanelList({
     ]
 
     const handleStartChat = async item => {
-        console.log("tess1234")
         // emit('join', { 'room_id': item.id }).then(callback => {
         //     console.log("adakah callback join ??", callback)
         //     // checkErrorMsg(callback)
@@ -146,8 +182,8 @@ export default function PanelList({
     }
 
     const mapDataRoom = () => {
-        if (context[statename]) {
-            const filterbykeyword = context[statename].filter(res => {
+        if (listRoom) {
+            const filterbykeyword = listRoom.filter(res => {
                 const stringifydata = JSON.stringify(res)
                 if (!stringifydata.toLowerCase().includes(keyword.toLowerCase())) return false
                 return true

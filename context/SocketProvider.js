@@ -26,26 +26,25 @@ export const SocketProvider = ({ children, profileData }) => {
     }
 
     const receiveNotif = (data) => {
-        console.log("ini receive notif", data)
-        // console.log("profileData profileData", profileData)
-        // console.log("apakah ada context", context.setData)
-        context.setData(prevContext => {
-            // console.log("masuk sini kah??")
-            const prevDataChat = prevContext[statename] || [];
-            // console.log("prevContext saat ini", prevContext)
-            // console.log("prevDataChat saat ini", prevContext[statename])
-            const existingMessageIndex = prevDataChat.findIndex(res => res.id === data.id);
-            // console.log("existingMessageIndex", existingMessageIndex)
-            if (existingMessageIndex !== -1) { // kalau roomnya udah ada berarti cuma update msg
-                const updatedMessages = [...prevDataChat];
-                updatedMessages[existingMessageIndex] = data;
-                // console.log("updatedMessagesupdatedMessages", updatedMessages)
-                return { ...prevContext, [statename]: updatedMessages };
-            } else {
-                // console.log("ini existingMessageIndex bukan -1")
-                return { ...prevContext, [statename]: [data, ...prevDataChat] };
-            }
-        });
+        // context.setData(prevContext => {
+        //     console.log("masuk sini kah??")
+        //     const prevDataChat = prevContext[statename] || [];
+        //     console.log("prevContext saat ini", prevContext)
+        //     console.log("prevDataChat saat ini", prevContext[statename])
+        //     const existingMessageIndex = prevDataChat.findIndex(res => res.id === data.id);
+        //     console.log("existingMessageIndex", existingMessageIndex)
+        //     if (existingMessageIndex !== -1) { // kalau roomnya udah ada berarti cuma update msg
+        //         const updatedMessages = [...prevDataChat];
+        //         updatedMessages[existingMessageIndex] = data;
+        //         console.log("updatedMessagesupdatedMessages", updatedMessages)
+        //         return { ...prevContext, [statename]: updatedMessages };
+        //     } else {
+        //         console.log("ini existingMessageIndex bukan -1", )
+        //         const updateRoom = [data, ...prevDataChat];
+        //         console.log("updateRoom 2", updateRoom)
+        //         return { ...prevContext, [statename]: updateRoom };
+        //     }
+        // });
 
         if (profileData['id'] != data['last_msg_uid']) {
             let objNotif = {

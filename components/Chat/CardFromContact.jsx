@@ -57,7 +57,7 @@ export default function CardFromContact({
         <div className="flex items-start gap-2.5">
             <span className='w-10 h-10 shadow-md rounded-full flex items-center justify-center text-white font-bold text-xl uppercase bg-gradient-to-br from-teal-600 to-teal-200'>
                 {/* {dataContact?.label.charAt(0)} */}
-                {roomInfo.type == 2 ? roomInfo.label.charAt(0) : data?.label.charAt(0)}
+                {roomInfo.type == 1 ? roomInfo.label.charAt(0) : data?.username.charAt(0)}
             </span>
             <div className={`pt-3 pb-7 px-3 bg-white leading-1.5 text-white relative shadow-xl max-w-[500px] ${isContext ? "min-w-72" : "min-w-56"} rounded-e-xl rounded-es-xl`}>
                 {roomInfo.type == 2 ? <span className="text-sm font-semibold text-gray-900 dark:text-white">{data?.username}</span> : null}

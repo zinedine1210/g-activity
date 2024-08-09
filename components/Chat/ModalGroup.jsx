@@ -30,7 +30,7 @@ export default function ModalGroup({ statename }) {
         let valuesPost = {
             "username": query
         }
-        if(inputType == "addgroupmember"){
+        if (inputType == "addgroupmember") {
             valuesPost['room_id'] = data.id
         }
         const result = await CollectionData.postData({ url: `chat-room/findmember`, values: valuesPost })
@@ -148,13 +148,26 @@ export default function ModalGroup({ statename }) {
         addgroupmember: {
             name: "addgroupmember",
             action: async (value) => {
-                console.log('disini add member group', value)
+                context.setData({ ...context, [statename]: null, modal: null })
                 value['room_id'] = data.id
                 emit("addGroupMember", value)
                     .then(callback => {
+                        const transformedData = value['member'].map(item => ({
+                            id: item.uid,
+                            username: item.label
+                        }));
+
+                        const existingMembers = context.memberGroup || [];
+                        const updatedMembers = [...existingMembers, ...transformedData];
+
+                        context.setData(prevData => {
+                            return {
+                                ...prevData,
+                                memberGroup: updatedMembers
+                            };
+                        });
                         checkErrorMsg(callback)
                     })
-                context.setData({ ...context, [statename]: null, modal: null })
             }
         }
     }

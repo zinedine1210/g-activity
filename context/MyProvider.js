@@ -25,6 +25,7 @@ export function MyProvider({children}) {
         "workspaceData":null,
         "dataRoom": null,
         "dataTask":[],
+        "memberGroup":[],
         "dataComponents":[
             {
                 "id":0,

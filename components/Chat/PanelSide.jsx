@@ -16,10 +16,10 @@ export default function PanelSide({
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
             </button>
             <hr />
-            <button onClick={() => router.push({ pathname: `/usr/chat`, query: router.query }, undefined, { shallow: true })} className="w-full h-14 flex items-center justify-center bg-white text-blue-500 rounded-xl shadow-xl text-center duration-300 ease-in-out hover:scale-110">
+            <button onClick={() => router.push({ pathname: `/usr/chat`, query: {} }, undefined, { shallow: true })} className="w-full h-14 flex items-center justify-center bg-white text-blue-500 rounded-xl shadow-xl text-center duration-300 ease-in-out hover:scale-110">
                 <BsChatFill className="text-2xl" />
             </button>
-            <button onClick={() => router.push({ pathname: `/usr/chat/contact`, query: router.query }, undefined, { shallow: true })} className="w-full h-14 flex items-center justify-center bg-white text-blue-500 rounded-xl shadow-xl text-center duration-300 ease-in-out hover:scale-110">
+            <button onClick={() => router.push({ pathname: `/usr/chat/contact`, query: {} }, undefined, { shallow: true })} className="w-full h-14 flex items-center justify-center bg-white text-blue-500 rounded-xl shadow-xl text-center duration-300 ease-in-out hover:scale-110">
                 <FaAddressBook className="text-2xl" />
             </button>
         </div>

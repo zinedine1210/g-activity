@@ -119,7 +119,6 @@ export default function MainChat({
   }
 
   const receiveMsg = (msg) => {
-    console.log("receiveMsg ini", msg)
     if (msg['room_id'] == roomId) {
       setDataChat(prevDataChat => {
         return [...prevDataChat, msg];
@@ -130,11 +129,20 @@ export default function MainChat({
   }
 
   const receiveRoomSystem = (msg) => {
-    console.log("receiveRoomSystem ini", msg)
     if (msg['room_id'] == roomId) {
       setDataChat(prevDataChat => {
         return [...prevDataChat, msg];
       });
+      if (msg['user_list']) {
+        const idExists = msg['user_list'].some(user => user.uid === profileData.id);
+        if (idExists) {
+          let isLeave = msg['system_type'] == 4? 1:0 
+          setRoomInfo(prevRoomInfo => {
+            prevRoomInfo['is_leave'] = isLeave
+            return { ...prevRoomInfo };
+          });
+        }
+      }
       context.setData({ ...context, dataReply: null })
       containerRef.current?.scrollIntoView({ behavior: "auto" }); // scroll kebawah 
     }
@@ -143,7 +151,6 @@ export default function MainChat({
 
   // join room
   const joinRoom = (newRoomId) => {
-    console.log("join room sendiri", newRoomId)
     emit('join', { 'room_id': newRoomId }).then(callback => {
       console.log("join room id success", callback)
       // checkErrorMsg(callback)
@@ -271,7 +278,6 @@ export default function MainChat({
   };
 
   const leaveGroup = () => {
-    console.log("disini leave group")
     Swal.fire({
       title: 'Are you sure?',
       text: "You will not be in this group",
@@ -288,13 +294,11 @@ export default function MainChat({
         }
         emit("leaveGroup", obj)
           .then(callback => {
-            console.log("callback leave group", callback)
             setRoomInfo(prevRoomInfo => {
               prevRoomInfo['is_leave'] = 1
               return { ...prevRoomInfo };
             });
             setIsGroupInfoOpen(false);
-            console.log("adakah room id", roomId)
             leaveRoom(roomId)
           })
       }
