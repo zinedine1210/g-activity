@@ -10,6 +10,7 @@ export const MyContext = createContext();
 export function MyProvider({children}) {
     const [data, setData] = useState({
         "dataDocumentation":null,
+        "publishDoc": {},
         "realDocumentation":null,
         "drawer": null,
         "active":null,

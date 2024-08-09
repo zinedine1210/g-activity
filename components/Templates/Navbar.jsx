@@ -10,6 +10,7 @@ import { findIndex } from "lodash";
 import ProjectRepository from "../../repositories/ProjectRepository";
 import CollectionData from "@repositories/CollectionData"
 import CardAssign from "./CardAssign";
+import Link from "next/link";
 
 export default function Navbar(props) {
     const { lang, profileData } = props
@@ -174,7 +175,7 @@ export default function Navbar(props) {
                     </div>
 
                     <div className={`${active ? "visible" : "invisible md:visible"} absolute inset-x-0 z-20 w-full px-6 py-2 transition-all duration-300 ease-in-out bg-white top-28 dark:bg-dark md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center`}>
-                        <div className="flex flex-col md:flex-row space-x-5 items-center">
+                        <div className="flex flex-col md:flex-row space-x-3 items-center">
                             <button onClick={() => setTheme(theme == "light" ? "dark" : "light")}>
                                 <svg fill="none" stroke="currentColor" className={`${theme == "light" ? "block" : "hidden"} w-5 h-5`} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
@@ -193,8 +194,11 @@ export default function Navbar(props) {
                                 </div>
                             </div>
                             <a onClick={(e) => handlerClose(e)} href={context.dataDocumentation ? `/usr/workspaces/project/Untitled?id=${context.dataDocumentation.project_id}` : ""} className="btn-secondary">Project</a>
+                            <Link href={`/documentation/${context?.dataDocumentation?.id}/${context?.dataDocumentation?.pages?.[0]?.id}`}>
+                                <button className="btn-secondary">Publish</button>
+                            </Link>
                             <button disabled={context.dataDocumentation ? false : true} onClick={() => handlerSave()} className="disabled:bg-zinc-500 hover:bg-blue-400 transition-all bg-primary rounded-md text-white px-3 py-2 font-semibold text-sm flex items-center gap-2">
-                                {lang("save")}
+                                Save
                                 <FaSave />
                             </button>
                         </div>
