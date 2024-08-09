@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { BsChevronDown, BsChevronRight } from 'react-icons/bs'
 
 export default function Page({ page }) {
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(false)
     const router = useRouter()
     const { docId, pageId } = router.query
 

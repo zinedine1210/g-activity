@@ -20,6 +20,7 @@ export default function NavbarMOM(props) {
     const [open, setOpen] = useState(false)
     const context = useContext(MyContext)
     const [language, setLanguage] = useState(defaultLocale)
+    const [mounted, setMounted] = useState(false)
 
     const settingsLanguage = (value) => {
         if (value == "id") {
@@ -31,8 +32,26 @@ export default function NavbarMOM(props) {
         }
     }
 
-    const handlerSave = async () => {
+
+    useEffect(() => {
+        if(context?.dataDocumentation) handlerSave(false)
+    }, [mounted])
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setMounted(prev => !prev)
+        }, 5000); // Interval 1000ms (1 detik)
+    
+        // Fungsi cleanup untuk menghapus interval saat komponen dibongkar
+        return () => clearInterval(interval);
+    }, [])
+
+    const handlerSave = async (alert=true) => {
         // update data record:
+        const stringify = JSON.stringify(context.dataDocumentation)
+        const localStringify = localStorage.getItem("draftapp")
+        if(localStringify && stringify == localStringify) return false
+
         const newArr = JSON.parse(JSON.stringify(context.dataDocumentation))
         delete newArr.assigns
         delete newArr.header
@@ -63,14 +82,19 @@ export default function NavbarMOM(props) {
         const result = await MomRepository.putMom({ xa: JSON.parse(localStorage.getItem("XA")), data: newArr, id: context.dataDocumentation.id })
         console.log(result);
         if (result.status == 0) {
-            Swal.fire({
-                icon: "success",
-                position: "top-end",
-                title: "Changes saved successfully",
-                timer: 1000,
-                showConfirmButton: false
-            })
+            if(alert){
+                Swal.fire({
+                    icon: "success",
+                    position: "top-end",
+                    title: "Changes saved successfully",
+                    timer: 1000,
+                    showConfirmButton: false
+                })
+            }
         }
+
+
+        localStorage.setItem("draftapp", JSON.stringify(context.dataDocumentation))
     }
 
     const handlerPinned = () => {
