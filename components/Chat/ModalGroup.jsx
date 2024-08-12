@@ -9,6 +9,7 @@ import { emit, on, connect, checkErrorMsg } from "@utils/socketfunction"
 import { showToast } from "@utils/functionToast"
 import { useRouter } from "next/router";
 import { toast } from 'react-toastify';
+import ComboInput from "@components/Input/ComboInput"
 
 export default function ModalGroup({ statename }) {
     const context = useContext(MyContext)
@@ -17,7 +18,7 @@ export default function ModalGroup({ statename }) {
     const [value, setValue] = useState({})
     const [typename, setTypename] = useState("")
     const router = useRouter()
-
+    const [items, setItems] = useState([])
     const [options, setOptions] = useState([]);
     const [selected, setSelected] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -194,24 +195,12 @@ export default function ModalGroup({ statename }) {
                                             </div>
                                             <div>
                                                 <h1 className="font-semibold">Search and select user</h1>
-                                                <input
-                                                    type="text"
-                                                    value={searchTerm}
-                                                    onChange={e => handleInputChange(e, 'newgroup')}
-                                                    placeholder="Type contact name..."
-                                                    className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white"
-                                                />
-                                                {isLoading ? (
-                                                    <p>Loading...</p>
-                                                ) : (
-                                                    <MultiSelect
-                                                        options={options}
-                                                        value={selected}
-                                                        onChange={setSelected}
-                                                        disableSearch={true}
-                                                        labelledBy="Select"
+                                                <div className="w-full border px-2 py-3">
+                                                    <ComboInput 
+                                                        items={items}
+                                                        setItems={setItems}
                                                     />
-                                                )}
+                                                </div>
                                             </div>
                                         </div>
                                     )

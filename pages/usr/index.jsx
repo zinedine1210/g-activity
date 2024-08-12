@@ -6,6 +6,7 @@ import Layout2 from "../../components/Layouts/Layout2"
 import CollectionData from "@repositories/CollectionData"
 import moment from "moment"
 import { convertDate } from "@utils/function"
+import ComboInput from "@components/Input/ComboInput";
 
 function User(props) {
   const { profileData } = props
