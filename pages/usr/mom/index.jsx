@@ -105,7 +105,7 @@ function MinuteOfMeeting(props) {
       <Suspense fallback={"Loading"}>
         {
           context.dataDocumentation ?
-            <div className="w-full h-screen overflow-y-scroll pt-20 pb-56 bg-zinc-100 dark:bg-darkSecondary">
+            <div className="w-full h-screen overflow-y-scroll pt-24 pb-56 bg-zinc-100 dark:bg-darkSecondary">
               <div className={`bg-white px-5 md:px-20 py-10 shadow-md rounded-lg mx-auto relative ${getSizeWindow(size)}`}>
                 <div className="absolute top-2 right-2 flex items-center gap-1">
                   <button className="flex items-center justify-center rounded-md w-8 h-8 hover:bg-blue-100 p-2 transition-all duration-300" onClick={() => handlerDeleteSize()}>
