@@ -69,29 +69,28 @@ export const GroupInfo = ({ profileData, roomInfo, closePanel, handleLeaveGroup 
 
 
     return (
-        <div className=" w-1/4 bg-white shadow-lg absolute right-0 h-full p-4 overflow-y-auto space-y-2">
+        <div className="w-1/2 bg-white flex flex-col border-s">
             <div>
-                <div className="flex items-center space-x-2">
-                    <button onClick={closePanel} className="text-red-500 flex items-center">
-                        <FaTimes className="text-zinc-600 text-xs" />
-                    </button>
+                <div className="flex items-center space-x-2 border-b py-4 px-5 justify-between">
                     <h5 className="text-lg font-bold mb-0">Info Group</h5>
+                    <button onClick={closePanel} className="text-red-500 flex items-center justify-center w-8 h-8 rounded-md hover:bg-zinc-100 duration-300 ease-in-out">
+                        <FaTimes className="text-zinc-600" />
+                    </button>
                 </div>
-                <div className='flex items-center space-x-2 p-2'>
-                    <span className='w-10 h-10 shadow-md rounded-full flex items-center justify-center text-white font-bold text-lg uppercase bg-gradient-to-br from-teal-600 to-teal-200'>
-                        <FaUsers className="text-zinc-600 text-lg" />
+                <div className='text-center mx-auto'>
+                    <span className='w-full h-56 mx-auto flex items-center justify-center text-white font-bold text-lg uppercase bg-gradient-to-br from-teal-600 to-teal-200'>
+                        <FaUsers className="text-teal-600 text-9xl" />
                     </span>
-                    <div className='items-center'>
+                    <div className='items-center text-2xl font-bold py-2'>
                         {roomInfo.label}
                     </div>
                 </div>
             </div>
-            {/* <p className="mb-4">{group.description}</p> */}
-            <div>
-                <h5 className="text-lg font-semibold">Members ({listMembers && listMembers.length})</h5>
-                <ul className='space-y-0'>
+            <div className='overflow-y-auto h-full'>
+                <h5 className="font-semibold text-zinc-500 text-sm px-5 mb-2">Members ({listMembers && listMembers.length})</h5>
+                <ul className='space-y-0 text-zinc-600 text-sm'>
                     {
-                        profileData.id == roomInfo._cb && <li key="addmember" className="flex items-center space-x-2 cursor-pointer hover:bg-blue-500/10 p-2" onClick={addMemberGroup}>
+                        profileData.id == roomInfo._cb && <li key="addmember" className="flex items-center space-x-2 px-5 cursor-pointer hover:bg-blue-500/10 p-2" onClick={addMemberGroup}>
                             <div>
                                 <span className='w-8 h-8 shadow-md rounded-full flex items-center justify-center text-white font-bold text-xs uppercase bg-gradient-to-br from-teal-600 to-teal-200'>
                                     <FaUserPlus className="text-zinc-600 text-lg" />
@@ -103,7 +102,7 @@ export const GroupInfo = ({ profileData, roomInfo, closePanel, handleLeaveGroup 
                         </li>}
 
                     {listMembers && listMembers.map((member) => (
-                        <li key={member.id} className="flex items-center space-x-2 cursor-pointer hover:bg-blue-500/10 p-2">
+                        <li key={member.id} className="flex items-center space-x-2 px-5 cursor-pointer hover:bg-blue-500/10 p-2">
                             <div>
                                 <span className='w-8 h-8 shadow-md rounded-full flex items-center justify-center text-white font-bold text-xs uppercase bg-gradient-to-br from-teal-600 to-teal-200'>
                                     {member.username.charAt(0)}
@@ -127,8 +126,8 @@ export const GroupInfo = ({ profileData, roomInfo, closePanel, handleLeaveGroup 
                 </ul>
             </div>
             {
-                roomInfo['is_leave'] != 1 ? <div className='flex items-center space-x-2 cursor-pointer hover:bg-blue-500/10' onClick={handleLeaveGroup}>
-                    <FaSignOutAlt className="text-zinc-600 text-lg" />
+                roomInfo['is_leave'] != 1 ? <div className='flex items-center space-x-2 cursor-pointer hover:bg-red-200 duration-300 ease-in-out bg-red-100 text-red-500 px-5 py-3' onClick={handleLeaveGroup}>
+                    <FaSignOutAlt className="text-red-600 text-lg" />
                     <span>
                         Leave Group
                     </span>

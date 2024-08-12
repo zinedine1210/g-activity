@@ -35,8 +35,8 @@ export default function CardSystem({
         </div>
     ));
     return (
-        <div className="p-4 mb-4 text-sm text-teal-200 rounded-lg bg-green-700 bg-opacity-80 backdrop-blur-sm dark:bg-gray-800 dark:text-blue-400 text-center" role="alert">
+        <div className="px-4 py-3 w-full xl:w-1/2 mx-auto mb-4 text-sm rounded-lg bg-yellow-50 bg-opacity-50 backdrop-blur-sm dark:bg-gray-800 dark:text-blue-400 text-center" role="alert">
             {renderMessage()}
-        </div >
+        </div>
     )
 }

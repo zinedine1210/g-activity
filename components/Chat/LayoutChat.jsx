@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import PanelSide from './PanelSide'
 import MainChat from './MainChat'
 import Seo from '@components/seo'
-import { MyContext } from 'context/MyProvider'
 import SidebarMenu from '@components/Layouts/SidebarMenu'
+import NotFound from '@components/NotFound/NotFound'
 
 export default function LayoutChat({ children, profileData, title, desc, image, roomId }) {
   const [mounted, setMounted] = useState(false)
