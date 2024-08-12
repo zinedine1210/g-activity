@@ -51,8 +51,7 @@ export default function ModalGroup({ statename }) {
     }
 
     // Handler untuk input pencarian dengan debounce
-    const handleInputChange = useCallback((event, inputType) => {
-        const { value } = event.target;
+    const handleInputChange = useCallback((value, inputType) => {
         setSearchTerm(value);
 
         if (debounceTimeout) {
@@ -179,7 +178,7 @@ export default function ModalGroup({ statename }) {
     return (
         <div className="absolute top-0 left-0 flex justify-center items-center right-0 z-50 bg-black bg-opacity-50 w-full p-2 overflow-x-hidden overflow-y-auto md:inset-0 h-full md:h-full">
             <div className="relative w-full h-full max-w-2xl md:h-auto">
-                <div className="relative bg-white rounded-lg shadow dark:bg-darkSecondary flex items-center">
+                <div className="relative bg-white rounded-lg shadow dark:bg-darkSecondary flex items-center h-full">
                     <div className="p-6 w-full relative">
                         {
                             type && type == "create" ? <form onSubmit={e => handlerSubmit(e)} className="flex-col flex h-full">
@@ -188,19 +187,14 @@ export default function ModalGroup({ statename }) {
                                 </header>
                                 {
                                     value && (
-                                        <div className="w-full mt-10 space-y-5 overflow-y-auto flex-1">
+                                        <div className="w-full mt-10 space-y-5 flex-1">
                                             <div>
                                                 <h1 className="font-semibold">Group name</h1>
                                                 <input type="text" required value={value.group} onInput={e => handlerChange(e.target.value, e.target.name)} name="group" className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white" autoComplete="off" />
                                             </div>
                                             <div>
                                                 <h1 className="font-semibold">Search and select user</h1>
-                                                <div className="w-full border px-2 py-3">
-                                                    <ComboInput 
-                                                        items={items}
-                                                        setItems={setItems}
-                                                    />
-                                                </div>
+                                                <ComboInput items={selected} setItems={setSelected} options={options} handleChange={(value) => handleInputChange(value, 'newgroup')} />
                                             </div>
                                         </div>
                                     )
@@ -227,7 +221,7 @@ export default function ModalGroup({ statename }) {
                                                 <input
                                                     type="text"
                                                     value={searchTerm}
-                                                    onChange={e => handleInputChange(e, 'addgroupmember')}
+                                                    onChange={e => handleInputChange(e.target.value, 'addgroupmember')}
                                                     placeholder="Type contact name..."
                                                     className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white"
                                                 />
