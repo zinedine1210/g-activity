@@ -121,7 +121,7 @@ export default function NotesEditor(props) {
       <Suspense fallback={"Loading"}>
         <div className="w-full h-screen overflow-y-scroll pt-24 pb-56 bg-zinc-100 dark:bg-darkSecondary">
           <div className="bg-white px-5 md:px-20 py-10 shadow-md rounded-lg w-full md:w-1/2 mx-auto relative">
-            <h1 role={"textbox"} spellCheck="false" onBlur={(e) => handlerChange(e.target.textContent)} maxLength={10} contentEditable data-placeholder={"Judul Catatan"} className={`editable-text text-4xl font-semibold mb-10`}>{context.dataDocumentation.title}</h1>
+            <h1 role={"textbox"} spellCheck="false" onBlur={(e) => handlerChange(e.target.textContent)} maxLength={10} contentEditable data-placeholder={"Judul Catatan"} className={`editable-text text-2xl font-semibold mb-8`}>{context.dataDocumentation.title}</h1>
             <TipTap editor={editor} />
             <span className="absolute bottom-3 right-5 text-xs text-zinc-500 dark:text-zinc-200">Diedit 12.30</span>
           </div>
