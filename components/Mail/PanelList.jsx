@@ -1,0 +1,99 @@
+import { BsChat, BsSearch } from "react-icons/bs";
+import { useRouter } from "next/router";
+import { Notify } from "@utils/scriptApp";
+import { useContext, useEffect, useRef, useState } from "react";
+import { MyContext } from "context/MyProvider";
+import { HiRefresh } from "react-icons/hi";
+import TableMailBox from "@components/Mail/Mailbox/TableMailBox"
+import ToolbarMailBox from "@components/Mail/Mailbox/ToolbarMailBox";
+import SidebarMail from "@components/Mail/Mailbox/SidebarMail"
+import DropdownAccount from "@components/Mail/DropdownAccount"
+import CollectionData from "@repositories/CollectionData"
+
+export default function PanelList({
+    profileData,
+    roomId
+}) {
+    const router = useRouter()
+    const { uid } = router.query;
+    const statename = "dataMailAccount"
+    const context = useContext(MyContext)
+    const [keyword, setKeyword] = useState("")
+    const [currentAccount, setCurrentAccount] = useState("")
+    const [listAccount, setListAccount] = useState("")
+
+    const setCurrent = async (obj) => {
+        setCurrentAccount(obj)
+    }
+
+    const getDataAccountMail = async () => {
+        const result = await CollectionData.getData({ url: `mail_account` })
+        if (result.status == 0) {
+            console.log("result account", result)
+            if (result.data.length > 0) {
+                setCurrent(result.data[0])
+                setListAccount(result.data)
+                router.push(`/usr/mail?uid=${result.data[0]['id']}#INBOX`)
+            }
+            context.setData({ ...context, [statename]: result.data })
+        } else Notify("Something went wrong", 'error')
+    }
+
+    useEffect(() => {
+        if (!context[statename]) {
+            getDataAccountMail()
+        } else {
+            if (context[statename].length > 0) {
+                setListAccount(context[statename])
+                if (!uid) {
+                    router.push(`/usr/mail?uid=${context[statename][0]['id']}#INBOX`)
+                    setCurrent(context[statename][0])
+                } else {
+                    let objCurrentAccount = context[statename].find(account => account.id === uid);
+                    if (objCurrentAccount) {
+                        setCurrent(objCurrentAccount)
+                    }
+                }
+            }
+        }
+    }, [context[statename], uid])
+
+    return (
+        <div className="w-full xl:w-full h-screen overflow-y-hidden">
+            <div className="flex-col flex h-full">
+                <div className="flex items-center justify-center bg-slate-100">
+                    <div className="w-full bg-white shadow-xl rounded-lg flex overflow-x-auto custom-scrollbar h-screen">
+                        <div className="px-4">
+                            <DropdownAccount listAccounts={listAccount} currentAccount={currentAccount} />
+
+                            <div className="h-16 flex items-center">
+                                <a href="#" className="w-48 mx-auto bg-blue-600 hover:bg-blue-700 flex items-center justify-center text-gray-100 py-2 rounded space-x-2 transition duration-150">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                    <span>Compose</span>
+                                </a>
+                            </div>
+                            {/* Section sidebar mail*/}
+                            <SidebarMail />
+                        </div>
+                        <div className="flex-1 px-2 w-full">
+                            {/* Section toolbar mail*/}
+                            <div>
+                                <ToolbarMailBox />
+                            </div>
+
+                            {/* Section table mail*/}
+                            <div className="max-w-full">
+                                <TableMailBox />
+                            </div>
+                        </div >
+
+                    </div >
+                </div >
+            </div>
+        </div >
+    )
+}
+
+

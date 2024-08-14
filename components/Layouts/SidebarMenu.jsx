@@ -145,7 +145,7 @@ export default function SidebarMenu({
                 active: "/chat"
             },
             // {
-            //     url: "/usr/mail",
+            //     url: "/usr/mail#INBOX",
             //     featurename: "mail",
             //     label: "Mail",
             //     icon: <HiMail className={`${isThisPage("/mail") ? open ? "text-white scale-150" : "text-white scale-125" : open ? "text-zinc-500 scale-150" : "text-zinc-500 hover:text-blue-500 scale-125"} w-8 h-8 transition-all duration-200`} />,

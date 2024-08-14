@@ -1,0 +1,83 @@
+### Email Account (Create)
+POST https://g-activity.gnusa.id/service/mail_account HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxkaWFuLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.qKqbKiVy8wp1nCtJKBi72CVyCBJPs9ATWvP8zDzn5Pk
+
+{
+    "name":"Aldian",
+    "username":"aldian@gai.co.id",
+    "password":"GaiGhe7e",
+    "server":"mails.gai.co.id"
+}
+
+### Email Account (GET)
+GET https://g-activity.gnusa.id/service/mail_account HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxkaWFuLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.qKqbKiVy8wp1nCtJKBi72CVyCBJPs9ATWvP8zDzn5Pk
+
+### Email Account (Delete)
+# https://g-activity.gnusa.id/service/mail_account/:id
+DELETE https://g-activity.gnusa.id/service/mail_account/319b67dd-7e15-4553-9362-83dd7f2fe8a0 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxkaWFuLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.qKqbKiVy8wp1nCtJKBi72CVyCBJPs9ATWvP8zDzn5Pk
+
+### Email Provider (GET)
+GET https://g-activity.gnusa.id/service/mail_provider HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxkaWFuLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.qKqbKiVy8wp1nCtJKBi72CVyCBJPs9ATWvP8zDzn5Pk
+
+### MBox (Inbox)
+# https://g-activity.gnusa.id/service/mail/:account_id/:mbox?page=1&emails_per_page=10&filter=urlencode
+# filter = {"from":"john.doe@gai.co.id","to":"jane.doe@gai.co.id","subject":"bla bla bla","since":"01-Jan-2024","before:"01-Jan-2024"}
+GET https://g-activity.gnusa.id/service/mail/6fd1ba37-bb73-4d92-beec-0902be65e94c/INBOX HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxkaWFuLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.qKqbKiVy8wp1nCtJKBi72CVyCBJPs9ATWvP8zDzn5Pk
+
+### MBox (Draft)
+# https://g-activity.gnusa.id/service/mail/:account_id/:mbox?page=1&emails_per_page=10&filter=urlencode
+# filter = {"from":"john.doe@gai.co.id","to":"jane.doe@gai.co.id","subject":"bla bla bla","since":"01-Jan-2024","before:"01-Jan-2024"}
+GET https://g-activity.gnusa.id/service/mail/6fd1ba37-bb73-4d92-beec-0902be65e94c/Drafts HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxkaWFuLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.qKqbKiVy8wp1nCtJKBi72CVyCBJPs9ATWvP8zDzn5Pk
+
+### MBox (Sent)
+# https://g-activity.gnusa.id/service/mail/:account_id/:mbox?page=1&emails_per_page=10&filter=urlencode
+# filter = {"from":"john.doe@gai.co.id","to":"jane.doe@gai.co.id","subject":"bla bla bla","since":"01-Jan-2024","before:"01-Jan-2024"}
+GET https://g-activity.gnusa.id/service/mail/6fd1ba37-bb73-4d92-beec-0902be65e94c/Sent HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxkaWFuLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.qKqbKiVy8wp1nCtJKBi72CVyCBJPs9ATWvP8zDzn5Pk
+
+### MBox (Junk)
+# https://g-activity.gnusa.id/service/mail/:account_id/:mbox?page=1&emails_per_page=10&filter=urlencode
+# filter = {"from":"john.doe@gai.co.id","to":"jane.doe@gai.co.id","subject":"bla bla bla","since":"01-Jan-2024","before:"01-Jan-2024"}
+GET https://g-activity.gnusa.id/service/mail/6fd1ba37-bb73-4d92-beec-0902be65e94c/Junk HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxkaWFuLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.qKqbKiVy8wp1nCtJKBi72CVyCBJPs9ATWvP8zDzn5Pk
+
+### MBox (Trash)
+# https://g-activity.gnusa.id/service/mail/:account_id/:mbox?page=1&emails_per_page=10&filter=urlencode
+# filter = {"from":"john.doe@gai.co.id","to":"jane.doe@gai.co.id","subject":"bla bla bla","since":"01-Jan-2024","before:"01-Jan-2024"}
+GET https://g-activity.gnusa.id/service/mail/6fd1ba37-bb73-4d92-beec-0902be65e94c/Trash HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxkaWFuLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.qKqbKiVy8wp1nCtJKBi72CVyCBJPs9ATWvP8zDzn5Pk
+
+### Email move to trash
+# https://g-activity.gnusa.id/service/mail_to_trash/:account_id/:mbox
+DELETE https://g-activity.gnusa.id/service/mail_to_trash/319b67dd-7e15-4553-9362-83dd7f2fe8a0/Inbox HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxkaWFuLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.qKqbKiVy8wp1nCtJKBi72CVyCBJPs9ATWvP8zDzn5Pk
+
+{
+    "email_id":1
+}
+
+### Email delete permanent (from trash to delete permanent)
+# https://g-activity.gnusa.id/service/delete/:account_id
+DELETE https://g-activity.gnusa.id/service/delete/319b67dd-7e15-4553-9362-83dd7f2fe8a0 HTTP/1.1
+content-type: application/cbor
+XA: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxkaWFuLmdudXNhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiYWZkMjg0NTE5MzFkM2Y0M2VkYTU5ODQ1ZjU5NjMzNTYxZjk0NTFjNCJ9.qKqbKiVy8wp1nCtJKBi72CVyCBJPs9ATWvP8zDzn5Pk
+
+{
+    "email_id":1,
+    "filename":"tony_stark_.jpg"
+}
