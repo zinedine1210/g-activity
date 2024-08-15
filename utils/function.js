@@ -319,3 +319,68 @@ export function getTimeAgoFromIsoString(isoDate) {
         return `${years} years ago`;
     }
 }
+
+export function convertDateString(dateString, type = "date") {
+    const date = new Date(dateString);
+    
+    // Format untuk "datemonth" -> 14 Aug
+    if (type === "datemonth") {
+        const options = { day: '2-digit', month: 'short' };
+        return date.toLocaleDateString('en-US', options);
+    }
+
+    // Format untuk "datetime" -> 14 Aug, 3:05 PM
+    if (type === "datetime") {
+        const optionsDate = { day: '2-digit', month: 'short' };
+        const formattedDate = date.toLocaleDateString('en-US', optionsDate);
+        const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: true };
+        const formattedTime = date.toLocaleTimeString('en-US', optionsTime);
+        return `${formattedDate}, ${formattedTime}`;
+    }
+
+    // Format untuk "dateyear" -> 23/11/22
+    if (type === "dateyear") {
+        const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+        return date.toLocaleDateString('en-GB', options).replace(/-/g, '/');
+    }
+
+    // Format untuk "full" -> Rab, 23 Nov 2022, 14.34
+    if (type === "full") {
+        const optionsDate = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' };
+        const formattedDate = date.toLocaleDateString('id-ID', optionsDate);
+        const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: false };
+        const formattedTime = date.toLocaleTimeString('id-ID', optionsTime).replace('.', ':');
+        return `${formattedDate}, ${formattedTime}`;
+    }
+
+    // Default case jika type tidak cocok
+    return dateString;
+}
+
+export function convertDateMail(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    
+    // Periksa apakah tanggalnya hari ini
+    if (date.toDateString() === now.toDateString()) {
+        // Return time (e.g., 3:05 PM)
+        const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: true };
+        return date.toLocaleTimeString('en-US', optionsTime);
+    }
+    
+    // Periksa apakah tanggalnya dalam tahun yang sama
+    if (date.getFullYear() === now.getFullYear()) {
+        // Return date with month in "day month" format (e.g., 8 May)
+        const optionsDate = { day: 'numeric', month: 'short' };
+        return date.toLocaleDateString('en-GB', optionsDate);
+    }
+    
+    // Jika tanggalnya tidak dalam tahun yang sama
+    // Return date in DD/MM/YY format (e.g., 18/09/23)
+    const optionsDateYear = { day: '2-digit', month: '2-digit', year: '2-digit' };
+    return date.toLocaleDateString('en-GB', optionsDateYear).replace(/-/g, '/');
+}
+
+
+
+  

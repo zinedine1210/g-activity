@@ -7,6 +7,7 @@ import { HiRefresh } from "react-icons/hi";
 import TableMailBox from "@components/Mail/Mailbox/TableMailBox"
 import ToolbarMailBox from "@components/Mail/Mailbox/ToolbarMailBox";
 import SidebarMail from "@components/Mail/Mailbox/SidebarMail"
+import DetailMail from "@components/Mail/Mailbox/DetailMail"
 import DropdownAccount from "@components/Mail/DropdownAccount"
 import CollectionData from "@repositories/CollectionData"
 
@@ -21,6 +22,7 @@ export default function PanelList({
     const [keyword, setKeyword] = useState("")
     const [currentAccount, setCurrentAccount] = useState("")
     const [listAccount, setListAccount] = useState("")
+    const [currentRightPanel, setCurrentRightPanel] = useState(null)
 
     const setCurrent = async (obj) => {
         setCurrentAccount(obj)
@@ -58,6 +60,13 @@ export default function PanelList({
         }
     }, [context[statename], uid])
 
+    useEffect(() => {
+        console.log("apakaah ada??", context['mailRightPanel'])
+        setCurrentRightPanel(context['mailRightPanel'])
+    }, [context['mailRightPanel']])
+
+
+
     return (
         <div className="w-full xl:w-full h-screen overflow-y-hidden">
             <div className="flex-col flex h-full">
@@ -77,16 +86,25 @@ export default function PanelList({
                             {/* Section sidebar mail*/}
                             <SidebarMail />
                         </div>
-                        <div className="flex-1 px-2 w-full">
-                            {/* Section toolbar mail*/}
-                            <div>
-                                <ToolbarMailBox />
-                            </div>
 
-                            {/* Section table mail*/}
-                            <div className="max-w-full">
-                                <TableMailBox />
-                            </div>
+                        <div className="flex-1 px-2 w-full">
+                            
+                            {
+                                currentRightPanel == "tableMail" && <><div>
+                                    {/* Section toolbar mail*/}
+                                    <ToolbarMailBox />
+                                </div>
+                                    {/* Section table mail*/}
+                                    <div className="max-w-full">
+                                        <TableMailBox />
+                                    </div></>
+                            }
+
+                            {/* Section detail mail*/}
+                            {
+                                currentRightPanel == "detailMail" && <><DetailMail /></>
+                            }
+
                         </div >
 
                     </div >

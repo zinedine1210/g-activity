@@ -26,6 +26,7 @@ export function MyProvider({children}) {
         "dataRoom": null,
         "dataTask":[],
         "memberGroup":[],
+        "mailRightPanel":"tableMail",
         "dataComponents":[
             {
                 "id":0,
