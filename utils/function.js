@@ -15,16 +15,16 @@ export function timeUntil(epochTime) {
     const now = new Date();
     const futureDate = new Date(epochTime);
     const difference = futureDate - now;
-  
+
     if (difference <= 0) {
-      return "Time has passed";
+        return "Time has passed";
     }
-  
+
     const days = Math.floor(difference / (1000 * 60 * 60 * 24));
     const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-  
+
     if (days > 3) {
         const tgl = futureDate.toLocaleDateString('id-ID', {
             day: 'numeric',
@@ -32,18 +32,18 @@ export function timeUntil(epochTime) {
             year: 'numeric',
             hour: 'numeric',
             minute: "numeric"
-          });
-      return tgl
+        });
+        return tgl
     } else if (days > 0) {
-      return `${days} day(s) later`;
+        return `${days} day(s) later`;
     } else if (hours > 0) {
-      return `${hours} hour(s) later`;
+        return `${hours} hour(s) later`;
     } else if (minutes > 0) {
-      return `${minutes} minute(s) later`;
+        return `${minutes} minute(s) later`;
     } else if (seconds > 0) {
-      return `In a few seconds`;
+        return `In a few seconds`;
     } else {
-      return "Soon";
+        return "Soon";
     }
 }
 
@@ -290,7 +290,7 @@ async function saveData() {
     })
 }
 
-export function convertDate(item){
+export function convertDate(item) {
     return new Date(item.epoch_time * 1000)
 }
 
@@ -322,7 +322,7 @@ export function getTimeAgoFromIsoString(isoDate) {
 
 export function convertDateString(dateString, type = "date") {
     const date = new Date(dateString);
-    
+
     // Format untuk "datemonth" -> 14 Aug
     if (type === "datemonth") {
         const options = { day: '2-digit', month: 'short' };
@@ -360,21 +360,21 @@ export function convertDateString(dateString, type = "date") {
 export function convertDateMail(dateString) {
     const date = new Date(dateString);
     const now = new Date();
-    
+
     // Periksa apakah tanggalnya hari ini
     if (date.toDateString() === now.toDateString()) {
         // Return time (e.g., 3:05 PM)
         const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: true };
         return date.toLocaleTimeString('en-US', optionsTime);
     }
-    
+
     // Periksa apakah tanggalnya dalam tahun yang sama
     if (date.getFullYear() === now.getFullYear()) {
         // Return date with month in "day month" format (e.g., 8 May)
         const optionsDate = { day: 'numeric', month: 'short' };
         return date.toLocaleDateString('en-GB', optionsDate);
     }
-    
+
     // Jika tanggalnya tidak dalam tahun yang sama
     // Return date in DD/MM/YY format (e.g., 18/09/23)
     const optionsDateYear = { day: '2-digit', month: '2-digit', year: '2-digit' };
@@ -382,5 +382,10 @@ export function convertDateMail(dateString) {
 }
 
 
-
-  
+export const formatFileSize = (sizeInBytes) => {
+    if (sizeInBytes === 0) return '0 Byte';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(sizeInBytes) / Math.log(k));
+    return parseFloat((sizeInBytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};

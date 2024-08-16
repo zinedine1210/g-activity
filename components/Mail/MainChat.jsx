@@ -4,11 +4,7 @@ import { MyContext } from "context/MyProvider";
 import { useRouter } from "next/router"
 import { useContext, useEffect, useRef, useState } from "react";
 import { BsPlus, BsSend, BsX } from "react-icons/bs";
-import CardFromMe from "./CardFromMe";
-import CardFromContact from "./CardFromContact";
-import CardSystem from "@components/Chat/CardSystem";
 import HeaderMainChat from "./HeaderMainMail";
-import { GroupInfo } from "@components/Chat/GroupInfo";
 import { emit, on, connect, checkErrorMsg } from "@utils/socketfunction"
 import { socket } from '../../config/config-socket'
 import Swal from 'sweetalert2';

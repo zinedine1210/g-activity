@@ -164,7 +164,7 @@ export default function Mail(props) {
                                     </div>
                                     <div className="flex items-center">
                                         <div className="flex items-center ml-3">
-                                            <button title="Reload"
+                                            <button title="Refresh"
                                                 className="text-gray-700 px-2 py-1 border border-gray-300 rounded-lg shadow hover:bg-gray-200 transition duration-100">
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor">

@@ -31,11 +31,15 @@ export default function PanelList({
     const getDataAccountMail = async () => {
         const result = await CollectionData.getData({ url: `mail_account` })
         if (result.status == 0) {
-            console.log("result account", result)
             if (result.data.length > 0) {
-                setCurrent(result.data[0])
                 setListAccount(result.data)
-                router.push(`/usr/mail?uid=${result.data[0]['id']}#INBOX`)
+                let objCurrentAccount = result.data.find(account => account.id === uid);
+                let currentActive = result.data[0]
+                if(objCurrentAccount){
+                    currentActive = objCurrentAccount
+                }
+                setCurrent(currentActive)
+                router.push(`/usr/mail?uid=${currentActive['id']}#INBOX`)
             }
             context.setData({ ...context, [statename]: result.data })
         } else Notify("Something went wrong", 'error')
@@ -54,6 +58,7 @@ export default function PanelList({
                     let objCurrentAccount = context[statename].find(account => account.id === uid);
                     if (objCurrentAccount) {
                         setCurrent(objCurrentAccount)
+                        context.setData({ ...context, mailRightPanel: 'tableMail' })
                     }
                 }
             }

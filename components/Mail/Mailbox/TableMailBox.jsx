@@ -16,7 +16,8 @@ export default function TableMailBox({
     const statename = "dataMailBox"
     const [keyword, setKeyword] = useState("")
     const [itemHover, setItemHover] = useState(false);
-    const [filterHash, setFilterHash] = useState(false);
+    const [filterHash, setFilterHash] = useState('#INBOX');
+    const [filterUID, setFilterUID] = useState(null);
     const [dataMail, setDataMail] = useState([
         // {
         //     sender: "William Livingston",
@@ -34,16 +35,83 @@ export default function TableMailBox({
         // }
     ]);
 
+    const getDataBoxMail = async (filterUID, filterType, filterPage) => {
+        if (filterUID && filterType) {
+            let result = await CollectionData.getData({ url: `mail/${filterUID}/${filterType}`, start: filterPage })
+            console.log("result apa broo?", result)
+            if (result.status == 0) {
+                if (Object.keys(result.data).length > 0) {
+                    result['data']['filterUID'] = filterUID
+                    result['data']['filterType'] = filterType
+                    result['data']['filterPage'] = Number(filterPage)
+                }
+                context.setData({ ...context, [statename]: result.data })
+            } else Notify("failed to get data", 'error')
+        }
+    }
+
+    const delToTrashEmail = async (data) => {
+        let emailId = data['id'];
+        let obj = { 'email_id': emailId }
+        let result = await CollectionData.deleteData({ url: `mail_to_trash/${filterUID}/Inbox`, values: obj })
+        let updatedData = context[statename]['emails'].filter(item => item.id !== emailId);
+        context.setData({ ...context,[statename]: {...context[statename],'emails': updatedData}});
+        Notify("Email has move to trash", 'success')
+    }
+
+
+    useEffect(() => {
+        setDataMail(null)
+        const hash = router.asPath.split('#')[1] || '#INBOX';
+        const page = router.query.page || 1;
+        const uid = router.query.uid;
+        setFilterUID(uid)
+        if (context[statename]) {
+            const hasChanged = (
+                context[statename]['filterType'] !== hash ||
+                context[statename]['filterPage'] !== page ||
+                context[statename]['filterUID'] !== uid
+            );
+            if (hasChanged) {
+                getDataBoxMail(uid, hash, page);
+            }
+        } else {
+            getDataBoxMail(uid, hash, page);
+        }
+
+        setFilterHash(hash);
+    }, [router.query.uid, router.query.page, router.asPath.split('#')[1]]);
+
+    useEffect(() => {
+        if (!context[statename]) {
+            console.log("sini 1")
+            // getDataBoxMail()
+            // setDataMail(null)
+        } else {
+            setDataMail(context[statename]['emails'])
+        }
+    }, [context[statename]]);
+
+    const truncateText = (text, maxLength) => {
+        if (text.length <= maxLength) return text;
+        return text.slice(0, maxLength) + '...';
+    };
+
+    const detailEmail = (mail) => {
+        console.log("detail", mail)
+        context.setData({ ...context, mailRightPanel: 'detailMail', detailMailData: mail })
+    }
+
     const toolbarOptions = [
-        {
-            title: "Archive",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />
-                </svg>
-            ),
-            action: () => { console.log('Archive clicked'); }
-        },
+        // {
+        //     title: "Archive",
+        //     icon: (
+        //         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        //             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />
+        //         </svg>
+        //     ),
+        //     action: () => { console.log('Archive clicked'); }
+        // },
         {
             title: "Delete",
             icon: (
@@ -51,7 +119,12 @@ export default function TableMailBox({
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
             ),
-            action: () => { console.log('Delete clicked'); }
+            action: (e, data) => {
+                e.stopPropagation();
+                console.log('Delete clicked');
+                console.log("data", data)
+                delToTrashEmail(data)
+            }
         },
         // {
         //     title: "Mark As Read",
@@ -74,81 +147,41 @@ export default function TableMailBox({
     ];
 
 
-    const getDataBoxMail = async (filterUID, filterType, filterPage) => {
-        console.log('filterUID, filterType', filterUID, filterType)
-        if(filterUID && filterType){
-            const result = await CollectionData.getData({ url: `mail/${filterUID}/${filterType}`, start:filterPage})
-            console.log("result apa broo?", result)
-            if (result.status == 0) {
-                context.setData({ ...context, [statename]: result.data })
-            } else Notify("tesss", 'error')
-        }
-    }
-
-
-    useEffect(() => {
-        console.log("ini aspath")
-        setDataMail(null)
-        // Mendapatkan filter dari hash di URL
-        const hash = router.asPath.split('#')[1];
-        const page = router.query.page || 1
-        setFilterHash(hash || '#INBOX');
-        getDataBoxMail(router.query.uid, hash, page)
-    }, [router.asPath]);
-
-    useEffect(() => {
-        if (!context[statename]) {
-            getDataBoxMail()
-        } else {
-            setDataMail(context[statename]['emails'])
-        }
-    }, [context[statename]]);
-
-    const truncateText = (text, maxLength) => {
-        if (text.length <= maxLength) return text;
-        return text.slice(0, maxLength) + '...';
-    };
-
-    const detailEmail = (mail) => {
-        console.log("detail", mail)
-        context.setData({ ...context, mailRightPanel: 'detailMail', detailMailData: mail })
-    }
-
-
     return (
         <>
             <div className="bg-gray-100 mb-6 max-w-full overflow-hidden">
                 <ul className="ul-container">
                     {
-                        dataMail && dataMail.length > 0 ? dataMail.map((mail, index) => {
+                        dataMail ? dataMail.length > 0 ? dataMail.map((mail, index) => {
                             // const title_desc = `${mail.title} - ${mail.desc}`;
                             return (
                                 <li key={index} className="flex items-center border-y hover:bg-gray-200 px-2" onClick={() => detailEmail(mail)}>
-                                    <input type="checkbox" className="focus:ring-0 border-2 border-gray-400" />
+                                    {/* <input type="checkbox" className="focus:ring-0 border-2 border-gray-400" /> */}
                                     <div
                                         onMouseEnter={() => setItemHover(index)}
                                         onMouseLeave={() => setItemHover(null)}
                                         className={`w-full flex items-center justify-between p-1 my-1 cursor-pointer ${itemHover === index ? 'hover-class' : ''}`}
                                     >
                                         <div className="flex items-center text-sm">
-                                            <div className="flex items-center mr-4 ml-1 space-x-1">
+                                            {/* <div className="flex items-center mr-4 ml-1 space-x-1">
                                                 <button title={mail.starred ? "Starred" : "Not starred"}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className={`text-${mail.starred ? 'yellow-500' : 'gray-500'} hover:text-yellow-600 h-5 w-5`} fill="currentColor" viewBox="0 0 20 20">
                                                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                                     </svg>
                                                 </button>
-                                            </div>
-                                            <span className="min-w-64 pr-2">{mail.From}</span>
+                                            </div> */}
+                                             <div className="flex items-center mr-2 ml-1 space-x-1"></div>
+                                            <span className="min-w-64 pr-2">{mail.From && mail.From}</span>
                                             <div className="w-full flex flex-col max-w-full">
-                                                <span className="truncate-text">{mail.Subject}</span>
-                                                <span className="truncate-multiline text-gray-400 block text-ellipsis overflow-hidden">{truncateText(mail.Body, 100)}</span>
+                                                <span className="truncate-text">{mail.Subject ? mail.Subject : "(no subject)"}</span>
+                                                <span className="truncate-multiline text-gray-400 block text-ellipsis overflow-hidden">{mail.Body ? truncateText(mail.Body, 100): "(no body)"}</span>
                                             </div>
                                         </div>
                                         <div className="w-32 flex items-center justify-end">
                                             {itemHover === index && (
                                                 <div className="flex items-center space-x-2">
                                                     {toolbarOptions.map((option, i) => (
-                                                        <button key={i} title={option.title} onClick={option.action}>
+                                                        <button key={i} title={option.title} onClick={(e) => option.action(e, mail)}>
                                                             {option.icon}
                                                         </button>
                                                     ))}
@@ -156,14 +189,22 @@ export default function TableMailBox({
                                             )}
                                             {itemHover !== index && (
                                                 <span className="text-sm text-gray-500 min-w-14">
-                                                    {convertDateMail(mail.Date, "datetime")}
+                                                    {mail.Date && convertDateMail(mail.Date, "datetime")}
                                                 </span>
                                             )}
                                         </div>
                                     </div>
                                 </li>
                             )
-                        }) : new Array(10).fill("loading").map((load) => {
+                        }) : (
+                            <div className="flex items-center justify-center border-y hover:bg-gray-200 px-2 py-4">
+                                <div className="text-gray-500 text-center">
+                                    <p className="text-lg font-semibold">No Data</p>
+                                    <p className="text-sm">There are currently no emails available.</p>
+
+                                </div>
+                            </div>
+                        ) : new Array(10).fill("loading").map((load) => {
                             return (
                                 <div className='mb-2 p-1'><div className="skeleton w-full h-12" /></div>
                             )

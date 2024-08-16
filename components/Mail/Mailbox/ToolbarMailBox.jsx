@@ -16,7 +16,6 @@ export default function ToolbarMailBox({
     const [totalEmail, setTotalEmail] = useState(false);
 
     useEffect(() => {
-        console.log("apa di toolbar mail box", context[statename])
         if (context[statename]) {
             setTotalEmail({
                 "total_emails": context[statename]['total_emails'],
@@ -40,7 +39,7 @@ export default function ToolbarMailBox({
 
     const toolbarOptions = [
         {
-            title: "Reload",
+            title: "Refresh",
             icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path
@@ -52,7 +51,7 @@ export default function ToolbarMailBox({
                 </svg>
             ),
             action: () => {
-                console.log('Reload clicked');
+                console.log('Refresh clicked');
             }
         },
         {

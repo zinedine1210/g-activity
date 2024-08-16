@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { MyContext } from "context/MyProvider";
+import { convertDateMail } from '@utils/function'
+import AttachmentList from '@components/Mail/Mailbox/AttachmentList';
 
 
 const EmailDetail = () => {
@@ -10,7 +12,7 @@ const EmailDetail = () => {
   const context = useContext(MyContext)
   const topEmailRef = useRef(null);
 
-  console.log("context detail", detailMailData)
+  // console.log("context detail", detailMailData)
 
   useEffect(() => {
     if (topEmailRef.current) {
@@ -32,7 +34,7 @@ const EmailDetail = () => {
       }
     },
     // {
-    //   title: "Reload",
+    //   title: "Refresh",
     //   icon: (
     //     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     //       <path
@@ -44,7 +46,7 @@ const EmailDetail = () => {
     //     </svg>
     //   ),
     //   action: () => {
-    //     console.log('Reload clicked');
+    //     console.log('Refresh clicked');
     //   }
     // },
     {
@@ -201,44 +203,12 @@ const EmailDetail = () => {
               <span className="text-xs text-gray-400">From: {email}</span>
             </div>
           </div>
-          <span className="text-sm text-gray-500">Jan 30, 2022, 10:23 AM</span>
+          <span className="text-sm text-gray-500">{convertDateMail(detailMailData.Date, "datetime")}  Jan 30, 2022, 10:23 AM</span>
         </div>
         <EmailBody body={detailMailData.Body} />
-        <div className="border-t-2 flex space-x-4 py-4">
-          <div className="w-70 flex items-center py-2.5 px-2 border-2 border-gray-300 rounded-lg hover:bg-gray-200">
-            <div className="flex items-center">
-              <div className="w-10 flex items-center justify-center">
-                <Image src="/images/mail/attachment_pdf.svg" alt="attachment pdf" width={50} height={50} />
-              </div>
-              <div className="w-48 ml-2 flex flex-col">
-                <a href="#" className="text-sm text-gray-700 font-bold truncate">Terms and Conditions.pdf</a>
-                <span className="text-gray-500 text-xs">1.5 MB</span>
-              </div>
-            </div>
-            <button className="w-6 flex items-center justify-center" title="Download">
-              <svg xmlns="http://www.w3.org/2000/svg" className="text-gray-500 hover:text-gray-600 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-              </svg>
-            </button>
-          </div>
-          <div className="w-70 flex items-center py-2.5 px-2 border-2 border-gray-300 rounded-lg hover:bg-gray-200">
-            <div className="flex items-center">
-              <div className="w-10 flex items-center justify-center">
-                {/* <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve"><style type="text/css">.st0{fill:#41A5EE;} .st1{fill:#2B7CD3;} .st2{fill:#185ABD;} .st3{fill:#103F91;} .st4{opacity:0.1;enable-background:new ;} .st5{opacity:0.2;enable-background:new ;} .st6{fill:url(#SVGID_1_);} .st7{fill:#FFFFFF;}</style><path className="st0" d="M490.17,19.2H140.9c-12.05,0-21.83,9.72-21.83,21.7l0,0v96.7l202.42,59.2L512,137.6V40.9	C512,28.91,502.23,19.2,490.17,19.2L490.17,19.2z"></path><path className="st1" d="M512,137.6H119.07V256l202.42,35.52L512,256V137.6z"></path><path className="st2" d="M119.07,256v118.4l190.51,23.68L512,374.4V256H119.07z"></path><path className="st3" d="M140.9,492.8h349.28c12.05,0,21.83-9.72,21.83-21.7l0,0v-96.7H119.07v96.7	C119.07,483.09,128.84,492.8,140.9,492.8L140.9,492.8z"></path><path className="st4" d="M263.94,113.92H119.07v296h144.87c12.04-0.04,21.79-9.73,21.83-21.7v-252.6	C285.73,123.65,275.98,113.96,263.94,113.92z"></path><path className="st5" d="M252.04,125.76H119.07v296h132.97c12.04-0.04,21.79-9.73,21.83-21.7v-252.6	C273.82,135.49,264.07,125.8,252.04,125.76z"></path><path className="st5" d="M252.04,125.76H119.07v272.32h132.97c12.04-0.04,21.79-9.73,21.83-21.7V147.46	C273.82,135.49,264.07,125.8,252.04,125.76z"></path><path className="st5" d="M240.13,125.76H119.07v272.32h121.06c12.04-0.04,21.79-9.73,21.83-21.7V147.46	C261.91,135.49,252.17,125.8,240.13,125.76z"></path><linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="45.8183" y1="-1083.4916" x2="216.1361" y2="-788.5082" gradientTransform="matrix(1 0 0 1 0 1192)"><stop offset="0" style="stop-color:#2368C4"></stop><stop offset="0.5" style="stop-color:#1A5DBE"></stop><stop offset="1" style="stop-color:#1146AC"></stop></linearGradient><path className="st6" d="M21.83,125.76h218.3c12.05,0,21.83,9.72,21.83,21.7v217.08c0,11.99-9.77,21.7-21.83,21.7H21.83	C9.77,386.24,0,376.52,0,364.54V147.46C0,135.48,9.77,125.76,21.83,125.76z"></path><path className="st7" d="M89.56,292.21c0.43,3.35,0.71,6.26,0.85,8.76h0.5c0.19-2.37,0.59-5.22,1.19-8.56c0.6-3.34,1.15-6.16,1.63-8.47	l22.96-98.49h29.68l23.81,97.01c1.38,6.03,2.37,12.15,2.96,18.3h0.39c0.44-5.97,1.27-11.9,2.48-17.76l18.99-97.6h27.02	l-33.36,141.13H157.1l-22.62-93.47c-0.65-2.69-1.4-6.2-2.23-10.53s-1.33-7.48-1.54-9.47h-0.39c-0.26,2.3-0.77,5.71-1.54,10.23	c-0.76,4.52-1.37,7.87-1.83,10.04l-21.27,93.17h-32.1L40.04,185.46h27.5l20.68,98.69C88.7,286.17,89.14,288.87,89.56,292.21z"></path></svg> */}
-                <Image src="/images/mail/attachment_doc.svg" alt="attachment doc" width={50} height={50} />
-              </div>
-              <div className="w-48 ml-2 flex flex-col">
-                <a href="#" className="text-sm text-gray-700 font-bold truncate">Contract Proposal.docx</a>
-                <span className="text-gray-500 text-xs">3.1 MB</span>
-              </div>
-            </div>
-            <button className="w-6 flex items-center justify-center" title="Download">
-              <svg xmlns="http://www.w3.org/2000/svg" className="text-gray-500 hover:text-gray-600 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
+        {
+          detailMailData.Attachments && detailMailData.Attachments.length > 0 && <div className="border-t-2 flex space-x-4 py-4"><AttachmentList attachments={detailMailData.Attachments} /></div>
+        }
         <div className="mt-8 flex items-center space-x-4">
           <button className="w-32 flex items-center justify-center space-x-2 py-1.5 text-gray-600 border border-gray-400 rounded-lg hover:bg-gray-200">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
