@@ -5,12 +5,16 @@ import { FaUser } from "react-icons/fa";
 import { MyContext } from "context/MyProvider";
 import { convertDateMail } from '@utils/function'
 import AttachmentList from '@components/Mail/Mailbox/AttachmentList';
+import CollectionData from "@repositories/CollectionData"
 
 
-const EmailDetail = () => {
+const EmailDetail = ({ account }) => {
   const { detailMailData } = useContext(MyContext)
   const context = useContext(MyContext)
   const topEmailRef = useRef(null);
+  const [progress, setProgress] = useState(0);
+  const [downloadComplete, setDownloadComplete] = useState(false);
+  const [showProgress, setShowProgress] = useState(false);
 
   // console.log("context detail", detailMailData)
 
@@ -147,15 +151,89 @@ const EmailDetail = () => {
     // },
   ];
 
+  const onDownloadsFile = async (file) => {
+    console.log('Downloading file:', file);
+    setProgress(0);
+    setShowProgress(true);
+    setDownloadComplete(false);
+
+
+    let value = {
+      "msg_id": detailMailData['msg_id'],
+      "filename": file['filename']
+    };
+
+    console.log("detailMailData", value);
+    console.log("account", account);
+
+    const result = await CollectionData.postData({ url: `download_attachment/${account['id']}`, values: value });
+    console.log("result download", result);
+
+    if (result.status === 0) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', result.data, true);
+      xhr.responseType = 'blob';
+
+      xhr.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percentComplete = Math.round((event.loaded / event.total) * 100);
+          console.log(`Progress: ${percentComplete}%`);
+          setProgress(percentComplete);
+        }
+      };
+
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          const url = window.URL.createObjectURL(xhr.response);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = file['filename'];
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+
+          setProgress(100);
+          setDownloadComplete(true);
+          setShowProgress(false);
+          console.log("Download complete");
+        } else {
+          console.error(`Failed to load file. Status: ${xhr.status}`);
+        }
+      };
+
+      xhr.onerror = () => {
+        console.error("An error occurred during the download");
+      };
+
+      xhr.send();
+    } else {
+      console.error("Failed to start download:", result.message);
+    }
+  };
+
+
   let fromData = detailMailData.From.match(/(.*?)<(.*?)>/);
-  let name = fromData[1].trim();
-  let email = fromData[2].trim();
+  let name = fromData?.[1]?.trim() || '(no name)';
+  let email = fromData?.[2]?.trim() || '';
 
   const EmailBody = ({ body }) => {
     return (
       <div className="py-6 pl-2 text-gray-700" dangerouslySetInnerHTML={{ __html: body.replace(/\r\n/g, "<br />") }} />
     );
   };
+
+  const ProgressBar = ({ progress }) => (
+    <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+      <div
+        className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+        style={{ width: `${progress}%` }}
+      >
+        {progress}%
+      </div>
+    </div>
+  );
+
 
   return (
     <>
@@ -206,10 +284,12 @@ const EmailDetail = () => {
           <span className="text-sm text-gray-500">{convertDateMail(detailMailData.Date, "datetime")}  Jan 30, 2022, 10:23 AM</span>
         </div>
         <EmailBody body={detailMailData.Body} />
+        {/* <ProgressBar progress={progress} /> */}
+        {showProgress && <ProgressBar progress={progress} />}
         {
-          detailMailData.Attachments && detailMailData.Attachments.length > 0 && <div className="border-t-2 flex space-x-4 py-4"><AttachmentList attachments={detailMailData.Attachments} /></div>
+          detailMailData.Attachments && detailMailData.Attachments.length > 0 && <div className="border-t-2 flex space-x-4 py-4"><AttachmentList attachments={detailMailData.Attachments} downloadFiles={onDownloadsFile} /></div>
         }
-        <div className="mt-8 flex items-center space-x-4">
+        <div className="mt-8 flex items-center space-x-4 text-sm">
           <button className="w-32 flex items-center justify-center space-x-2 py-1.5 text-gray-600 border border-gray-400 rounded-lg hover:bg-gray-200">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd"></path>

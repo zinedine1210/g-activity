@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { formatFileSize } from '@utils/function';
 
-const AttachmentList = ({ attachments }) => {
+const AttachmentList = ({ attachments, downloadFiles }) => {
   const getIconAndAlt = (fileName) => {
     const extension = fileName.split('.').pop().toLowerCase();
     let icon, alt;
@@ -37,7 +37,8 @@ const AttachmentList = ({ attachments }) => {
         return (
           <div
             key={index}
-            className="w-70 flex items-center py-2.5 px-2 border-2 border-gray-300 rounded-lg hover:bg-gray-200"
+            className="w-70 flex items-center py-2.5 px-2 border-2 border-gray-300 rounded-lg hover:bg-gray-200 hover"
+            onClick={() => downloadFiles(file)}
           >
             <div className="flex items-center">
               <div className="w-10 flex items-center justify-center">

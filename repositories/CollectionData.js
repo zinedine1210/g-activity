@@ -49,7 +49,10 @@ class CollectionData {
                 if (error.hasOwnProperty("code") && error.code == "ERR_CANCELED") {
                     return { "status": -1, "data": "Timeout" }
                 }
-                let result = cbor.decode(error.response.data)
+                let result = {"data":[], 'stats': -1}
+                if(error.response.data){
+                    result = cbor.decode(error.response.data)
+                }
                 return result;
             });
         return reponse;
