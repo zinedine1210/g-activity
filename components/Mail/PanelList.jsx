@@ -24,6 +24,13 @@ export default function PanelList({
     const [currentAccount, setCurrentAccount] = useState("")
     const [listAccount, setListAccount] = useState("")
     const [currentRightPanel, setCurrentRightPanel] = useState(null)
+    const matchHash = {
+        "Inbox": true,
+        "Sent": true,
+        "Drafts": true,
+        "Junk": true,
+        "Trash": true,
+    };
 
     const setCurrent = async (obj) => {
         setCurrentAccount(obj)
@@ -40,26 +47,37 @@ export default function PanelList({
                     currentActive = objCurrentAccount
                 }
                 setCurrent(currentActive)
-                router.push(`/usr/mail?uid=${currentActive['id']}#INBOX`)
+                console.log("Disini yaa?? 111")
+                // router.push(`/usr/mail?uid=${currentActive['id']}#Inbox`)
             }
             context.setData({ ...context, [statename]: result.data })
         } else Notify("Something went wrong", 'error')
     }
 
     useEffect(() => {
+        context.setData({ ...context, mailRightPanel: ''})
         if (!context[statename]) {
             getDataAccountMail()
         } else {
+            const hash = router.asPath.split('#')[1] || 'Inbox';
             if (context[statename].length > 0) {
                 setListAccount(context[statename])
                 if (!uid) {
-                    router.push(`/usr/mail?uid=${context[statename][0]['id']}#INBOX`)
+                    router.push(`/usr/mail?uid=${context[statename][0]['id']}#Inbox`)
                     setCurrent(context[statename][0])
                 } else {
                     let objCurrentAccount = context[statename].find(account => account.id === uid);
+                    // console.log("objCurrentAccount", objCurrentAccount)
                     if (objCurrentAccount) {
                         setCurrent(objCurrentAccount)
+                        console.log("matchHash[hash]", matchHash[hash])
+                        if (!matchHash[hash] || matchHash[hash] == false) {
+                            router.push(`/usr/mail?uid=${objCurrentAccount['id']}#Inbox`)
+                        }
                         context.setData({ ...context, mailRightPanel: 'tableMail' })
+                    } else {
+                        console.log("gak ada account nih")
+                        // router.push(`/usr/mail?uid=${context[statename][0]['id']}#Inbox`)
                     }
                 }
             }
@@ -67,13 +85,11 @@ export default function PanelList({
     }, [context[statename], uid])
 
     useEffect(() => {
-        console.log("apakaah ada??", context['mailRightPanel'])
         setCurrentRightPanel(context['mailRightPanel'])
     }, [context['mailRightPanel']])
 
 
     const openComposeEmail = () => {
-        console.log("tes")
         context.setData({ ...context, mailRightPanel: 'composeMail' })
     }
 
@@ -100,7 +116,7 @@ export default function PanelList({
 
                         <div className="flex-1 px-2 w-full">
                             {
-                                currentRightPanel == "composeMail" && <><ComposeEmail /></>
+                                currentRightPanel == "composeMail" && <ComposeEmail account={currentAccount} />
                             }
 
                             {
@@ -110,7 +126,7 @@ export default function PanelList({
                                 </div>
                                     {/* Section table mail*/}
                                     <div className="max-w-full">
-                                        <TableMailBox />
+                                        <TableMailBox matchHash={matchHash} />
                                     </div></>
                             }
 

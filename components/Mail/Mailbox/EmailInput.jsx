@@ -1,19 +1,31 @@
-import { useState } from 'react';
-
-const EmailInput = ({ onEmailsChange, label }) => {
-    const [emails, setEmails] = useState([]);
+import React, { useContext, useState, useEffect } from 'react'
+const EmailInput = ({ onEmailsChange, label, defaultEmails = [] }) => {
+    const [emails, setEmails] = useState(defaultEmails);
     const [inputValue, setInputValue] = useState('');
+
+    useEffect(() => {
+        if (onEmailsChange) {
+            onEmailsChange(emails);
+        }
+    }, [emails, onEmailsChange]);
+
+    const isValidEmail = (email) => {
+        // Regex sederhana untuk memvalidasi format email
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
 
     const handleKeyDown = (e) => {
         if (e.key === ' ' || e.key === 'Enter' || e.key === ',') {
             e.preventDefault();
             const email = inputValue.trim();
-            if (email && !emails.includes(email)) {
+            if (email && isValidEmail(email) && !emails.includes(email)) {
                 const newEmails = [...emails, email];
                 setEmails(newEmails);
                 if (onEmailsChange) {
                     onEmailsChange(newEmails);
                 }
+            } else if (!isValidEmail(email)) {
+                alert('Please enter a valid email address.');
             }
             setInputValue('');
         } else if (e.key === 'Backspace' && !inputValue) {
@@ -38,7 +50,6 @@ const EmailInput = ({ onEmailsChange, label }) => {
 
     return (
         <div className="space-y-2">
-            {/* {label && <label htmlFor={label} className="block text-sm font-medium text-gray-700">{label}</label>} */}
             <div className="flex flex-wrap items-center border border-gray-300 bg-gray-50 p-2.5 rounded-lg space-x-2">
                 {emails.map((email, index) => (
                     <div key={index} className="bg-blue-500 text-white px-3 py-1 rounded-full flex items-center space-x-2">

@@ -121,7 +121,6 @@ class CollectionData {
         let url = `${baseUrl}/${obj.url}`
         const dataToken = this.getToken();
         let values = cbor.encode(obj['values'])
-        console.log("values delte", values)
         const reponse = await this.axiosInstance.delete(
             `${url}`,
             {

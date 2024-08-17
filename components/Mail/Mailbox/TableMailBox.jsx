@@ -8,7 +8,7 @@ import CollectionData from "@repositories/CollectionData"
 import { convertDateMail } from '@utils/function'
 
 export default function TableMailBox({
-
+    matchHash
 }) {
     const router = useRouter()
     const { pathname, query } = router;
@@ -16,8 +16,9 @@ export default function TableMailBox({
     const statename = "dataMailBox"
     const [keyword, setKeyword] = useState("")
     const [itemHover, setItemHover] = useState(false);
-    const [filterHash, setFilterHash] = useState('#INBOX');
+    const [filterHash, setFilterHash] = useState('#Inbox');
     const [filterUID, setFilterUID] = useState(null);
+    const [loadingIndex, setLoadingIndex] = useState(null);
     const [dataMail, setDataMail] = useState([
         // {
         //     sender: "William Livingston",
@@ -26,43 +27,17 @@ export default function TableMailBox({
         //     starred: false,
         //     time: "3:05 PM"
         // },
-        // {
-        //     sender: "Betty Garmon",
-        //     title: "Consectetur adipiscing elit",
-        //     desc: "Ccusantium doloremque laudantium, totam rem aperiam, eaque ipsa",
-        //     starred: true,
-        //     time: "1:23 PM"
-        // }
     ]);
 
-    const getDataBoxMail = async (filterUID, filterType, filterPage) => {
-        if (filterUID && filterType) {
-            let result = await CollectionData.getData({ url: `mail/${filterUID}/${filterType}`, start: filterPage })
-            console.log("result apa broo?", result)
-            if (result.status == 0) {
-                if (Object.keys(result.data).length > 0) {
-                    result['data']['filterUID'] = filterUID
-                    result['data']['filterType'] = filterType
-                    result['data']['filterPage'] = Number(filterPage)
-                }
-                context.setData({ ...context, [statename]: result.data })
-            } else Notify("failed to get data", 'error')
-        }
-    }
-
-    const delToTrashEmail = async (data) => {
-        let emailId = data['id'];
-        let obj = { 'email_id': emailId }
-        let result = await CollectionData.deleteData({ url: `mail_to_trash/${filterUID}/Inbox`, values: obj })
-        let updatedData = context[statename]['emails'].filter(item => item.id !== emailId);
-        context.setData({ ...context,[statename]: {...context[statename],'emails': updatedData}});
-        Notify("Email has move to trash", 'success')
-    }
-
+    // Definisikan hash, page, dan uid di luar useEffect
+    const hash = router.asPath.split('#')[1] || '#Inbox';
+    const page = router.query.page || 1;
+    const uid = router.query.uid;
 
     useEffect(() => {
+        console.log("masa iya kesini lagi??")
         setDataMail(null)
-        const hash = router.asPath.split('#')[1] || '#INBOX';
+        const hash = router.asPath.split('#')[1] || '#Inbox';
         const page = router.query.page || 1;
         const uid = router.query.uid;
         setFilterUID(uid)
@@ -80,17 +55,47 @@ export default function TableMailBox({
         }
 
         setFilterHash(hash);
-    }, [router.query.uid, router.query.page, router.asPath.split('#')[1]]);
+    }, [uid, page, hash]);
 
     useEffect(() => {
         if (!context[statename]) {
-            console.log("sini 1")
-            // getDataBoxMail()
-            // setDataMail(null)
+            getDataBoxMail(uid, hash, page);
+            setDataMail(null)
         } else {
             setDataMail(context[statename]['emails'])
         }
     }, [context[statename]]);
+
+
+    const getDataBoxMail = async (filterUID, filterType, filterPage) => {
+        if (filterUID && filterType) {
+            if (!matchHash[hash] || matchHash[hash] == false) {
+                filterType = "Inbox"
+            }
+            console.log("filterType", filterType)
+
+
+            let result = await CollectionData.getData({ url: `mail/${filterUID}/${filterType}`, start: filterPage })
+            if (result.status == 0) {
+                if (Object.keys(result.data).length > 0) {
+                    result['data']['filterUID'] = filterUID
+                    result['data']['filterType'] = filterType
+                    result['data']['filterPage'] = Number(filterPage)
+                }
+                context.setData({ ...context, [statename]: result.data })
+            } else Notify("failed to get data", 'error')
+        }
+    }
+
+    const delToTrashEmail = async (data) => {
+        let emailId = data['id'];
+        let obj = { 'email_id': emailId }
+        let result = await CollectionData.deleteData({ url: `mail_to_trash/${filterUID}/Inbox`, values: obj })
+        let updatedData = context[statename]['emails'].filter(item => item.id !== emailId);
+        context.setData({ ...context, [statename]: { ...context[statename], 'emails': updatedData } });
+        Notify("Email has move to trash", 'success')
+    }
+
 
     const truncateText = (text, maxLength) => {
         if (text.length <= maxLength) return text;
@@ -98,11 +103,20 @@ export default function TableMailBox({
     };
 
     const detailEmail = (mail) => {
-        console.log("detail", mail)
         context.setData({ ...context, mailRightPanel: 'detailMail', detailMailData: mail })
     }
 
-    const toolbarOptions = [
+    const extractFirstEmail = (toField) =>
+        toField[0].match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/)?.[0] || null;
+
+    const checkFromEmail = (mail) => {
+        if (["Sent", "Drafts"].includes(filterHash)) {
+            return mail.To.length > 0 ? extractFirstEmail(mail.To) || "(no receiver)" : "(no receiver)";
+        }
+        return mail.From;
+    };
+
+    const toolbarOptions = (index, mail) => [
         // {
         //     title: "Archive",
         //     icon: (
@@ -114,16 +128,24 @@ export default function TableMailBox({
         // },
         {
             title: "Delete",
-            icon: (
+            icon: loadingIndex === index ? (
+                <svg className="animate-spin h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                </svg>
+            ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
             ),
-            action: (e, data) => {
+            action: async (e) => {
                 e.stopPropagation();
-                console.log('Delete clicked');
-                console.log("data", data)
-                delToTrashEmail(data)
+                setLoadingIndex(index);
+                try {
+                    await delToTrashEmail(mail);
+                } finally {
+                    setLoadingIndex(null);
+                }
             }
         },
         // {
@@ -145,7 +167,6 @@ export default function TableMailBox({
         //     action: () => { console.log('Snooze'); }
         // }
     ];
-
 
     return (
         <>
@@ -170,18 +191,18 @@ export default function TableMailBox({
                                                     </svg>
                                                 </button>
                                             </div> */}
-                                             <div className="flex items-center mr-2 ml-1 space-x-1"></div>
-                                            <span className="min-w-64 pr-2">{mail.From && mail.From}</span>
+                                            <div className="flex items-center mr-2 ml-1 space-x-1"></div>
+                                            <span className="min-w-64 pr-2"> {checkFromEmail(mail)}</span>
                                             <div className="w-full flex flex-col max-w-full">
                                                 <span className="truncate-text">{mail.Subject ? mail.Subject : "(no subject)"}</span>
-                                                <span className="truncate-multiline text-gray-400 block text-ellipsis overflow-hidden">{mail.Body ? truncateText(mail.Body, 100): "(no body)"}</span>
+                                                <span className="truncate-multiline text-gray-400 block text-ellipsis overflow-hidden">{mail.Body ? truncateText(mail.Body, 100) : "(no body)"}</span>
                                             </div>
                                         </div>
                                         <div className="w-32 flex items-center justify-end">
                                             {itemHover === index && (
                                                 <div className="flex items-center space-x-2">
-                                                    {toolbarOptions.map((option, i) => (
-                                                        <button key={i} title={option.title} onClick={(e) => option.action(e, mail)}>
+                                                    {toolbarOptions(index, mail).map((option, i) => (
+                                                        <button key={i} title={option.title} onClick={option.action} disabled={loadingIndex === index}>
                                                             {option.icon}
                                                         </button>
                                                     ))}

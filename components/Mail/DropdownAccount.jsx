@@ -13,7 +13,7 @@ const Dropdown = ({ listAccounts, currentAccount }) => {
 
     const handleAccountSwitch = (account) => {
         setDropdownOpen(false);
-        router.push(`/usr/mail?uid=${account['id']}#INBOX`)
+        router.push(`/usr/mail?uid=${account['id']}#Inbox`)
     }
 
     const handleClickOutside = (event) => {
