@@ -35,7 +35,6 @@ export default function TableMailBox({
     const uid = router.query.uid;
 
     useEffect(() => {
-        console.log("masa iya kesini lagi??")
         setDataMail(null)
         const hash = router.asPath.split('#')[1] || '#Inbox';
         const page = router.query.page || 1;
@@ -72,9 +71,7 @@ export default function TableMailBox({
             if (!matchHash[hash] || matchHash[hash] == false) {
                 filterType = "Inbox"
             }
-            console.log("filterType", filterType)
-
-
+            
             let result = await CollectionData.getData({ url: `mail/${filterUID}/${filterType}`, start: filterPage })
             if (result.status == 0) {
                 if (Object.keys(result.data).length > 0) {

@@ -2,8 +2,12 @@ import React, { useContext, useState, useEffect } from 'react'
 import { Notify } from '@utils/scriptApp'
 import { MyContext } from 'context/MyProvider'
 import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic';
 import CollectionData from "@repositories/CollectionData"
 import EmailInput from '@components/Mail/Mailbox/EmailInput';
+import 'react-quill/dist/quill.snow.css';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export default function ComposeMail({
     account
@@ -40,6 +44,7 @@ export default function ComposeMail({
                 "body_mail": dataBodyMail
                 // "reply_to":"aldian.putra0594@gmail.com", // opsional(kalau tidak ada tidak usah kirim datanya) | kalau lebih dari satu jadi array ["aldian@gai.co.id","charly@gai.co.id"]
             }
+            console.log("value", value)
 
             const result = await CollectionData.postData({ url: `sent_mail/${account['id']}`, values: value });
             // console.log("result post data", result)
@@ -123,8 +128,9 @@ export default function ComposeMail({
                     <div className='flex flex-wrap items-center border border-gray-300 bg-gray-50 p-2.5 rounded-lg space-x-2'>
                         <input type="text" onChange={(e) => setDataSubject(e.target.value)} placeholder='Subject' className="block w-full border-none outline-none bg-transparent text-gray-900 placeholder-gray-400 sm:text-sm flex-1" />
                     </div>
-                    <div>
-                        <textarea id="body" onChange={(e) => setDataBodyMail(e.target.value)} class="w-full h-64 block rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 p-4 border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 text-base focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm" placeholder="Message..."></textarea>
+                    <div className='max-h-screen overflow-auto h-96'>
+                        {/* <textarea id="body" onChange={(e) => setDataBodyMail(e.target.value)} class="w-full h-64 block rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 p-4 border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 text-base focus:border-blue-500 focus:ring-blue-500 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm" placeholder="Message..."></textarea> */}
+                        <ReactQuill theme="snow" onChange={setDataBodyMail} className="h-80" />
                     </div>
                     {/* <div class="flex items-center space-x-2 my-2">
                         <div class="w-40 flex items-center justify-between text-gray-600 px-2 py-1.5  border border-gray-400 rounded-lg hover:bg-gray-200">

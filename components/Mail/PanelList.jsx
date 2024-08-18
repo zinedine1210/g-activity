@@ -4,6 +4,7 @@ import { Notify } from "@utils/scriptApp";
 import { useContext, useEffect, useRef, useState } from "react";
 import { MyContext } from "context/MyProvider";
 import { HiRefresh } from "react-icons/hi";
+import Swal from 'sweetalert2';
 import TableMailBox from "@components/Mail/Mailbox/TableMailBox"
 import ToolbarMailBox from "@components/Mail/Mailbox/ToolbarMailBox";
 import SidebarMail from "@components/Mail/Mailbox/SidebarMail"
@@ -55,12 +56,15 @@ export default function PanelList({
     }
 
     useEffect(() => {
+        console.log("tess1234")
         context.setData({ ...context, mailRightPanel: ''})
         if (!context[statename]) {
             getDataAccountMail()
         } else {
             const hash = router.asPath.split('#')[1] || 'Inbox';
+            console.log("context[statename]", context[statename])
             if (context[statename].length > 0) {
+                console.log("sini kah?")
                 setListAccount(context[statename])
                 if (!uid) {
                     router.push(`/usr/mail?uid=${context[statename][0]['id']}#Inbox`)
@@ -80,6 +84,23 @@ export default function PanelList({
                         // router.push(`/usr/mail?uid=${context[statename][0]['id']}#Inbox`)
                     }
                 }
+            } else {
+                console.log("disini ya??")
+                Swal.fire({
+                    title:`Email not found`,
+                    text:"You don't have an email account yet, please enter your email account to use the email feature.",
+                    icon: 'info',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Redirect to Email Account',
+                    allowOutsideClick: false, // Prevent closing by clicking outside
+                    allowEscapeKey: false
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                       router.push(`/usr/mail/account`)
+                    }
+                  })
             }
         }
     }, [context[statename], uid])
