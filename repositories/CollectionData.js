@@ -17,7 +17,7 @@ class CollectionData {
     }
 
     expiredToken(result) {
-        if(result['message'] == "Token Expired"){
+        if (result['message'] == "Token Expired") {
             handleTokenExpired(result);
         }
     }
@@ -26,8 +26,8 @@ class CollectionData {
         let url = `${baseUrl}/${obj.url}`
         url += `?count=${obj['count'] ? obj['count'] : 20}`
         url += `&start=${obj['start'] ? obj['start'] : 0}`
-        
-        if(obj.query){
+
+        if (obj.query) {
             url += obj.query
         }
 
@@ -49,8 +49,8 @@ class CollectionData {
                 if (error.hasOwnProperty("code") && error.code == "ERR_CANCELED") {
                     return { "status": -1, "data": "Timeout" }
                 }
-                let result = {"data":[], 'stats': -1}
-                if(error.response.data){
+                let result = { "data": [], 'stats': -1 }
+                if (error.response.data) {
                     result = cbor.decode(error.response.data)
                 }
                 return result;
@@ -88,7 +88,7 @@ class CollectionData {
 
     async putData(obj, abortSignal) {
         let url = `${baseUrl}/${obj.url}`
-        if(obj['id']){
+        if (obj['id']) {
             url += `/${obj['id']}`
         }
         const dataToken = this.getToken();
@@ -145,6 +145,39 @@ class CollectionData {
             });
         return reponse;
 
+    }
+
+
+    async postFormData(obj, abortSignal) {
+        let url = `${baseUrl}/${obj.url}`;
+        const dataToken = this.getToken();
+
+        // Mengirim permintaan POST dengan FormData
+        const response = await this.axiosInstance.post(
+            `${url}`,
+            obj.values,
+            {
+                headers: {
+                    "XA": dataToken,
+                    "Content-Type": "multipart/form-data"
+                }
+                // signal: abortSignal ? abortSignal:AbortSignal.timeout(10000)
+            }
+        )
+            .then((response) => {
+                let result = response.data;
+                this.expiredToken(result);
+                return result;
+            })
+            .catch((error) => {
+                if (error.hasOwnProperty("code") && error.code == "ERR_CANCELED") {
+                    return { "status": -1, "data": "Timeout" };
+                }
+                let result = response.data
+                return result;
+            });
+
+        return response;
     }
 }
 

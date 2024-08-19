@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import CollectionData from "@repositories/CollectionData"
 import EmailInput from '@components/Mail/Mailbox/EmailInput';
 import 'react-quill/dist/quill.snow.css';
+import AttachmentList from '@components/Mail/Mailbox/AttachmentList';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -21,12 +22,48 @@ export default function ComposeMail({
     const [dataSubject, setDataSubject] = useState("");
     const [dataBodyMail, setDataBodyMail] = useState("");
     const [isLoader, setIsLoader] = useState(false);
+    const [attachments, setAttachments] = useState([]);
+
+    const toolbarOptions = [
+        {
+            title: "Back",
+            icon: (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd"></path>
+                </svg>
+            ),
+            action: () => {
+                context.setData({ ...context, mailRightPanel: 'tableMail' })
+            }
+        }
+    ];
+
+    const loaderComponent = (<svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path> </svg>)
+
+    const handleFileUpload = (event) => {
+        console.log("event", event)
+        const files = Array.from(event.target.files);
+        const uploadedFiles = files.map((file) => ({
+            filename: file.name,
+            size: file.size,
+            file: file, // Menyimpan file asli untuk dikirim nanti
+        }));
+        console.log("uploadedFiles", uploadedFiles)
+        setAttachments((prevAttachments) => [...prevAttachments, ...uploadedFiles]);
+    };
+
+    const handleRemoveAttachment = (index) => {
+        setAttachments((prevAttachments) => prevAttachments.filter((_, i) => i !== index));
+    };
+
 
     const handleSendEmail = async () => {
         const hash = router.asPath.split('#')[1];
         const filterUID = hash || '#Inbox';
         console.log("filterUID", filterUID)
         console.log("dataTo", dataTo)
+        console.log("attachments", attachments)
+
         if (!isLoader) {
             if (!dataTo || dataTo.length == 0) {
                 return Notify("Email receiver must be filled", "info")
@@ -46,8 +83,25 @@ export default function ComposeMail({
             }
             console.log("value", value)
 
-            const result = await CollectionData.postData({ url: `sent_mail/${account['id']}`, values: value });
-            // console.log("result post data", result)
+            const formData = new FormData();
+
+            for (const key in value) {
+                formData.append(key, value[key]);
+            }
+
+            if (attachments.length > 0) {
+                attachments.forEach((attachment) => {
+                    formData.append('upload', attachment.file);
+                });
+            }
+
+            console.log("attachments", attachments)
+
+            console.log("formData", formData)
+
+            // const result = await CollectionData.postData({ url: `sent_mail/${account['id']}`, values: value });
+            const result = await CollectionData.postFormData({ url: `sent_mail/${account['id']}`, values: formData });
+            console.log("result post data", result)
             setIsLoader(false)
             if (result.status == 0) {
                 if (filterUID == "Sent") {
@@ -68,22 +122,6 @@ export default function ComposeMail({
             }
         }
     };
-
-    const toolbarOptions = [
-        {
-            title: "Back",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd"></path>
-                </svg>
-            ),
-            action: () => {
-                context.setData({ ...context, mailRightPanel: 'tableMail' })
-            }
-        }
-    ];
-
-    const loaderComponent = (<svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path> </svg>)
 
     return (
         <>
@@ -160,14 +198,48 @@ export default function ComposeMail({
                             </button>
                         </div>
                     </div> */}
+                    <div>
+                        {attachments.length > 0 && (
+                            <div className="flex space-x-4">
+                                <AttachmentList
+                                    type={1}
+                                    attachments={attachments}
+                                    removeAttachment={handleRemoveAttachment}
+                                />
+                            </div>
+                        )}
+                    </div>
                     <div class="flex items-center justify-between mt-4">
                         <div class="flex items-center space-x-2">
                             <button class="bg-blue-500 hover:bg-blue-700 rounded-lg px-12 py-1.5 text-gray-100 hover:shadow-xl transition duration-150" onClick={handleSendEmail}>{isLoader ? loaderComponent : 'Send'}</button>
-                            <button title="Attach Files">
+                            <input
+                                type="file"
+                                multiple
+                                onChange={handleFileUpload}
+                                className="hidden"
+                                id="file-upload"
+                            />
+                            <label htmlFor="file-upload" title="Attach Files">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-6 w-6 text-gray-500 hover:text-gray-700"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                                    />
+                                </svg>
+                            </label>
+                            {/* <button title="Attach Files">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 hover:text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
                                 </svg>
-                            </button>
+                            </button> */}
                         </div>
                         {/* <button class="mr-4 text-gray-700 hover:text-gray-900" title="Delete">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

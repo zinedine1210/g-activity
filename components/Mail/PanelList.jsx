@@ -57,7 +57,7 @@ export default function PanelList({
 
     useEffect(() => {
         console.log("tess1234")
-        context.setData({ ...context, mailRightPanel: ''})
+        context.setData({ ...context, mailRightPanel: '' })
         if (!context[statename]) {
             getDataAccountMail()
         } else {
@@ -87,8 +87,8 @@ export default function PanelList({
             } else {
                 console.log("disini ya??")
                 Swal.fire({
-                    title:`Email not found`,
-                    text:"You don't have an email account yet, please enter your email account to use the email feature.",
+                    title: `Email not found`,
+                    text: "You don't have an email account yet, please enter your email account to use the email feature.",
                     icon: 'info',
                     showCancelButton: false,
                     confirmButtonColor: '#3085d6',
@@ -98,9 +98,9 @@ export default function PanelList({
                     allowEscapeKey: false
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                       router.push(`/usr/mail/account`)
+                        router.push(`/usr/mail/account`)
                     }
-                  })
+                })
             }
         }
     }, [context[statename], uid])

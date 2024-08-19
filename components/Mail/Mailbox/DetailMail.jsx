@@ -280,7 +280,7 @@ const EmailDetail = ({ account }) => {
         {/* <ProgressBar progress={progress} /> */}
         {showProgress && <ProgressBar progress={progress} />}
         {
-          detailMailData.Attachments && detailMailData.Attachments.length > 0 && <div className="border-t-2 flex space-x-4 py-4"><AttachmentList attachments={detailMailData.Attachments} downloadFiles={onDownloadsFile} /></div>
+          detailMailData.Attachments && detailMailData.Attachments.length > 0 && <div className="border-t-2 flex space-x-4 py-4"><AttachmentList type={2} attachments={detailMailData.Attachments} downloadFiles={onDownloadsFile} /></div>
         }
         <div className="mt-8 flex items-center space-x-4 text-sm">
           <button className="w-32 flex items-center justify-center space-x-2 py-1.5 text-gray-600 border border-gray-400 rounded-lg hover:bg-gray-200">

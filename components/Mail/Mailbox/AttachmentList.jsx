@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import { formatFileSize } from '@utils/function';
 
-const AttachmentList = ({ attachments, downloadFiles }) => {
+const AttachmentList = ({ type, attachments, downloadFiles, removeAttachment }) => {
+  // type 1 == compose, type 2 == download
   const getIconAndAlt = (fileName) => {
     const extension = fileName.split('.').pop().toLowerCase();
     let icon, alt;
@@ -38,7 +39,6 @@ const AttachmentList = ({ attachments, downloadFiles }) => {
           <div
             key={index}
             className="w-70 flex items-center py-2.5 px-2 border-2 border-gray-300 rounded-lg hover:bg-gray-200 hover"
-            onClick={() => downloadFiles(file)}
           >
             <div className="flex items-center">
               <div className="w-10 flex items-center justify-center">
@@ -51,25 +51,53 @@ const AttachmentList = ({ attachments, downloadFiles }) => {
                 <span className="text-gray-500 text-xs"> {formatFileSize(file.size)}</span>
               </div>
             </div>
-            <button
-              className="w-6 flex items-center justify-center"
-              title="Download"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-gray-500 hover:text-gray-600 h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                ></path>
-              </svg>
-            </button>
+            <div className="flex items-center space-x-2">
+
+              {
+                type == 1 && <button
+                  className="w-6 flex items-center justify-center"
+                  title="Remove"
+                  onClick={() => removeAttachment(index)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="text-red-500 hover:text-red-600 h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              }
+              {
+                type == 2 && <button
+                  className="w-6 flex items-center justify-center"
+                  title="Download"
+                  onClick={() => downloadFiles(file)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="text-gray-500 hover:text-gray-600 h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                    />
+                  </svg>
+                </button>
+              }
+            </div>
           </div>
         );
       })}
