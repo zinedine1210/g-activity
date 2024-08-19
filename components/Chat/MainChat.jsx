@@ -12,6 +12,7 @@ import { GroupInfo } from "@components/Chat/GroupInfo";
 import { emit, on, connect, checkErrorMsg } from "@utils/socketfunction"
 import { socket } from '../../config/config-socket'
 import Swal from 'sweetalert2';
+import PersonalInfo from "./PersonalInfo";
 
 export default function MainChat({
   profileData,
@@ -24,6 +25,7 @@ export default function MainChat({
   const [dataChat, setDataChat] = useState(null)
   const [roomInfo, setRoomInfo] = useState(null)
   const [isGroupInfoOpen, setIsGroupInfoOpen] = useState(false);
+  const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(false)
 
 
   const getAllChat = async () => {
@@ -268,12 +270,13 @@ export default function MainChat({
     containerRef.current?.scrollIntoView({ behavior: viewType });
   }
 
-  const closeGroupInfo = () => {
+  const closeInfo = () => {
     setIsGroupInfoOpen(false);
+    setIsPersonalInfoOpen(false)
   };
 
-  const openGroupInfo = () => {
-    // open info group
+  const openInfo = () => {
+    if(roomInfo.type == 1) return setIsPersonalInfoOpen(true)
     roomInfo.type == 2 && roomInfo['is_leave'] != 1 ? setIsGroupInfoOpen(true) : null
   };
 
@@ -310,7 +313,7 @@ export default function MainChat({
     return (
         <div className="w-full xl:w-full h-screen overflow-y-hidden bg-zinc-200 bg-cover bg-center flex" >
           <div className="flex-col flex h-full w-full">
-            <HeaderMainChat roomInfo={roomInfo} handleOpenInfo={openGroupInfo} />
+            <HeaderMainChat roomInfo={roomInfo} handleOpenInfo={openInfo} />
             <div className="w-full flex-1 overflow-y-auto space-y-4 px-10 py-5">
               {
                 mapAllChat()
@@ -355,7 +358,8 @@ export default function MainChat({
                 </div>
               </form>}
           </div>
-          {isGroupInfoOpen && <GroupInfo closePanel={closeGroupInfo} roomInfo={roomInfo} profileData={profileData} handleLeaveGroup={leaveGroup} />}
+          {isPersonalInfoOpen && <PersonalInfo closePanel={closeInfo} roomInfo={roomInfo} profileData={profileData}/>}
+          {isGroupInfoOpen && <GroupInfo closePanel={closeInfo} roomInfo={roomInfo} profileData={profileData} handleLeaveGroup={leaveGroup} />}
         </div>
     )
   } else {
