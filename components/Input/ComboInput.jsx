@@ -111,7 +111,7 @@ function ComboInput({ items, setItems, handleChange, options }) {
             {
               options.map((item, index) => {
                 return (
-                  <button onClick={() => handleCreate(item)} className='w-full text-start py-2 px-5 hover:bg-blue-50 duration-300' key={index}>
+                  <button type='button' onClick={() => handleCreate(item)} className='w-full text-start py-2 px-5 hover:bg-blue-50 duration-300' key={index}>
                     {item.label}
                   </button>
                 )

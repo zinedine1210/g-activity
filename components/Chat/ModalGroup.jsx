@@ -136,6 +136,7 @@ export default function ModalGroup({ statename }) {
         create: {
             name: "create",
             action: async (value) => {
+                if(value.member.length == 0 || value.group == '') return Notify('Group Name or member is null')
                 emit("createGroup", value)
                     .then(callback => {
                         console.log("apa callback creategroup", callback)
@@ -215,27 +216,10 @@ export default function ModalGroup({ statename }) {
                                 </header>
                                 {
                                     value && (
-                                        <div className="w-full mt-2 space-y-5 overflow-y-auto flex-1">
+                                        <div className="w-full mt-5 space-y-5 overflow-y-auto flex-1">
                                             <div>
                                                 <h1 className="font-semibold">Search and select user</h1>
-                                                <input
-                                                    type="text"
-                                                    value={searchTerm}
-                                                    onChange={e => handleInputChange(e.target.value, 'addgroupmember')}
-                                                    placeholder="Type contact name..."
-                                                    className="mt-2 block w-full placeholder-zinc-400/70 rounded-lg border peer transition-colors invalid:focus:border-red-400 invalid:focus:ring-red-300 invalid:focus:ring-opacity-40 invalid:border-red-200 border-zinc-200 bg-white px-5 py-2.5 text-zinc-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-dark dark:bg-dark dark:text-white"
-                                                />
-                                                {isLoading ? (
-                                                    <p>Loading...</p>
-                                                ) : (
-                                                    <MultiSelect
-                                                        options={options}
-                                                        value={selected}
-                                                        onChange={setSelected}
-                                                        disableSearch={true}
-                                                        labelledBy="Select"
-                                                    />
-                                                )}
+                                                <ComboInput items={selected} setItems={setSelected} options={options} handleChange={(value) => handleInputChange(value, 'addgroupmember')} />
                                             </div>
                                         </div>
                                     )
