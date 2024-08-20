@@ -73,7 +73,6 @@ export default function TableMailBox({
             }
             
             let result = await CollectionData.getData({ url: `mail/${filterUID}/${filterType}`, start: filterPage })
-            console.log("resultresult", result)
             if (result.status == 0) {
                 if (Object.keys(result.data).length > 0) {
                     result['data']['filterUID'] = filterUID

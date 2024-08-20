@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import { formatFileSize } from '@utils/function';
 
-const AttachmentList = ({ type, attachments, downloadFiles, removeAttachment }) => {
-  // type 1 == compose, type 2 == download
+const AttachmentList = ({ attachments, downloadFiles, removeAttachment }) => {
   const getIconAndAlt = (fileName) => {
     const extension = fileName.split('.').pop().toLowerCase();
     let icon, alt;
@@ -32,7 +31,7 @@ const AttachmentList = ({ type, attachments, downloadFiles, removeAttachment }) 
   };
 
   return (
-    <div className="flex space-x-4 py-4">
+    <div className="flex space-x-4 py-4 flex-wrap space-y-2">
       {attachments.map((file, index) => {
         const { icon, alt } = getIconAndAlt(file.filename);
         return (
@@ -45,16 +44,15 @@ const AttachmentList = ({ type, attachments, downloadFiles, removeAttachment }) 
                 <Image src={icon} alt={alt} width={50} height={50} />
               </div>
               <div className="w-48 ml-2 flex flex-col">
-                <a href="#" className="text-sm text-gray-700 font-bold truncate">
+                <a className="text-sm text-gray-700 font-bold truncate">
                   {file.filename}
                 </a>
                 <span className="text-gray-500 text-xs"> {formatFileSize(file.size)}</span>
               </div>
             </div>
             <div className="flex items-center space-x-2">
-
               {
-                type == 1 && <button
+                removeAttachment && <button
                   className="w-6 flex items-center justify-center"
                   title="Remove"
                   onClick={() => removeAttachment(index)}
@@ -76,7 +74,7 @@ const AttachmentList = ({ type, attachments, downloadFiles, removeAttachment }) 
                 </button>
               }
               {
-                type == 2 && <button
+                downloadFiles && <button
                   className="w-6 flex items-center justify-center"
                   title="Download"
                   onClick={() => downloadFiles(file)}

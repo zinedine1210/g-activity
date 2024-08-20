@@ -9,12 +9,17 @@ import CollectionData from "@repositories/CollectionData"
 
 
 const EmailDetail = ({ account }) => {
+  const router = useRouter()
   const { detailMailData } = useContext(MyContext)
   const context = useContext(MyContext)
   const topEmailRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const [downloadComplete, setDownloadComplete] = useState(false);
   const [showProgress, setShowProgress] = useState(false);
+
+  const hash = router.asPath.split('#')[1];
+  const filterUID = hash || '#Inbox';
+
 
   // console.log("context detail", detailMailData)
 
@@ -151,7 +156,6 @@ const EmailDetail = ({ account }) => {
   ];
 
   const onDownloadsFile = async (file) => {
-    console.log('Downloading file:', file);
     setProgress(0);
     setShowProgress(true);
     setDownloadComplete(false);
@@ -162,11 +166,7 @@ const EmailDetail = ({ account }) => {
       "filename": file['filename']
     };
 
-    console.log("detailMailData", value);
-    console.log("account", account);
-
     const result = await CollectionData.postData({ url: `download_attachment/${account['id']}`, values: value });
-    console.log("result download", result);
 
     if (result.status === 0) {
       const xhr = new XMLHttpRequest();
@@ -211,6 +211,13 @@ const EmailDetail = ({ account }) => {
     }
   };
 
+  const handleReplyClick = () => {
+    context.setData({ ...context, mailRightPanel: 'composeMail', mailReply: "Reply" })
+  };
+
+  const handleForwardClick = () => {
+    context.setData({ ...context, mailRightPanel: 'composeMail', mailReply: "Forward" })
+  };
 
   let fromData = detailMailData.From.match(/(.*?)<(.*?)>/);
   let name = fromData?.[1]?.trim() || detailMailData.From;
@@ -270,8 +277,8 @@ const EmailDetail = ({ account }) => {
                 <span className="text-sm text-gray-400">{`<${email}>`}</span>
               </div>
               <span className="text-sm text-gray-400">To: {toEmail}</span>
-              {toCc && <span className="text-sm text-gray-400">Cc: {toCc}</span>} 
-              {toBcc && <span className="text-sm text-gray-400">Bcc: {toBcc}</span>} 
+              {toCc && <span className="text-sm text-gray-400">Cc: {toCc}</span>}
+              {toBcc && <span className="text-sm text-gray-400">Bcc: {toBcc}</span>}
             </div>
           </div>
           <span className="text-sm text-gray-500">{convertDateMail(detailMailData.Date, "datetime")}  Jan 30, 2022, 10:23 AM</span>
@@ -280,22 +287,26 @@ const EmailDetail = ({ account }) => {
         {/* <ProgressBar progress={progress} /> */}
         {showProgress && <ProgressBar progress={progress} />}
         {
-          detailMailData.Attachments && detailMailData.Attachments.length > 0 && <div className="border-t-2 flex space-x-4 py-4"><AttachmentList type={2} attachments={detailMailData.Attachments} downloadFiles={onDownloadsFile} /></div>
+          detailMailData.Attachments && detailMailData.Attachments.length > 0 && <div className="border-t-2 flex space-x-4 py-4"><AttachmentList attachments={detailMailData.Attachments} downloadFiles={onDownloadsFile} /></div>
         }
-        <div className="mt-8 flex items-center space-x-4 text-sm">
-          <button className="w-32 flex items-center justify-center space-x-2 py-1.5 text-gray-600 border border-gray-400 rounded-lg hover:bg-gray-200">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd"></path>
-            </svg>
-            <span>Reply</span>
-          </button>
-          <button className="w-32 flex items-center justify-center space-x-2 py-1.5 text-gray-600 border border-gray-400 rounded-lg hover:bg-gray-200">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-            </svg>
-            <span>Forward</span>
-          </button>
-        </div>
+
+        {
+          filterUID == "Drafts" || filterUID == "Sent" && <div className="mt-8 flex items-center space-x-4 text-sm">
+            <button className="w-32 flex items-center justify-center space-x-2 py-1.5 text-gray-600 border border-gray-400 rounded-lg hover:bg-gray-200" onClick={handleReplyClick}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd"></path>
+              </svg>
+              <span>Reply</span>
+            </button>
+            <button className="w-32 flex items-center justify-center space-x-2 py-1.5 text-gray-600 border border-gray-400 rounded-lg hover:bg-gray-200" onClick={handleForwardClick}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+              </svg>
+              <span>Forward</span>
+            </button>
+          </div>
+        }
+
       </div>
     </>
   );

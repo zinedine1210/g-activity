@@ -48,7 +48,6 @@ export default function PanelList({
                     currentActive = objCurrentAccount
                 }
                 setCurrent(currentActive)
-                console.log("Disini yaa?? 111")
                 // router.push(`/usr/mail?uid=${currentActive['id']}#Inbox`)
             }
             context.setData({ ...context, [statename]: result.data })
@@ -56,15 +55,12 @@ export default function PanelList({
     }
 
     useEffect(() => {
-        console.log("tess1234")
         context.setData({ ...context, mailRightPanel: '' })
         if (!context[statename]) {
             getDataAccountMail()
         } else {
             const hash = router.asPath.split('#')[1] || 'Inbox';
-            console.log("context[statename]", context[statename])
             if (context[statename].length > 0) {
-                console.log("sini kah?")
                 setListAccount(context[statename])
                 if (!uid) {
                     router.push(`/usr/mail?uid=${context[statename][0]['id']}#Inbox`)
@@ -85,7 +81,6 @@ export default function PanelList({
                     }
                 }
             } else {
-                console.log("disini ya??")
                 Swal.fire({
                     title: `Email not found`,
                     text: "You don't have an email account yet, please enter your email account to use the email feature.",
@@ -111,7 +106,7 @@ export default function PanelList({
 
 
     const openComposeEmail = () => {
-        context.setData({ ...context, mailRightPanel: 'composeMail' })
+        context.setData({ ...context, mailRightPanel: 'composeMail', mailReply: "New" })
     }
 
 
