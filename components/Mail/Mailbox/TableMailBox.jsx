@@ -6,6 +6,7 @@ import RecordAccount from '@components/Mail/Account/RecordAccount'
 import { useRouter } from 'next/router'
 import CollectionData from "@repositories/CollectionData"
 import { convertDateMail } from '@utils/function'
+import Swal from 'sweetalert2';
 
 export default function TableMailBox({
     matchHash
@@ -71,7 +72,7 @@ export default function TableMailBox({
             if (!matchHash[hash] || matchHash[hash] == false) {
                 filterType = "Inbox"
             }
-            
+
             let result = await CollectionData.getData({ url: `mail/${filterUID}/${filterType}`, start: filterPage })
             if (result.status == 0) {
                 if (Object.keys(result.data).length > 0) {
@@ -86,11 +87,36 @@ export default function TableMailBox({
 
     const delToTrashEmail = async (data) => {
         let emailId = data['id'];
-        let obj = { 'email_id': emailId }
-        let result = await CollectionData.deleteData({ url: `mail_to_trash/${filterUID}/Inbox`, values: obj })
-        let updatedData = context[statename]['emails'].filter(item => item.id !== emailId);
-        context.setData({ ...context, [statename]: { ...context[statename], 'emails': updatedData } });
-        Notify("Email has move to trash", 'success')
+      
+        if (hash == "Trash") {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This email will be deleted permanent",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes!'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    // delete permanent
+                    let obj = { 'email_id': emailId, 'msg_id': data['msg_id'] }
+                    if(data['Attachments'] && data['Attachments'].length > 0){
+                        obj['filename'] = data['Attachments'][0]['filename']
+                    }
+                    let result = await CollectionData.deleteData({ url: `delete/${filterUID}`, values: obj })
+                    let updatedData = context[statename]['emails'].filter(item => item.id !== emailId);
+                    context.setData({ ...context, [statename]: { ...context[statename], 'emails': updatedData } });
+                    Notify("Email has deleted", 'success')
+                }
+            })
+        } else {
+            let obj = { 'email_id': emailId }
+            let result = await CollectionData.deleteData({ url: `mail_to_trash/${filterUID}/Inbox`, values: obj })
+            let updatedData = context[statename]['emails'].filter(item => item.id !== emailId);
+            context.setData({ ...context, [statename]: { ...context[statename], 'emails': updatedData } });
+            Notify("Email has move to trash", 'success')
+        }
     }
 
 
